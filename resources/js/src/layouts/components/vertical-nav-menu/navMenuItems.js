@@ -4,5 +4,11 @@ export default [
     name: "Home",
     slug: "home",
     icon: "HomeIcon",
+  },
+  {
+    url: "/grid",
+    name: "Grid",
+    slug: "grid",
+    icon: "HomeIcon",
   }
 ]

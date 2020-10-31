@@ -8,3 +8,11 @@
 ==========================================================================================*/
 
 @import 'main';
+
+// hide ag-grid watermark (it's steal but I don't have 750$ for a license)
+.ag-watermark {
+    display: none !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}

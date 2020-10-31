@@ -1,14 +1,3 @@
-<!-- =========================================================================================
-  File Name: VerticalNavMenu.vue
-  Description: Vertical NavMenu Component
-  Component Name: VerticalNavMenu
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <div class="parentx">
 
@@ -28,32 +17,12 @@
 
         <!-- Header -->
         <div class="header-sidebar flex items-end justify-between" slot="header">
-
           <!-- Logo -->
           <router-link tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
-            <logo class="w-10 mr-4 fill-current text-primary" />
-            <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
+            <logo class="w-full" />
+<!--            <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>-->
           </router-link>
           <!-- /Logo -->
-
-          <!-- Menu Buttons -->
-          <div>
-            <!-- Close Button -->
-            <template v-if="showCloseButton">
-              <feather-icon icon="XIcon" class="m-0 cursor-pointer" @click="$store.commit('TOGGLE_IS_VERTICAL_NAV_MENU_ACTIVE', false)" />
-            </template>
-
-            <!-- Toggle Buttons -->
-            <template v-else-if="!showCloseButton && !verticalNavMenuItemsMin">
-              <feather-icon
-                id="btnVNavMenuMinToggler"
-                class="mr-0 cursor-pointer"
-                :icon="reduce ? 'CircleIcon' : 'DiscIcon'"
-                svg-classes="stroke-current text-primary"
-                @click="toggleReduce(!reduce)" />
-            </template>
-          </div>
-          <!-- /Menu Toggle Buttons -->
         </div>
         <!-- /Header -->
 
@@ -69,9 +38,7 @@
               {{ item.header }}
             </span>
             <!-- /Group Header -->
-
             <template v-else-if="!item.header">
-
               <!-- Nav-Item -->
               <v-nav-menu-item
                 v-if="!item.submenu"
