@@ -1,16 +1,15 @@
 <?php
 
+use Database\Seeders\PermissionsSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
-     *
-     * @return void
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        $this->call(PermissionsSeeder::class);
     }
 }

@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {beforeEnterAuthenticatedRoutes} from './middlewares/enterAuthenticatedRoutes'
+import {beforeEnterPublicRoutes} from './middlewares/enterPublicRoutes'
+import {hasRole} from "./middlewares/hasRole";
 
 Vue.use(Router)
 
@@ -10,7 +13,6 @@ const router = new Router({
         return {x: 0, y: 0}
     },
     routes: [
-
         {
             path: '',
             component: () => import('./layouts/main/Main.vue'),
@@ -23,14 +25,16 @@ const router = new Router({
                 {
                     path: '/me',
                     name: 'me', // profile
-                    component: () => import('./views/Me')
+                    component: () => import('./views/Me'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/grid',
-                    name: 'grid', // profile
+                    name: 'grid', // dummy example implementing ag-grid
                     component: () => import('./views/Grid')
                 }
             ],
+            beforeEnter: beforeEnterAuthenticatedRoutes
         },
         {
             path: '',
@@ -61,7 +65,8 @@ const router = new Router({
                     name: '404',
                     component: () => import('./views/Errors/404')
                 },
-            ]
+            ],
+            beforeEnter: beforeEnterPublicRoutes
         },
         {
             path: '*',

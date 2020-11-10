@@ -32,6 +32,9 @@ Vue.use(VueHammer)
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
+import VeeValidateLaravel from 'vee-validate-laravel';
+Vue.use(VeeValidateLaravel);
+
 // PrismJS
 import 'prismjs'
 import 'prismjs/themes/prism-tomorrow.css'

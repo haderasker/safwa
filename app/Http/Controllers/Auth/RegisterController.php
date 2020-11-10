@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\StudentEmail;
+use App\Rules\TeacherEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -43,14 +45,15 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'type'     => ['required', 'in:student,teacher'],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', new StudentEmail($data['type']), new TeacherEmail($data['type'])],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -58,15 +61,21 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Models\User
+     * @param array $data
+     * @return User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        $user = User::updateOrCreate([
+            'email' => $data['email']
+        ], [
+            'name'     => $data['name'],
             'password' => Hash::make($data['password']),
         ]);
+
+        // assign role to the user
+        $user->assignRole($data['type']);
+
+        return $user;
     }
 }

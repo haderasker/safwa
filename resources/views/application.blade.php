@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
 
-    <title>Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset(mix('css/main.css')) }}">
     <link rel="stylesheet" href="{{ asset(mix('css/iconfont.css')) }}">
@@ -26,8 +26,6 @@
     <div id="app">
     </div>
 
-    <!-- <script src="js/app.js"></script> -->
     <script src="{{ asset(mix('js/app.js')) }}"></script>
-
   </body>
 </html>

@@ -14,6 +14,8 @@ require('dotenv').config();
  |
  */
 
+mix.disableNotifications();
+
 mix.js('resources/js/app.js', 'public/js')
     .webpackConfig({
         resolve: {

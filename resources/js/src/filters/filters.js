@@ -1,14 +1,5 @@
 import Vue from 'vue'
-// hello_world => Hello World
-Vue.filter('title', function (value, replacer = '_') {
-  if (!value) return ''
-  value = value.toString()
+import convertToTitle from "./convertToTitle";
 
-  const arr = value.split(replacer)
-  const capitalized_array = []
-  arr.forEach((word) => {
-    const capitalized = word.charAt(0).toUpperCase() + word.slice(1)
-    capitalized_array.push(capitalized)
-  })
-  return capitalized_array.join(' ')
-})
+// hello_world => Hello World
+Vue.filter('title', convertToTitle)

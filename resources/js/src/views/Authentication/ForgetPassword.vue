@@ -16,7 +16,7 @@
 
                 <vs-input type="email" label-placeholder="Email" v-model="email" class="w-full mb-8" />
                 <vs-button type="border" :to="{ name: 'login' }" class="px-4 w-full md:w-auto">Back To Login</vs-button>
-                <vs-button class="float-right px-4 w-full md:w-auto mt-3 mb-8 md:mt-0 md:mb-0">Recover Password</vs-button>
+                <vs-button @click="recover" class="float-right px-4 w-full md:w-auto mt-3 mb-8 md:mt-0 md:mb-0">Recover Password</vs-button>
               </div>
             </div>
           </div>
@@ -32,6 +32,15 @@ export default {
     return {
       email: ''
     }
-  }
+  },
+    methods: {
+        async recover() {
+            await this.$store.dispatch('Authentication/forgetPassword', {
+                email: this.email
+            })
+
+            this.$router.push({ name: 'login' }).catch(() => {})
+        }
+    }
 }
 </script>

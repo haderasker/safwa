@@ -11,8 +11,10 @@
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import {AgGridVue} from 'ag-grid-vue';
-import {RowGroupingModule} from 'ag-grid-enterprise/dist/ag-grid-enterprise';
+import {RowGroupingModule, LicenseManager} from 'ag-grid-enterprise/dist/ag-grid-enterprise';
 import MedalCellRenderer from './MedalCellRenderer'
+
+LicenseManager.setLicenseKey("your license key");
 
 export default {
     name: 'Grid',

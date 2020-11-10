@@ -1,51 +1,55 @@
 <template>
-  <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
+    <div class="the-navbar__user-meta flex items-center">
+        <div class="text-right leading-tight hidden sm:block">
+            <p class="font-semibold">{{ activeUserInfo.name | title }}</p>
+            <small v-if="roles.length">{{ roles[0] | title }}</small>
+        </div>
 
-    <div class="text-right leading-tight hidden sm:block">
-      <p class="font-semibold">{{ activeUserInfo.displayName }}</p>
-      <small>Teacher</small>
+        <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
+            <div class="con-img ml-3">
+                <img v-if="activeUserInfo.name" :src="require('@assets/images/portrait/small/avatar-s-11.jpg')" alt="user-img"
+                     width="40" height="40" class="rounded-full shadow-md cursor-pointer block"/>
+            </div>
+
+            <vs-dropdown-menu class="vx-navbar-dropdown">
+                <ul style="min-width: 9rem">
+
+                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
+                        @click="toProfilePage">
+                        <feather-icon icon="UserIcon" svgClasses="w-4 h-4"/>
+                        <span class="ml-2">Profile</span>
+                    </li>
+
+                    <vs-divider class="m-1"/>
+
+                    <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
+                        <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"/>
+                        <span class="ml-2">Logout</span>
+                    </li>
+                </ul>
+            </vs-dropdown-menu>
+        </vs-dropdown>
     </div>
-
-    <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-
-      <div class="con-img ml-3">
-        <img v-if="activeUserInfo.photoURL" key="onlineImg" :src="activeUserInfo.photoURL" alt="user-img" width="40" height="40" class="rounded-full shadow-md cursor-pointer block" />
-      </div>
-
-      <vs-dropdown-menu class="vx-navbar-dropdown">
-        <ul style="min-width: 9rem">
-
-          <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="$router.push('/me').catch(() => {})">
-            <feather-icon icon="UserIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Profile</span>
-          </li>
-
-          <vs-divider class="m-1" />
-
-          <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
-            <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4" />
-            <span class="ml-2">Logout</span>
-          </li>
-        </ul>
-      </vs-dropdown-menu>
-    </vs-dropdown>
-  </div>
 </template>
 
 <script>
 export default {
-  computed: {
-    activeUserInfo () {
-      return this.$store.state.Default.AppActiveUser
+    computed: {
+        activeUserInfo() {
+            return this.$store.getters['Authentication/getProfile']
+        },
+        roles() {
+            return this.$store.getters['Authentication/getRoles']
+        }
+    },
+    methods: {
+        toProfilePage() {
+            this.$router.push({ name: 'me' }).catch(() => {})
+        },
+        async logout() {
+            await this.$store.dispatch('Authentication/logout')
+            this.$router.push({ name: 'login' }).catch(() => {})
+        }
     }
-  },
-  methods: {
-    logout () {
-      localStorage.removeItem('userInfo')
-
-      // This is just for demo Purpose. If user clicks on logout -> redirect
-      this.$router.push('/pages/login').catch(() => {})
-    }
-  }
 }
 </script>

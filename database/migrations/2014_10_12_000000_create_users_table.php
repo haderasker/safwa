@@ -20,6 +20,16 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->enum('sex', ['male', 'female'])->nullable();
+            $table->string('national_number')->nullable();
+            $table->string('phone')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->string('nationality')->nullable();
+            $table->json('address')->nullable();
+            $table->string('language')->nullable();
+            $table->string('ar_level')->nullable();
+
         });
     }
 
