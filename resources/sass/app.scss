@@ -16,3 +16,11 @@
     width: 0 !important;
     height: 0 !important;
 }
+
+::v-deep .vs-dialog-success footer {
+    display: none;
+}
+
+.vs-dialog-success footer {
+    display: none;
+}

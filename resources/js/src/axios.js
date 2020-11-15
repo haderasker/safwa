@@ -55,5 +55,4 @@ safwaAxios.interceptors.response.use(r => r, async error => {
     return Promise.reject(error)
 })
 
-
 export default safwaAxios

@@ -13,6 +13,8 @@ Vue.prototype.$http = axios
 // Filters
 import './filters/filters.js'
 
+import './helpers/checkRoles'
+
 // Theme Configurations
 import '../themeConfig.js'
 
@@ -45,6 +47,8 @@ import i18n from './i18n/i18n'
 // Vue select css
 // Note: In latest version you have to add it separately
 // import 'vue-select/dist/vue-select.css';
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false
 

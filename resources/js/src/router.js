@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {beforeEnterAuthenticatedRoutes} from './middlewares/enterAuthenticatedRoutes'
 import {beforeEnterPublicRoutes} from './middlewares/enterPublicRoutes'
-import {hasRole} from "./middlewares/hasRole";
+import {hasRole, hasAnyRole} from "./middlewares/hasRole";
 
 Vue.use(Router)
 
@@ -29,9 +29,22 @@ const router = new Router({
                     beforeEnter: hasRole('admin')
                 },
                 {
-                    path: '/grid',
-                    name: 'grid', // dummy example implementing ag-grid
-                    component: () => import('./views/Grid')
+                    path: '/notifications',
+                    name: 'notifications.index',
+                    component: () => import('./views/Notifications'),
+                    beforeEnter: hasAnyRole('admin', 'teacher')
+                },
+                {
+                    path: '/courses',
+                    name: 'courses.index',
+                    component: () => import('./views/Courses'),
+                    beforeEnter: hasRole('admin')
+                },
+                {
+                    path: '/courses/create',
+                    name: 'courses.create',
+                    component: () => import('./views/Courses/create'),
+                    beforeEnter: hasRole('admin')
                 }
             ],
             beforeEnter: beforeEnterAuthenticatedRoutes

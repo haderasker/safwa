@@ -17,14 +17,14 @@
                     <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
                         @click="toProfilePage">
                         <feather-icon icon="UserIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Profile</span>
+                        <span class="ml-2">{{ $t('navbar.profile') }}</span>
                     </li>
 
                     <vs-divider class="m-1"/>
 
                     <li class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white" @click="logout">
                         <feather-icon icon="LogOutIcon" svgClasses="w-4 h-4"/>
-                        <span class="ml-2">Logout</span>
+                        <span class="ml-2">{{ $t('navbar.logout') }}</span>
                     </li>
                 </ul>
             </vs-dropdown-menu>

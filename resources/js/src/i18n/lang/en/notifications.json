@@ -1,0 +1,15 @@
+{
+    "teachers": "Teachers",
+    "students": "Students",
+    "select_category": "Select Category",
+    "select_one": "Select One",
+    "levels": "Levels",
+    "all": "All",
+    "email_content": "Email Content",
+    "title": "Notifications",
+    "success_title": "Success",
+    "success_message": "Message Sent :)",
+    "failed_title": "Failed",
+    "failed_message": "Failed to send the Message :(",
+    "send": "Send"
+}
