@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
-class PermissionsSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Create the initial roles and permissions.
