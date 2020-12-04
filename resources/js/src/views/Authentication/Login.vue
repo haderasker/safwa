@@ -67,7 +67,7 @@ export default {
     data() {
         return {
             cred: {
-                email: 'test@email.com',
+                email: 'admin@email.com',
                 password: 'password',
                 remember: false
             }

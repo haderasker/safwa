@@ -23,6 +23,51 @@ const router = new Router({
                     component: () => import('./views/Dashboard')
                 },
                 {
+                    path: '/academic-year',
+                    name: 'academic-year',
+                    component: () => import('./views/AcademicYear')
+                },
+                {
+                    path: '/exams',
+                    name: 'exams',
+                    component: () => import('./views/Exams')
+                },
+                {
+                    path: '/results',
+                    name: 'results',
+                    component: () => import('./views/Results')
+                },
+                {
+                    path: '/teachers',
+                    name: 'teachers',
+                    component: () => import('./views/Teachers')
+                },
+                {
+                    path: '/students',
+                    name: 'students',
+                    component: () => import('./views/Students/List')
+                },
+                {
+                    path: '/cms',
+                    name: 'cms',
+                    component: () => import('./views/CMS')
+                },
+                {
+                    path: '/student-courses',
+                    name: 'student-courses',
+                    component: () => import('./views/Students/Courses')
+                },
+                {
+                    path: '/student-exams',
+                    name: 'student-exams',
+                    component: () => import('./views/Students/Exams')
+                },
+                {
+                    path: '/student-results',
+                    name: 'student-results',
+                    component: () => import('./views/Students/Results')
+                },
+                {
                     path: '/me',
                     name: 'me', // profile
                     component: () => import('./views/Me'),

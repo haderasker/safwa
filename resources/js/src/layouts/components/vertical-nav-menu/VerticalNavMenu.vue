@@ -39,12 +39,13 @@
                         <!-- Group Header -->
                         <span v-if="item.header && !verticalNavMenuItemsMin" class="navigation-header truncate"
                               :key="`header-${index}`">
-              {{ item.header }}
-            </span>
+                          {{ item.header }}
+                        </span>
                         <!-- /Group Header -->
                         <template v-else-if="!item.header">
                             <!-- Nav-Item -->
                             <v-nav-menu-item
+                                :roles="item.roles"
                                 v-if="!item.submenu"
                                 :key="`item-${index}`"
                                 :index="index"

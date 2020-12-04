@@ -2,5 +2,14 @@
     "home": "الرئيسية",
     "grid": "الجداول",
     "notifications": "اخطارات",
-    "courses": "ادارة المواد"
+    "courses": "ادارة المواد",
+    "teachers": "ادارة المعلمين",
+    "academic-year": "ادارة السنة الدراسية",
+    "exams": "ادارة الامتحانات",
+    "results": "ادارة النتائج",
+    "students": "ادارة الطلاب",
+    "cms": "ادارة المحتوى",
+    "student-courses": "المواد",
+    "student-exams": "الامتحانات",
+    "student-results": "النتائج"
 }

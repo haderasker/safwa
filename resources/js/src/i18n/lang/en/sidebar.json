@@ -2,5 +2,14 @@
     "home": "Home",
     "grid": "Grid",
     "notifications": "Notifications",
-    "courses": "Courses"
+    "courses": "Courses",
+    "academic-year": "Academic Years",
+    "exams": "Exams",
+    "results": "Results",
+    "teachers": "Teachers",
+    "students": "Students",
+    "cms": "CMS",
+    "student-courses": "Courses",
+    "student-exams": "Exams",
+    "student-results": "Results"
 }
