@@ -28,9 +28,29 @@ const router = new Router({
                     component: () => import('./views/AcademicYear')
                 },
                 {
+                    path: '/academic-year/create',
+                    name: 'academic-year.create',
+                    component: () => import('./views/AcademicYear/Create')
+                },
+                {
+                    path: '/academic-year/edit/:id',
+                    name: 'academic-year.edit',
+                    component: () => import('./views/AcademicYear/Edit')
+                },
+                {
                     path: '/exams',
                     name: 'exams',
                     component: () => import('./views/Exams')
+                },
+                {
+                    path: '/exams/create',
+                    name: 'exams.create',
+                    component: () => import('./views/Exams/Create')
+                },
+                {
+                    path: '/exams/edit/{id}',
+                    name: 'exams.edit',
+                    component: () => import('./views/Exams/Edit')
                 },
                 {
                     path: '/results',

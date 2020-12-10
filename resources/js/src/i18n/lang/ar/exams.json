@@ -1,0 +1,45 @@
+{
+    "title": "الامتحانات",
+    "all_exams": "جميع الامتحانات",
+    "create_exam_tooltip": "انشاء امتحان جديد",
+    "create_exam_title": "انشاء امتحان جديد",
+    "exam_name": "الاسم",
+    "q_number": "عدد الأسئلة",
+    "success_score": "درجة النجاح",
+    "total_students": "عدد الممتحنين",
+    "graduation_students": "عدد الناجحين",
+    "actions": "خيارات",
+    "filter": "بحث",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "create": "انشاء امتحان",
+    "step1": {
+        "title": "المعلومات الاساسية"
+    },
+    "step2": {
+        "title": "الأسئلة"
+    },
+    "next": "التالي",
+    "back": "للخلف",
+    "select_subject": "اختر المادة",
+    "select_level": "اختر الفرقة",
+    "exam_type": "اختر النوع",
+    "exam_start_date": "بداية الامتحان",
+    "exam_end_date": "نهاية الامتحان",
+    "exam_duration": "مدة الامتحان",
+    "types": {
+        "one": "اساسي",
+        "two": "تخلفات"
+    },
+    "add_q": "اضافة سؤال",
+    "q_list": "قائمة الأسئلة",
+    "edit_q": "تعديل",
+    "remove_q": "حذف",
+    "save_q": "حفظ السؤال",
+    "cancel": "الغاء",
+    "add_new_q_title": "إضافة سؤال جديد",
+    "update_q_title": "تعديل",
+    "new_q_label": "السؤال",
+    "new_q_score": "الدرجة",
+    "add_answer": "اضافة اجابة",
+    "answers": "الاجابات"
+}

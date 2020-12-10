@@ -1,0 +1,49 @@
+{
+    "title": "السنة الدراسية",
+    "list": {
+        "column_name": "الاسم",
+        "column_hijri": "التاريخ الهجري",
+        "column_first_semester_start": "بداية الفصل الدراسي الأول",
+        "column_first_semester_end": "نهاية الفصل الدراسي الأول",
+        "column_second_semester_start": "بداية الفصل الدراسي الثاني",
+        "column_second_semester_end": "نهاية الفصل الدراسي الثاني",
+        "column_actions": "خيارات"
+    },
+    "create_year_tooltip": "انشاء سنة دراسية جديدة",
+    "all_years": "جميع السنوات الدراسية",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "year_name": "الاسم",
+    "filter": "بحث",
+    "create_year_title": "انشاء سنة دراسية جديدة",
+    "next": "التالي",
+    "back": "للخلف",
+    "create_year": "انشاء سنة دراسية",
+    "step1": {
+        "title": "المعلومات الأساسية"
+    },
+    "step2": {
+        "title": "الفصل الدراسي الأول"
+    },
+    "step3": {
+        "title": "الفصل الدراسي الثاني"
+    },
+    "create": {
+        "label": "الاسم",
+        "first_semester": {
+            "label": "الفصل الدراسي الأول",
+            "start": "تاريخ البداية",
+            "end": "تاريخ النهاية"
+        },
+        "second_semester": {
+            "label": "الفصل الدراسي الثاني",
+            "start": "تاريخ البداية",
+            "end": "تاريخ النهاية"
+        },
+        "level1": "الفرقة الأولى",
+        "level2": "الفرقة الثانية",
+        "level3": "الفرقة الثالثة",
+        "level4": "الفرقة الرابعة",
+        "select_courses": "اختر مواد الفصل الدراسي",
+        "for": "للـ"
+    }
+}

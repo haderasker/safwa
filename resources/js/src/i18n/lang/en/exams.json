@@ -1,0 +1,45 @@
+{
+    "title": "Exams",
+    "all_exams": "All Exams",
+    "create_exam_tooltip": "Create New Exam",
+    "create_exam_title": "Create New Exam",
+    "exam_name": "Name",
+    "q_number": "Q. Number",
+    "success_score": "Success Score",
+    "total_students": "Total Students",
+    "graduation_students": "Graduation Students",
+    "actions": "Actions",
+    "filter": "Filter",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "create": "Create Exam",
+    "step1": {
+        "title": "Basic Info"
+    },
+    "step2": {
+        "title": "Questions"
+    },
+    "next": "Next",
+    "back": "Back",
+    "select_subject": "Select Subject",
+    "select_level": "Select Level",
+    "exam_type": "Select Type",
+    "exam_start_date": "Start Date",
+    "exam_end_date": "End Date",
+    "exam_duration": "Duration",
+    "types": {
+        "one": "Default",
+        "two": "Fail"
+    },
+    "add_q": "Add Question",
+    "q_list": "Question List",
+    "edit_q": "Edit",
+    "remove_q": "Remove",
+    "save_q": "Save Question",
+    "cancel": "Cancel",
+    "add_new_q_title": "ADD NEW QUESTION",
+    "update_q_title": "UPDATE",
+    "new_q_label": "Label",
+    "new_q_score": "Score",
+    "add_answer": "Add New Answer",
+    "answers": "Answers"
+}

@@ -1,0 +1,49 @@
+{
+    "title": "Academic Year",
+    "list": {
+        "column_name": "Name",
+        "column_hijri": "Hijri",
+        "column_first_semester_start": "First Semester Start Date",
+        "column_first_semester_end": "First Semester End Date",
+        "column_second_semester_start": "Second Semester Start Date",
+        "column_second_semester_end": "Second Semester End Date",
+        "column_actions": "Actions"
+    },
+    "create_year_tooltip": "Create New Academic Year",
+    "all_years": "All Academic Years",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "year_name": "Name",
+    "filter": "Filter",
+    "create_year_title": "Create New Academic Year",
+    "next": "Next",
+    "back": "Back",
+    "create_year": "Create Year",
+    "step1": {
+        "title": "Basic Info"
+    },
+    "step2": {
+        "title": "First Semester"
+    },
+    "step3": {
+        "title": "Second Semester"
+    },
+    "create": {
+        "label": "Label",
+        "first_semester": {
+            "label": "First Semester",
+            "start": "Start Date",
+            "end": "End Date"
+        },
+        "second_semester": {
+            "label": "Second Semester",
+            "start": "Start Date",
+            "end": "End Date"
+        },
+        "level1": "Level One",
+        "level2": "Level Two",
+        "level3": "Level Three",
+        "level4": "Level Four",
+        "select_courses": "Select Semester Courses",
+        "for": "for"
+    }
+}

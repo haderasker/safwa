@@ -1,3 +1,12 @@
 {
-
+    "total_students": "عدد الطلاب",
+    "total_graduates": "عدد الخريجين",
+    "level_one_students": "طلاب الفرقة الاولى",
+    "level_two_students": "طلاب الفرقة الثانية",
+    "level_three_students": "طلاب الفرقة الثالثة",
+    "level_four_students": "طلاب الفرقة الرابعة",
+    "doctrine_shafi": "طلاب المذهب الشافعي",
+    "doctrine_maliki": "طلاب المذهب المالكي",
+    "doctrine_hanafi": "طلاب المذهب الحنفي",
+    "doctrine_hanbali": "طلاب المذهب الحنبلي"
 }
