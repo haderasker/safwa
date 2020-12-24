@@ -2,6 +2,9 @@
 
 use Database\Seeders\PermissionsSeeder;
 use Database\Seeders\UsersSeeder;
+use Database\Seeders\DoctrinesSeeder;
+use Database\Seeders\CoursesSeeder;
+use Database\Seeders\LessonsSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,5 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionsSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(DoctrinesSeeder::class);
+        $this->call(CoursesSeeder::class);
+        $this->call(LessonsSeeder::class);
     }
 }

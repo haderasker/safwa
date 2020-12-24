@@ -12,11 +12,23 @@ import en_exams from './lang/en/exams.json'
 import ar_exams from './lang/ar/exams.json'
 import en_academic_years from './lang/en/academic_years.json'
 import ar_academic_years from './lang/ar/academic_years.json'
+import en_results from './lang/en/results.json'
+import ar_results from './lang/ar/results.json'
+import en_courses from './lang/en/courses.json'
+import ar_courses from './lang/ar/courses.json'
+import en_lessons from './lang/en/lessons.json'
+import ar_lessons from './lang/ar/lessons.json'
+import en_teachers from './lang/en/teachers.json'
+import ar_teachers from './lang/ar/teachers.json'
+import en_students from './lang/en/students.json'
+import ar_students from './lang/ar/students.json'
+import en_comments from './lang/en/comments.json'
+import ar_comments from './lang/ar/comments.json'
 
 Vue.use(VueI18n)
 
 export default new VueI18n({
-    locale: 'ar', // set default locale
+    locale: 'en', // set default locale
     messages: {
         en: {
             sidebar: en_sidebar,
@@ -24,7 +36,13 @@ export default new VueI18n({
             notifications: en_notifications,
             dashboard: en_dashboard,
             exams: en_exams,
-            academic_years: en_academic_years
+            academic_years: en_academic_years,
+            results: en_results,
+            courses: en_courses,
+            lessons: en_lessons,
+            teachers: en_teachers,
+            students: en_students,
+            comments: en_comments,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -32,7 +50,13 @@ export default new VueI18n({
             notifications: ar_notifications,
             dashboard: ar_dashboard,
             exams: ar_exams,
-            academic_years: ar_academic_years
+            academic_years: ar_academic_years,
+            results: ar_results,
+            courses: ar_courses,
+            lessons: ar_lessons,
+            teachers: ar_teachers,
+            students: ar_students,
+            comments: ar_comments,
         }
     },
     silentTranslationWarn: true

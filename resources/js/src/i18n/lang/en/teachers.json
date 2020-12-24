@@ -1,0 +1,23 @@
+{
+    "title": "Teachers",
+    "all_teachers": "All Teachers",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "create_teacher_tooltip": "Create New Teacher",
+    "list": {
+        "column_name": "Teacher",
+        "column_add_lessons": "Add Lessons Permission",
+        "column_lessons_number": "No. Lessons",
+        "column_created_at": "Created At",
+        "column_actions": "Actions"
+    },
+    "info": "Basic Information",
+    "name": "Name",
+    "email": "Email",
+    "add_lesson": "Allow to Add Lessons",
+    "description": "Description",
+    "create_title": "Create Teacher",
+    "edit_title": "Edit Teacher",
+    "save": "Save",
+    "update": "Update"
+}

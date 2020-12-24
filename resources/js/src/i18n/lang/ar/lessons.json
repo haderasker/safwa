@@ -1,0 +1,49 @@
+{
+    "title": "الدروس",
+    "all_lessons": "جميع الدروس",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
+    "create_lesson_tooltip": "انشاء درس جديد",
+    "list": {
+        "column_name": "الدرس",
+        "column_actions": "خيارات"
+    },
+    "edit_title": "تعديل درس",
+    "create_title": "تسجيل درس",
+    "wizard": {
+        "submit": "حفظ",
+        "next": "التالي",
+        "back": "للخلف"
+    },
+    "step1": {
+        "title": "المعلومات الأساسية",
+        "courses": "جميع المواد",
+        "lesson_name": "اسم الدرس",
+        "lesson_name_placeholder": "اسم الدرس",
+        "content": "المحتوى",
+        "youtube": "يوتيوب",
+        "soundcloud": "ساوند كلود",
+        "pdf": "بي دي اف",
+        "publish_date_time": "تاريخ النشر"
+    },
+    "step2": {
+        "title": "الاختبار"
+    },
+    "step3": {
+        "title": "التعليقات"
+    },
+    "add_q": "اضافة سؤال",
+    "questions": "الأسئلة",
+    "q_list": "قائمة الأسئلة",
+    "edit_q": "تعديل",
+    "remove_q": "حذف",
+    "save_q": "حفظ السؤال",
+    "cancel": "الغاء",
+    "add_new_q_title": "إضافة سؤال جديد",
+    "update_q_title": "تعديل",
+    "new_q_label": "السؤال",
+    "new_q_score": "الدرجة",
+    "add_answer": "اضافة اجابة",
+    "answers": "الاجابات"
+
+}

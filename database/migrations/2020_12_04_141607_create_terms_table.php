@@ -16,10 +16,11 @@ class CreateTermsTable extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('academic_year_id');
             $table->json('courses_ids');
             $table->timestamps();
-            $table->foreign('year_id')->references('id')->on('years');
+
+            $table->foreign('academic_year_id')->references('id')->on('academic_years');
 
         });
     }

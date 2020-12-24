@@ -31,6 +31,7 @@
         "two": "Fail"
     },
     "add_q": "Add Question",
+    "questions": "Questions",
     "q_list": "Question List",
     "edit_q": "Edit",
     "remove_q": "Remove",

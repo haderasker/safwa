@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import _ from 'lodash'
+window._ = _
+
 // Vuesax Component Framework
 import Vuesax from 'vuesax'
 

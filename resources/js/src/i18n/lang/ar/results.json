@@ -1,0 +1,16 @@
+{
+    "title": "النتائج",
+    "all_results": "جميع النتائج",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
+    "list": {
+        "column_student_name": "الاسم",
+        "column_student_email": "الايميل",
+        "column_exam_name": "الامتحان",
+        "column_total_score": "مجموع الدرجات",
+        "column_student_score": "درجة الطالب",
+        "column_exam_duration": "مدة الامتحان",
+        "column_status": "الحالة",
+        "column_actions": "خيارات"
+    }
+}

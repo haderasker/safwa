@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" @submitData="saveQuestion" :data="sidebarData"/>
+        <data-view-sidebar v-model="question" @close="onSidebarClosed" :open="sidebarOpened"/>
 
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
@@ -10,7 +10,7 @@
 
         <vx-card>
             <form-wizard
-                :startIndex="0"
+                :startIndex="1"
                 color="rgba(var(--vs-primary), 1)"
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
@@ -85,7 +85,7 @@
                     <vs-divider/>
                     <div class="vx-row mb-6">
                         <div class="vx-col w-full">
-                            <vs-button @click="addQuestion" color="primary" type="filled" size="small">
+                            <vs-button @click="openSidebar" color="primary" type="filled" size="small">
                                 {{ $t('exams.add_q') }}
                             </vs-button>
                         </div>
@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import DataViewSidebar from "./components/DataViewSidebar";
+import DataViewSidebar from "./DataViewSidebar";
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import Datepicker from 'vuejs-datepicker'
@@ -139,6 +139,23 @@ export default {
     },
     data() {
         return {
+            sidebarOpened: false,
+            question: {
+                index: -1,
+                label: '',
+                score: 0,
+                correctAnswer: -1,
+                answers: [
+                    {
+                        label: '',
+                        correct: false
+                    },
+                    {
+                        label: '',
+                        correct: false
+                    }
+                ]
+            },
             subjects: [
                 {
                     id: 1,
@@ -157,9 +174,7 @@ export default {
             duration: 1,
             startDate: new Date(),
             endDate: new Date(),
-            questionsList: [],
-            addNewDataSidebar: false,
-            sidebarData: {}
+            questionsList: []
         }
     },
     computed: {
@@ -177,8 +192,37 @@ export default {
         }
     },
     methods: {
-        toggleDataSidebar(val = false) {
-            this.addNewDataSidebar = val
+        openSidebar() {
+           this.sidebarOpened = true
+        },
+        resetQuestion() {
+            this.question = {
+                index: -1,
+                label: '',
+                score: 0,
+                correctAnswer: -1,
+                answers: [
+                    {
+                        label: '',
+                        correct: false
+                    },
+                    {
+                        label: '',
+                        correct: false
+                    }
+                ]
+            }
+        },
+        onSidebarClosed(saved) {
+            if (saved) {
+                if(this.question.index > -1) {
+                    this.questionsList[this.question.index] = this.question
+                } else {
+                    this.questionsList.push(this.question)
+                }
+            }
+            this.resetQuestion()
+            this.sidebarOpened = false
         },
         createExam() {
             // save exam
@@ -186,35 +230,19 @@ export default {
         validateStep(prevIndex, nextIndex) {
             // validate form
         },
-        addQuestion() {
-            this.sidebarData = {}
-            this.toggleDataSidebar(true)
-        },
         editQuestion(index, data) {
-            console.log({data})
             const correctAnswer = data.answers.findIndex(answer => !!answer.correct)
 
-            this.sidebarData = {
+            this.question = {
                 ...data,
                 correctAnswer,
                 index
             }
 
-            console.log(this.sidebarData)
-
-            this.toggleDataSidebar(true)
+            this.openSidebar()
         },
         removeQuestion(index) {
             this.questionsList.splice(index, 1)
-        },
-        saveQuestion(q) {
-            if(q.index) {
-                this.questionsList[q.index] = q
-            } else {
-                this.questionsList.push(q)
-            }
-
-            this.toggleDataSidebar(false)
         }
     }
 }

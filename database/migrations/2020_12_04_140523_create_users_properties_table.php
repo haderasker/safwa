@@ -18,7 +18,7 @@ class CreateUsersPropertiesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('doctrine_id');
-            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('academic_year_id');
             $table->unsignedBigInteger('level_id');
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->string('national_number')->nullable();
@@ -35,10 +35,11 @@ class CreateUsersPropertiesTable extends Migration
             $table->string('religion')->nullable();
             $table->integer('upload_lessons')->nullable();
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('doctrine_id')->references('id')->on('doctrines');
-            $table->foreign('year_id')->references('id')->on('years');
+            $table->foreign('academic_year_id')->references('id')->on('academic_years');
             $table->foreign('level_id')->references('id')->on('levels');
         });
     }

@@ -1,0 +1,23 @@
+{
+    "title": "الطلاب",
+    "all_students": "جميع الطلاب",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
+    "create_student_tooltip": "تسجيل طالب جديد",
+    "list": {
+        "column_name": "الطالب",
+        "column_email": "الايميل",
+        "column_nationality": "الجنسية",
+        "column_level": "الفرقة",
+        "column_status": "الحالة",
+        "column_actions": "خيارات"
+    },
+    "create_title": "تسجيل طالب",
+    "edit_title": "تعديل طالب",
+    "info": "المعلومات الأساسية",
+    "save": "حفظ",
+    "update": "تعديل",
+    "name": "الاسم",
+    "email": "الايميل",
+    "password": "كلمة المرور"
+}

@@ -84,17 +84,17 @@ export default {
                     sortable: true
                 },
                 {
-                    headerName: this.$t('results.list.column_exam_duration'),
+                    headerName: this.$t('results.list.column_status'),
                     field: 'name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
-                    headerName: this.$t('results.list.column_exam_duration'),
+                    headerName: this.$t('results.list.column_actions'),
                     field: 'name',
                     minWidth: 170,
                     sortable: true
-                },
+                }
             ]
         }
     },

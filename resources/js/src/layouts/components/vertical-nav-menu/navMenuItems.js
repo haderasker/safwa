@@ -35,6 +35,13 @@ export default [
         roles: ['admin', 'teacher']
     },
     {
+        url: "/lessons",
+        name: "sidebar.lessons",
+        slug: "lessons",
+        icon: "HomeIcon",
+        roles: ['admin', 'teacher']
+    },
+    {
         url: "/teachers",
         name: "sidebar.teachers",
         slug: "teachers",

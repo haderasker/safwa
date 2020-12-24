@@ -1,10 +1,11 @@
 <template>
-    <h1>Create Course</h1>
+    <steps></steps>
 </template>
 
 <script>
+import Steps from "./components/Steps";
 export default {
-
+    components: {Steps}
 }
 </script>
 

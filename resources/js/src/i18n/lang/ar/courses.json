@@ -1,0 +1,28 @@
+{
+    "title": "المواد",
+    "all_courses": "جميع المواد",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
+    "create_course_tooltip": "انشاء مادة جديدة",
+    "list": {
+        "column_name": "المادة",
+        "column_teacher": "المعلم",
+        "column_lessons_number": "عددالدروس",
+        "column_level": "الفرقة",
+        "column_students_success_number": "عدد الطلاب الناجحين",
+        "column_students_failed_number": "عدد الطلاب الراسبين",
+        "column_students_number": "اجمالي عدد الطلاب",
+        "column_actions": "خيارات"
+    },
+    "edit_title": "تعديل مادة",
+    "create_title": "انشاء مادة",
+    "course_name": "الاسم",
+    "teacher_name": "المدرس",
+    "course_description": "الوصف",
+    "highest_score": "الدرجة العظمى",
+    "lowest_score": "الدرجة الصغرى",
+    "doctrine": "المذهب",
+    "update": "تعديل",
+    "save": "حفظ",
+    "lessons_list": "جميع الدروس"
+}

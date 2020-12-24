@@ -1,0 +1,48 @@
+{
+    "title": "Lessons",
+    "all_lessons": "All Lessons",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "create_lesson_tooltip": "Create New Lesson",
+    "list": {
+        "column_name": "Lesson",
+        "column_actions": "Actions"
+    },
+    "edit_title": "Edit Lesson",
+    "create_title": "Create Lesson",
+    "wizard": {
+        "submit": "Save",
+        "next": "Next",
+        "back": "Back"
+    },
+    "step1": {
+        "title": "Basic Information",
+        "courses": "All Courses",
+        "lesson_name": "Lesson Name",
+        "lesson_name_placeholder": "Lesson Name",
+        "content": "Content",
+        "youtube": "YouTube",
+        "soundcloud": "Soundcloud",
+        "pdf": "PDF",
+        "publish_date_time": "Publish Date"
+    },
+    "step2": {
+        "title": "Quiz"
+    },
+    "step3": {
+        "title": "Comments"
+    },
+    "add_new_q_title": "ADD NEW QUESTION",
+    "update_q_title": "UPDATE",
+    "new_q_label": "Label",
+    "new_q_score": "Score",
+    "add_answer": "Add New Answer",
+    "answers": "Answers",
+    "add_q": "Add Question",
+    "questions": "Questions",
+    "q_list": "Question List",
+    "save_q": "Save Question",
+    "cancel": "Cancel",
+    "edit_q": "Edit",
+    "remove_q": "Remove"
+}

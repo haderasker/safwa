@@ -14,8 +14,6 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
-
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
@@ -27,24 +25,18 @@ class UsersSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@email.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'created_at' => $now,
-                'updated_at' => $now
             ],
             [
                 'id' => 2,
                 'name' => 'Teacher',
                 'email' => 'teacher@email.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'created_at' => $now,
-                'updated_at' => $now
             ],
             [
                 'id' => 3,
                 'name' => 'Student',
                 'email' => 'student@email.com',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'created_at' => $now,
-                'updated_at' => $now
             ]
         ]);
     }

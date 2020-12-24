@@ -1,0 +1,23 @@
+{
+    "title": "Students",
+    "all_students": "All Students",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "create_student_tooltip": "Create New Student",
+    "list": {
+        "column_name": "Student",
+        "column_email": "Email",
+        "column_nationality": "Nationality",
+        "column_level": "Level",
+        "column_status": "Status",
+        "column_actions": "Actions"
+    },
+    "create_title": "Create Student",
+    "edit_title": "Edit Student",
+    "info": "Basic Information",
+    "save": "Save",
+    "update": "Update",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+}

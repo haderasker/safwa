@@ -16,8 +16,6 @@ class PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
-
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('role_has_permissions')->truncate();
         DB::table('roles')->truncate();
@@ -27,9 +25,9 @@ class PermissionsSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // create Roles
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $teacher = Role::firstOrCreate(['name' => 'teacher']);
-        $student = Role::firstOrCreate(['name' => 'student']);
+        Role::firstOrCreate(['name' => 'admin']);
+        Role::firstOrCreate(['name' => 'teacher']);
+        Role::firstOrCreate(['name' => 'student']);
 
         DB::table('model_has_roles')->insert([
             [

@@ -2,5 +2,15 @@
     "title": "Results",
     "all_results": "All Results",
     "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter"
+    "filter": "Filter",
+    "list": {
+        "column_student_name": "Name",
+        "column_student_email": "Email",
+        "column_exam_name": "Exam",
+        "column_total_score": "Total Score",
+        "column_student_score": "Student Score",
+        "column_exam_duration": "Duration",
+        "column_status": "Status",
+        "column_actions": "Actions"
+    }
 }

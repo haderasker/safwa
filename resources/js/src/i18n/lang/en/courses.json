@@ -1,0 +1,28 @@
+{
+    "title": "Courses",
+    "all_courses": "All Courses",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "create_course_tooltip": "Create New Course",
+    "list": {
+        "column_name": "Course",
+        "column_teacher": "Teacher",
+        "column_lessons_number": "No. Lessons",
+        "column_level": "Level",
+        "column_students_success_number": "No. Success Students",
+        "column_students_failed_number": "No. Failed Students",
+        "column_students_number": "No. Students",
+        "column_actions": "Actions"
+    },
+    "edit_title": "Edit Course",
+    "create_title": "Create Course",
+    "course_name": "Name",
+    "teacher_name": "Teacher",
+    "course_description": "Description",
+    "highest_score": "Highest Score",
+    "lowest_score": "Lowest Score",
+    "doctrine": "Doctrine",
+    "update": "Update",
+    "save": "Save",
+    "lessons_list": "List of Lessons"
+}

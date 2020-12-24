@@ -12,4 +12,4 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 
 // Vue Route
-Route::get('/{any}', 'ApplicationController')->where('any', '.*');
+Route::get('/{any}', 'ApplicationController@index')->where('any', '.*');

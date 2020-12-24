@@ -15,15 +15,17 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
-            $table->unsignedBigInteger('course_id');
-            $table->dateTime('start_date_time');
-            $table->dateTime('expire_date_time');
-            $table->string('duration_minutes');
-            $table->string('type');
+            $table->unsignedBigInteger('testable_id');
+            $table->string('testable_type');
+            $table->string('label')->nullable();
+            $table->integer('duration')->default(0);
+            $table->timestamp('published_at')->nullable();
+            $table->timestamp('ended_at')->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->enum('type', ['default', 'fail']);
             $table->timestamps();
-            $table->foreign('course_id')->references('id')->on('courses');
 
+            $table->foreign('level_id')->references('id')->on('levels');
         });
     }
 

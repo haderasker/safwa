@@ -4,6 +4,7 @@
 
 <script>
 import Steps from "./components/Steps";
+
 export default {
     components: {Steps}
 }
