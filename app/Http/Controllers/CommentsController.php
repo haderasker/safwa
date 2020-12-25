@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Utils\Convert;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class CommentsController extends Controller
         return Comment::with('replies')
             ->where([
                 ['commentable_id', '=', $commentableId],
-                ['commentable_type', '=', $this->toModelName($commentableType)],
+                ['commentable_type', '=', Convert::toModelName($commentableType)],
             ])
             ->whereNull('parent_id')
             ->orderBy('created_at', 'desc')
@@ -54,7 +55,7 @@ class CommentsController extends Controller
         $oldComment = Comment::where([
             ['body', '=', $request->input('body', '')],
             ['commentable_id', '=', $request->input('commentable_id')],
-            ['commentable_type', '=', $this->toModelName($request->input('commentable_type'))],
+            ['commentable_type', '=', Convert::toModelName($request->input('commentable_type'))],
             ['user_id', '=', Auth::user()->id],
             ['parent_id', '=', $commentId > 0 ? $commentId : null],
         ])->count();
@@ -66,7 +67,7 @@ class CommentsController extends Controller
         $comment = new Comment([
             'body'             => $request->input('body', ''),
             'commentable_id'   => $request->input('commentable_id'),
-            'commentable_type' => $this->toModelName($request->input('commentable_type')),
+            'commentable_type' => Convert::toModelName($request->input('commentable_type')),
             'user_id'          => Auth::user()->id,
             'parent_id'        => $commentId > 0 ? $commentId : null
         ]);
@@ -104,10 +105,5 @@ class CommentsController extends Controller
         return Comment::where('parent_id', $parentId)
             ->orderBy('created_at', 'desc')
             ->get();
-    }
-
-    private function toModelName(string $name): string
-    {
-        return 'App\\Models\\' . ucfirst($name);
     }
 }

@@ -20,6 +20,7 @@
     },
     "next": "Next",
     "back": "Back",
+    "label": "Label",
     "select_subject": "Select Subject",
     "select_level": "Select Level",
     "exam_type": "Select Type",
@@ -27,8 +28,8 @@
     "exam_end_date": "End Date",
     "exam_duration": "Duration",
     "types": {
-        "one": "Default",
-        "two": "Fail"
+        "default": "Default",
+        "fail": "Fail"
     },
     "add_q": "Add Question",
     "questions": "Questions",

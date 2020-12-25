@@ -45,4 +45,15 @@ Route::group(['prefix' => 'academic-years'], function() {
     Route::get('/', 'AcademicYearsController@index');
 });
 
+Route::group(['prefix' => 'levels'], function() {
+    Route::get('/', 'LevelsController@index');
+});
+
+Route::group(['prefix' => 'exams'], function() {
+    Route::get('/', 'ExamsController@index');
+    Route::get('/{examId}', 'ExamsController@edit');
+    Route::post('/', 'ExamsController@store');
+    Route::put('/{examId}', 'ExamsController@update');
+});
+
 

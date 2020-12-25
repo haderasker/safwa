@@ -10,7 +10,7 @@
 
         <vx-card>
             <form-wizard
-                :startIndex="2"
+                :startIndex="1"
                 color="rgba(var(--vs-primary), 1)"
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
@@ -105,11 +105,11 @@
                         <vs-list>
                             <vs-list-header :title="$t('lessons.q_list')" color="primary"></vs-list-header>
 
-                            <draggable :list="questionsList">
+                            <draggable :list="lesson.quiz.questions">
                                 <transition-group>
                                     <vs-list-item
                                         class="list-item"
-                                        v-for="(listItem, index) in questionsList"
+                                        v-for="(listItem, index) in lesson.quiz.questions"
                                         :key="`listItem-${index}`"
                                         :title="listItem.label">
 
@@ -168,7 +168,6 @@ export default {
     data() {
         return {
             commentableType: 'lesson',
-            questionsList: [],
             question: {
                 index: -1,
                 label: '',
@@ -176,11 +175,11 @@ export default {
                 answers: [
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     },
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     }
                 ]
             },
@@ -193,10 +192,10 @@ export default {
     },
     watch: {
         question(val) {
-            console.log({question: val})
+            // console.log({question: val})
         },
-        questionsList(val) {
-            console.log({list: val})
+        'lesson.quiz.questions'(val) {
+            // console.log({list: val})
         }
     },
     mounted() {
@@ -214,13 +213,19 @@ export default {
         async createLesson() {
             const lesson = {
                 ...this.lesson,
-                course_id: this.lesson.course.id,
-                quiz: this.questionsList
+                course_id: window._.get(this, 'lesson.course.id', null),
+                questions: this.lesson.quiz.questions.map((q, index) => ({
+                    score: 10,
+                    label: q.label,
+                    answers: q.answers,
+                    order: index + 1,
+                    id: q.id || null
+                }))
             }
 
             delete lesson.course
 
-            if(this.$route.params.id) {
+            if (this.$route.params.id) {
                 await safwaAxios.put(`lessons/${this.$route.params.id}`, lesson);
             } else {
                 await safwaAxios.post('lessons', lesson);
@@ -240,11 +245,11 @@ export default {
                 answers: [
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     },
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     }
                 ]
             }
@@ -253,18 +258,17 @@ export default {
             if (saved) {
                 const q = JSON.parse(JSON.stringify(this.question))
                 if (this.question.index > -1) {
-                    this.questionsList[this.question.index] = q
+                    this.lesson.quiz.questions[this.question.index] = q
                 } else {
-                    this.questionsList.push(q)
+                    this.lesson.quiz.questions.push(q)
                 }
             }
             this.resetQuestion()
             this.sidebarOpened = false
         },
         editQuestion(index, data) {
-            const correctAnswer = data.answers.findIndex(answer => !!answer.correct)
+            const correctAnswer = data.answers.findIndex(answer => !!answer.is_correct)
 
-            console.log({data})
             this.question = {
                 ...data,
                 correctAnswer,
@@ -274,7 +278,7 @@ export default {
             this.openSidebar()
         },
         removeQuestion(index) {
-            this.questionsList.splice(index, 1)
+            this.lesson.quiz.questions.splice(index, 1)
         }
     }
 }

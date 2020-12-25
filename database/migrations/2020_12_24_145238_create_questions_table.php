@@ -18,6 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('exam_id');
             $table->string('label');
             $table->integer('score');
+            $table->integer('order');
             $table->timestamps();
 
             $table->foreign('exam_id')->references('id')->on('exams');

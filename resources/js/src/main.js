@@ -4,6 +4,9 @@ import App from './App.vue'
 import _ from 'lodash'
 window._ = _
 
+import moment from 'moment'
+window.$moment = moment
+
 // Vuesax Component Framework
 import Vuesax from 'vuesax'
 

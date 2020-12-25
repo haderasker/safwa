@@ -114,11 +114,11 @@ export default {
 
             // set all answers = false
             this.question.answers = this.question.answers.map(item => {
-                return {...item, correct: false}
+                return {...item, is_correct: false}
             })
 
             // set only one answer = true
-            this.question.answers[this.question.correctAnswer].correct = true
+            this.question.answers[this.question.correctAnswer].is_correct = true
 
             this.closeSidebar(true)
         },
@@ -132,7 +132,7 @@ export default {
 
             this.question.answers.push({
                 label: '',
-                correct: false
+                is_correct: false
             })
         },
         removeAnswer(index) {

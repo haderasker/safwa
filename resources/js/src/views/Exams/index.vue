@@ -41,9 +41,13 @@
 <script>
 import AgTable from "../../components/AgTable";
 import ExamsDataSource from "../../datasources/ExamsDataSource";
+import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
-    components: {AgTable},
+    components: {
+        AgTable,
+        tableActionColumnCell
+    },
     data() {
         return {
             filters: false,
@@ -60,13 +64,13 @@ export default {
             return [
                 {
                     headerName: this.$t('exams.exam_name'),
-                    field: 'name',
+                    field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('exams.q_number'),
-                    field: 'name',
+                    field: 'questions_count',
                     minWidth: 170
                 },
                 {
@@ -86,8 +90,12 @@ export default {
                 },
                 {
                     headerName: this.$t('exams.actions'),
-                    field: 'name',
-                    minWidth: 170
+                    minWidth: 170,
+                    cellRendererParams: {
+                        routeName: 'exams.edit',
+                        // deletableType: 'lesson',
+                    },
+                    cellRendererFramework: 'tableActionColumnCell'
                 }
             ]
         }

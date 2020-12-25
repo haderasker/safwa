@@ -29,10 +29,18 @@
                     <vs-divider/>
                     <div class="vx-row mb-6">
                         <div class="vx-col w-1/4">
+                            <span>{{ $t('exams.label') }}</span>
+                        </div>
+                        <div class="vx-col w-3/4">
+                            <vs-input class="w-full" v-model="exam.label"/>
+                        </div>
+                    </div>
+                    <div class="vx-row mb-6">
+                        <div class="vx-col w-1/4">
                             <span>{{ $t('exams.select_subject') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="subjects" v-model="selectedSubject"></v-select>
+                            <v-select label="name" :options="getCourses" v-model="exam.testable"></v-select>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -40,7 +48,7 @@
                             <span>{{ $t('exams.select_level') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="levels" v-model="selectedLevel"></v-select>
+                            <v-select label="name" :options="getLevels" v-model="exam.level"></v-select>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -48,7 +56,7 @@
                             <span>{{ $t('exams.exam_type') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="types" v-model="selectedType"></v-select>
+                            <v-select label="name" :options="typesOptions" v-model="exam.type"></v-select>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -56,7 +64,8 @@
                             <span>{{ $t('exams.exam_start_date') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="startDate"></datepicker>
+                            <datepicker :format="dateFormat" placeholder="Select Date"
+                                        v-model="exam.published_at"></datepicker>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -64,7 +73,8 @@
                             <span>{{ $t('exams.exam_end_date') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="endDate"></datepicker>
+                            <datepicker :format="dateFormat" placeholder="Select Date"
+                                        v-model="exam.ended_at"></datepicker>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -72,7 +82,7 @@
                             <span>{{ $t('exams.exam_duration') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input type="number" class="w-full" v-model="duration"/>
+                            <vs-input type="number" class="w-full" v-model="exam.duration"/>
                         </div>
                     </div>
                 </tab-content>
@@ -95,11 +105,11 @@
                         <vs-list>
                             <vs-list-header :title="$t('exams.q_list')" color="primary"></vs-list-header>
 
-                            <draggable :list="questionsList">
+                            <draggable :list="exam.questions">
                                 <transition-group>
                                     <vs-list-item
                                         class="list-item"
-                                        v-for="(listItem, index) in questionsList"
+                                        v-for="(listItem, index) in exam.questions"
                                         :key="`listItem-${index}`"
                                         :title="listItem.label"
                                         :subtitle="listItem.score.toString()">
@@ -128,8 +138,11 @@ import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import Datepicker from 'vuejs-datepicker'
 import draggable from 'vuedraggable'
+import safwaAxios from "../../../axios";
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
+    props: ['exam'],
     components: {
         FormWizard,
         TabContent,
@@ -148,52 +161,46 @@ export default {
                 answers: [
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     },
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     }
                 ]
             },
-            subjects: [
-                {
-                    id: 1,
-                    name: "subject one"
-                }
-            ],
-            levels: [
-                {
-                    id: 1,
-                    name: "level one"
-                }
-            ],
-            selectedLevel: null,
-            selectedSubject: null,
-            selectedType: null,
-            duration: 1,
-            startDate: new Date(),
-            endDate: new Date(),
-            questionsList: []
+            dateFormat: 'yyyy-MM-dd'
         }
     },
+    mounted() {
+        this.loadLevels()
+        this.loadCourses()
+    },
     computed: {
-        types() {
+        ...mapGetters({
+            getLevels: 'Levels/getLevels',
+            getCourses: 'Courses/getCourses'
+        }),
+        typesOptions() {
             return [
                 {
-                    id: 1,
-                    name: this.$t('exams.types.one')
+                    id: 'default',
+                    name: this.$t('exams.types.default')
                 },
                 {
-                    id: 2,
-                    name: this.$t('exams.types.two')
+                    id: 'fail',
+                    name: this.$t('exams.types.fail')
                 },
             ]
         }
     },
     methods: {
+        ...mapActions({
+            loadLevels: 'Levels/loadLevels',
+            loadCourses: 'Courses/loadCourses'
+        }),
         openSidebar() {
-           this.sidebarOpened = true
+            this.sidebarOpened = true
         },
         resetQuestion() {
             this.question = {
@@ -204,34 +211,57 @@ export default {
                 answers: [
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     },
                     {
                         label: '',
-                        correct: false
+                        is_correct: false
                     }
                 ]
             }
         },
         onSidebarClosed(saved) {
             if (saved) {
-                if(this.question.index > -1) {
-                    this.questionsList[this.question.index] = this.question
+                if (this.question.index > -1) {
+                    this.exam.questions[this.question.index] = this.question
                 } else {
-                    this.questionsList.push(this.question)
+                    this.exam.questions.push(this.question)
                 }
             }
             this.resetQuestion()
             this.sidebarOpened = false
         },
-        createExam() {
-            // save exam
+        async createExam() {
+            const exam = {
+                published_at: window.$moment(this.exam.published_at).format('YYYY-MM-DD'),
+                ended_at: window.$moment(this.exam.ended_at).format('YYYY-MM-DD'),
+                testable_type: 'course',
+                testable_id: window._.get(this, 'exam.testable.id', null),
+                duration: this.exam.duration,
+                label: this.exam.label,
+                level_id: window._.get(this, 'exam.level.id', null),
+                type: window._.get(this, 'exam.type.id', null),
+                questions: this.exam.questions.map((q, index) => ({
+                    score: q.score,
+                    label: q.label,
+                    answers: q.answers,
+                    order: index + 1,
+                    id: q.id || null
+                }))
+            }
+
+            if (this.$route.params.id) {
+                await safwaAxios.put(`exams/${this.$route.params.id}`, exam);
+            } else {
+                await safwaAxios.post('exams/', exam)
+                this.$router.push({name: 'exams.list'});
+            }
         },
         validateStep(prevIndex, nextIndex) {
             // validate form
         },
         editQuestion(index, data) {
-            const correctAnswer = data.answers.findIndex(answer => !!answer.correct)
+            const correctAnswer = data.answers.findIndex(answer => !!answer.is_correct)
 
             this.question = {
                 ...data,
@@ -242,7 +272,7 @@ export default {
             this.openSidebar()
         },
         removeQuestion(index) {
-            this.questionsList.splice(index, 1)
+            this.exam.questions.splice(index, 1)
         }
     }
 }

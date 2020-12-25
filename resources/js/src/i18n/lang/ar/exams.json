@@ -20,6 +20,7 @@
     },
     "next": "التالي",
     "back": "للخلف",
+    "label": "الاسم",
     "select_subject": "اختر المادة",
     "select_level": "اختر الفرقة",
     "exam_type": "اختر النوع",
@@ -27,8 +28,8 @@
     "exam_end_date": "نهاية الامتحان",
     "exam_duration": "مدة الامتحان",
     "types": {
-        "one": "اساسي",
-        "two": "تخلفات"
+        "default": "اساسي",
+        "fail": "تخلفات"
     },
     "add_q": "اضافة سؤال",
     "questions": "الأسئلة",

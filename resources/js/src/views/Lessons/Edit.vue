@@ -12,7 +12,11 @@ export default {
     },
     data() {
         return {
-            lesson: {}
+            lesson: {
+                quiz: {
+                    questions: []
+                }
+            }
         }
     },
     mounted() {

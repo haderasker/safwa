@@ -28,7 +28,7 @@ import ar_comments from './lang/ar/comments.json'
 Vue.use(VueI18n)
 
 export default new VueI18n({
-    locale: 'en', // set default locale
+    locale: 'ar', // set default locale
     messages: {
         en: {
             sidebar: en_sidebar,
