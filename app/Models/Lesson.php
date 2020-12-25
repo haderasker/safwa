@@ -32,9 +32,12 @@ class Lesson extends Model
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
+    /**
+     * @return MorphOne
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
     public function quiz(): MorphOne
     {
-        // select from exams where testable_id = this.id and testable_type = this.class
         return $this->morphOne(Exam::class, 'testable', 'testable_type', 'testable_id', 'id');
     }
 }

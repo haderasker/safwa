@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Course extends Model
 {
@@ -39,5 +40,14 @@ class Course extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
+
+    /**
+     * @return MorphMany
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public function exam(): MorphMany
+    {
+        return $this->morphMany(Exam::class, 'testable', 'testable_type', 'testable_id', 'id');
     }
 }
