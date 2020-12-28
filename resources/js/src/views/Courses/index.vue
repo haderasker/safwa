@@ -5,7 +5,7 @@
                 <h2 class="mb-1">{{ $t('courses.title') }}</h2>
             </div>
 
-            <vx-tooltip position="right" :text="$t('courses.create_course_tooltip')"
+            <vx-tooltip v-if="$hasRole('admin')" position="right" :text="$t('courses.create_course_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
                 <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'courses.create' }"/>
             </vx-tooltip>
@@ -44,7 +44,10 @@ import CoursesDataSource from "../../datasources/CoursesDataSource";
 import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
-    components: {AgTable, tableActionColumnCell},
+    components: {
+        AgTable,
+        tableActionColumnCell
+    },
     data() {
         return {
             filters: false,
@@ -58,20 +61,12 @@ export default {
     },
     computed: {
         agColumns() {
-            return [
+            const columns = [
                 {
                     headerName: this.$t('courses.list.column_name'),
                     field: 'name',
                     minWidth: 170,
                     sortable: true
-                },
-                {
-                    headerName: this.$t('courses.list.column_teacher'),
-                    minWidth: 170,
-                    sortable: true,
-                    valueGetter(params) {
-                        return window._.get(params, 'data.teacher.name')
-                    }
                 },
                 {
                     headerName: this.$t('courses.list.column_lessons_number'),
@@ -108,12 +103,27 @@ export default {
                     minWidth: 170,
                     sortable: true,
                     cellRendererParams: {
-                        routeName: 'courses.edit',
-                        // deletableType: 'course',
+                        routeName: this.$hasRole('admin') ? 'courses.edit' : null,
+                        courseRouteName: this.$hasRole('teacher') ? 'teacher-course.profile' : null,
+                        lessonRouteName: this.$hasRole('teacher') ? 'lessons.list' : null,
                     },
                     cellRendererFramework: 'tableActionColumnCell'
-                },
+                }
             ]
+
+            if (this.$hasRole('admin')) {
+                // push element at index 1 (second item)
+                columns.splice(1, 0, {
+                    headerName: this.$t('courses.list.column_teacher'),
+                    minWidth: 170,
+                    sortable: true,
+                    valueGetter(params) {
+                        return window._.get(params, 'data.teacher.name')
+                    }
+                });
+            }
+
+            return columns
         }
     },
     methods: {

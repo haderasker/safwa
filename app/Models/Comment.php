@@ -37,8 +37,4 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
-
-    public function getCreatedAtAttribute($value) {
-        return Carbon::parse($value)->diffForHumans();
-    }
 }

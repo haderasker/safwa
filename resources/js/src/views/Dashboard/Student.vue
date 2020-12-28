@@ -5,7 +5,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="remove-red-eye"
                     :statistic="lesson.name"
                     :statisticTitle="lesson.subject"/>
             </div>

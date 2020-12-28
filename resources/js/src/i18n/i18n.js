@@ -24,6 +24,22 @@ import en_students from './lang/en/students.json'
 import ar_students from './lang/ar/students.json'
 import en_comments from './lang/en/comments.json'
 import ar_comments from './lang/ar/comments.json'
+import en_student_courses from './lang/en/student_courses.json'
+import ar_student_courses from './lang/ar/student_courses.json'
+import en_student_course_profile from './lang/en/student_course_profile.json'
+import ar_student_course_profile from './lang/ar/student_course_profile.json'
+import en_student_lesson_profile from './lang/en/student_lesson_profile.json'
+import ar_student_lesson_profile from './lang/ar/student_lesson_profile.json'
+import en_general from './lang/en/general.json'
+import ar_general from './lang/ar/general.json'
+import en_student_exams from './lang/en/student_exams.json'
+import ar_student_exams from './lang/ar/student_exams.json'
+import en_student_exam from './lang/en/student_exam.json'
+import ar_student_exam from './lang/ar/student_exam.json'
+import en_student_results from './lang/en/student_results.json'
+import ar_student_results from './lang/ar/student_results.json'
+import en_student_result_profile from './lang/en/student_result_profile.json'
+import ar_student_result_profile from './lang/ar/student_result_profile.json'
 
 Vue.use(VueI18n)
 
@@ -43,6 +59,14 @@ export default new VueI18n({
             teachers: en_teachers,
             students: en_students,
             comments: en_comments,
+            student_courses: en_student_courses,
+            student_course_profile: en_student_course_profile,
+            student_lesson_profile: en_student_lesson_profile,
+            general: en_general,
+            student_exams: en_student_exams,
+            student_exam: en_student_exam,
+            student_results: en_student_results,
+            student_result_profile: en_student_result_profile,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -57,6 +81,14 @@ export default new VueI18n({
             teachers: ar_teachers,
             students: ar_students,
             comments: ar_comments,
+            student_courses: ar_student_courses,
+            student_course_profile: ar_student_course_profile,
+            student_lesson_profile: ar_student_lesson_profile,
+            general: ar_general,
+            student_exams: ar_student_exams,
+            student_exam: ar_student_exam,
+            student_results: ar_student_results,
+            student_result_profile: ar_student_result_profile,
         }
     },
     silentTranslationWarn: true

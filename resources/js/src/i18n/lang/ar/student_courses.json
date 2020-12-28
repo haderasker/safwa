@@ -1,0 +1,13 @@
+{
+    "title": "مواد الطالب",
+    "all_courses": "جميع المواد",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
+    "list": {
+        "column_name": "الاسم",
+        "column_teacher": "المعلم",
+        "column_lesson_num": "عدد الدروس",
+        "column_type": "النوع",
+        "column_actions": "خيارات"
+    }
+}

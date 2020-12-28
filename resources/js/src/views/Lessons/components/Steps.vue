@@ -10,7 +10,7 @@
 
         <vx-card>
             <form-wizard
-                :startIndex="1"
+                :startIndex="0"
                 color="rgba(var(--vs-primary), 1)"
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"

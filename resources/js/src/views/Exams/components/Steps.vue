@@ -233,8 +233,8 @@ export default {
         },
         async createExam() {
             const exam = {
-                published_at: window.$moment(this.exam.published_at).format('YYYY-MM-DD'),
-                ended_at: window.$moment(this.exam.ended_at).format('YYYY-MM-DD'),
+                published_at: this.$moment(this.exam.published_at).format('YYYY-MM-DD'),
+                ended_at: this.$moment(this.exam.ended_at).format('YYYY-MM-DD'),
                 testable_type: 'course',
                 testable_id: window._.get(this, 'exam.testable.id', null),
                 duration: this.exam.duration,

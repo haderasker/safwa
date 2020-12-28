@@ -69,11 +69,16 @@ export default {
                     sortable: true
                 },
                 {
+                    headerName: this.$t('lessons.list.column_course'),
+                    field: 'label',
+                    minWidth: 170,
+                    sortable: true
+                },
+                {
                     headerName: this.$t('lessons.list.column_actions'),
                     minWidth: 170,
                     cellRendererParams: {
                         routeName: 'lessons.edit',
-                        // deletableType: 'lesson',
                     },
                     cellRendererFramework: 'tableActionColumnCell'
                 },

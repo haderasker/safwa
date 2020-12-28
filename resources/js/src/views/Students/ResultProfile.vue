@@ -2,13 +2,13 @@
     <div>
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $t('student_courses.title') }}</h2>
+                <h2 class="mb-1">{{ $t('student_result_profile.title') }}</h2>
             </div>
         </div>
 
-        <vx-card :title="$t('student_courses.all_courses')">
+        <vx-card :title="$t('student_result_profile.all_courses')">
             <template slot="actions">
-                <vx-tooltip position="right" :text="$t('student_courses.filter_tooltip')"
+                <vx-tooltip position="right" :text="$t('student_result_profile.filter_tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
                     <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
@@ -19,7 +19,7 @@
                         <vs-input class="w-full" :label-placeholder="`hema`" v-model="agFilters.name"/>
                     </div>
                     <div class="vx-col w-1/2">
-                        <vs-button class="mr-3 mt-5">{{ $t('student_courses.filter') }}</vs-button>
+                        <vs-button class="mr-3 mt-5">{{ $t('student_result_profile.filter') }}</vs-button>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 
 <script>
 import AgTable from "../../components/AgTable";
-import StudentCoursesDataSource from "../../datasources/StudentCoursesDataSource";
+import StudentResultsDataSource from "../../datasources/StudentResultsDataSource";
 import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
@@ -50,7 +50,7 @@ export default {
                 name: null
             },
             agOptions: {
-                dataSource: StudentCoursesDataSource
+                dataSource: StudentResultsDataSource
             }
         }
     },
@@ -58,34 +58,34 @@ export default {
         agColumns() {
             return [
                 {
-                    headerName: this.$t('student_courses.list.column_name'),
+                    headerName: this.$t('student_result_profile.list.column_course_name'),
                     field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
-                    headerName: this.$t('student_courses.list.column_teacher'),
+                    headerName: this.$t('student_result_profile.list.column_score'),
                     field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
-                    headerName: this.$t('student_courses.list.column_lesson_num'),
+                    headerName: this.$t('student_result_profile.list.column_type'),
                     field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
-                    headerName: this.$t('student_courses.list.column_type'),
-                    field: 'type',
+                    headerName: this.$t('student_result_profile.list.column_student_status'),
+                    field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
-                    headerName: this.$t('student_courses.list.column_actions'),
+                    headerName: this.$t('student_result_profile.list.column_exam'),
                     minWidth: 170,
                     cellRendererParams: {
-                        routeName: 'student-course.profile'
+                        routeName: 'student-result.profile'
                     },
                     cellRendererFramework: 'tableActionColumnCell'
                 },

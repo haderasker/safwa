@@ -1,0 +1,13 @@
+{
+    "title": "Student Courses",
+    "all_courses": "All Courses",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "list": {
+        "column_name": "Name",
+        "column_teacher": "Teacher",
+        "column_lesson_num": "No. Lessons",
+        "column_type": "Type",
+        "column_actions": "Actions"
+    }
+}

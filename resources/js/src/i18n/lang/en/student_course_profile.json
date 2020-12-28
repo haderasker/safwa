@@ -1,0 +1,13 @@
+{
+    "info": "Basic Information",
+    "lessons": "Lessons",
+    "course": "Course",
+    "progress": "Progress",
+    "type": "Type",
+    "description": "Description",
+    "view": "View",
+    "list": {
+        "column_label": "Lesson",
+        "column_actions": "Actions"
+    }
+}

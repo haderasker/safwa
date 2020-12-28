@@ -1,0 +1,13 @@
+{
+    "info": "المعلومات الاساسية",
+    "lessons": "الدروس",
+    "course": "مادة",
+    "progress": "نسبة التقدم",
+    "type": "النوع",
+    "description": "الوصف",
+    "view": "مشاهدة",
+    "list": {
+        "column_label": "الدرس",
+        "column_actions": "الاختيارات"
+    }
+}

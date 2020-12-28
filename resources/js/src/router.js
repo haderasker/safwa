@@ -20,48 +20,56 @@ const router = new Router({
                 {
                     path: '/',
                     name: 'dashboard',
-                    component: () => import('./views/Dashboard')
+                    component: () => import('./views/Dashboard'),
+                    beforeEnter: hasAnyRole('admin', 'teacher', 'student')
                 },
                 {
                     path: '/academic-year',
                     name: 'academic-year.list',
-                    component: () => import('./views/AcademicYear')
+                    component: () => import('./views/AcademicYear'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/academic-year/create',
                     name: 'academic-year.create',
-                    component: () => import('./views/AcademicYear/Create')
+                    component: () => import('./views/AcademicYear/Create'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/academic-year/edit/:id',
                     name: 'academic-year.edit',
-                    component: () => import('./views/AcademicYear/Edit')
+                    component: () => import('./views/AcademicYear/Edit'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/exams',
                     name: 'exams.list',
-                    component: () => import('./views/Exams')
+                    component: () => import('./views/Exams'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/exams/create',
                     name: 'exams.create',
-                    component: () => import('./views/Exams/Create')
+                    component: () => import('./views/Exams/Create'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/exams/edit/:id',
                     name: 'exams.edit',
-                    component: () => import('./views/Exams/Edit')
+                    component: () => import('./views/Exams/Edit'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/results',
                     name: 'results.list',
-                    component: () => import('./views/Results')
+                    component: () => import('./views/Results'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/courses',
                     name: 'courses.list',
                     component: () => import('./views/Courses'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
                     path: '/courses/create',
@@ -79,49 +87,55 @@ const router = new Router({
                     path: '/lessons',
                     name: 'lessons.list',
                     component: () => import('./views/Lessons'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
                     path: '/lessons/create',
                     name: 'lessons.create',
                     component: () => import('./views/Lessons/create'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
                     path: '/lessons/edit/:id',
                     name: 'lessons.edit',
                     component: () => import('./views/Lessons/Edit'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
                     path: '/teachers',
                     name: 'teachers.list',
-                    component: () => import('./views/Teachers')
+                    component: () => import('./views/Teachers'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/teachers/create',
                     name: 'teachers.create',
-                    component: () => import('./views/Teachers/Create')
+                    component: () => import('./views/Teachers/Create'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/teachers/edit/:id',
                     name: 'teachers.edit',
-                    component: () => import('./views/Teachers/Edit')
+                    component: () => import('./views/Teachers/Edit'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/students',
                     name: 'students.list',
-                    component: () => import('./views/Students')
+                    component: () => import('./views/Students'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/students/create',
                     name: 'students.create',
-                    component: () => import('./views/Students/Create')
+                    component: () => import('./views/Students/Create'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/students/edit/:id',
                     name: 'students.edit',
-                    component: () => import('./views/Students/Edit')
+                    component: () => import('./views/Students/Edit'),
+                    beforeEnter: hasRole('admin')
                 },
                 {
                     path: '/notifications',
@@ -132,28 +146,68 @@ const router = new Router({
                 {
                     path: '/cms',
                     name: 'cms',
-                    component: () => import('./views/CMS')
+                    component: () => import('./views/CMS'),
+                    beforeEnter: hasRole('admin')
+                },
+                {
+                    path: 'teacher-courses/:id',
+                    name: 'teacher-course.profile',
+                    component: () => import('./views/Teachers/CourseProfile'),
+                    beforeEnter: hasRole('teacher')
                 },
                 {
                     path: '/student-courses',
                     name: 'student-courses',
-                    component: () => import('./views/Students/Courses')
+                    component: () => import('./views/Students/Courses'),
+                    beforeEnter: hasRole('student')
+                },
+                {
+                    path: '/student-courses/:id',
+                    name: 'student-course.profile',
+                    component: () => import('./views/Students/CourseProfile'),
+                    beforeEnter: hasRole('student')
+                },
+                {
+                    path: '/student-lessons/:id',
+                    name: 'student-lesson.profile',
+                    component: () => import('./views/Students/LessonProfile'),
+                    beforeEnter: hasRole('student')
                 },
                 {
                     path: '/student-exams',
                     name: 'student-exams',
-                    component: () => import('./views/Students/Exams')
+                    component: () => import('./views/Students/Exams'),
+                    beforeEnter: hasRole('student')
+                },
+                {
+                    path: '/student-exams/:id',
+                    name: 'student-exam',
+                    component: () => import('./views/Students/Exam'),
+                    beforeEnter: hasRole('student')
+                },
+                {
+                    path: '/student-exam-profile/:id',
+                    name: 'student-exam-profile',
+                    component: () => import('./views/Students/ExamProfile'),
+                    beforeEnter: hasRole('student')
                 },
                 {
                     path: '/student-results',
                     name: 'student-results',
-                    component: () => import('./views/Students/Results')
+                    component: () => import('./views/Students/Results'),
+                    beforeEnter: hasRole('student')
+                },
+                {
+                    path: '/student-results/:id',
+                    name: 'student-result.profile',
+                    component: () => import('./views/Students/ResultProfile'),
+                    beforeEnter: hasRole('student')
                 },
                 {
                     path: '/me',
                     name: 'me', // profile
                     component: () => import('./views/Me'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher', 'student')
                 },
             ],
             beforeEnter: beforeEnterAuthenticatedRoutes

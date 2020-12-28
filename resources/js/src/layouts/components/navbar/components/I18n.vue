@@ -30,6 +30,7 @@ export default {
     methods: {
         updateLocale(locale) {
             this.$i18n.locale = locale
+            this.$moment.locale(locale)
             this.$vs.rtl = locale === 'ar'
         }
     }

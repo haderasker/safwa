@@ -4,8 +4,11 @@ import App from './App.vue'
 import _ from 'lodash'
 window._ = _
 
+import VueMoment from 'vue-moment'
 import moment from 'moment'
-window.$moment = moment
+import 'moment/locale/ar'
+
+Vue.use(VueMoment, { moment })
 
 // Vuesax Component Framework
 import Vuesax from 'vuesax'

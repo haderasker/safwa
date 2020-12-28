@@ -17,6 +17,7 @@ class CreateUsersCoursesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
+            $table->enum('type', ['default', 'fail']);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('course_id')->references('id')->on('courses');

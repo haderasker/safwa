@@ -7,7 +7,7 @@
         <div class="comment-content">
             <a class="comment-author">{{ valueData.author.name }}</a>
             <div class="comment-metadata">
-                <span class="date">{{ valueData.created_at }}</span>
+                <span class="date">{{ valueData.created_at | moment('from', 'now') }}</span>
             </div>
             <div class="comment-body">
                 {{ valueData.body }}
@@ -16,7 +16,7 @@
             <div class="comment-actions">
                 <a class="reply" @click.prevent="showReplayForm = !showReplayForm">{{ $t('comments.reply') }}</a>
                 <a class="more-replies" @click="loadReplies">
-                    {{ $t('comments.load_replies') }} {{ this.valueData.noReplies ? $t('no_replies') : '' }}
+                    {{ $t('comments.load_replies') }} {{ this.valueData.noReplies ? $t('comments.no_replies') : '' }}
                 </a>
             </div>
 
