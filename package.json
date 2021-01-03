@@ -28,6 +28,7 @@
         "jw-paginate": "^1.0.4",
         "material-icons": "^0.3.1",
         "moment": "^2.29.1",
+        "moment-hijri": "^2.1.2",
         "perfect-scrollbar": "^1.4.0",
         "postcss-rtl": "^1.5.0",
         "prismjs": "^1.16.0",

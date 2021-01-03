@@ -1,3 +1,13 @@
 {
-
+    "title": "Student Year Results",
+    "all_courses": "All Courses",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "list": {
+        "column_course_name": "Course Name",
+        "column_score": "Score",
+        "column_type": "Type",
+        "column_student_status": "Student Status",
+        "column_exam": "Exam"
+    }
 }

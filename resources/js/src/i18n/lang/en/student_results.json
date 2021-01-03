@@ -1,3 +1,14 @@
 {
-
+    "title": "Student Results",
+    "all_results": "All Results",
+    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": "Filter",
+    "list": {
+        "column_level": "Level",
+        "column_academic_year": "Academic Year",
+        "column_first_semester": "First Semester",
+        "column_second_semester": "Second Semester",
+        "column_total": "Total",
+        "column_actions": "Actions"
+    }
 }

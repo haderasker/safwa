@@ -1,14 +1,14 @@
 {
-    "title": "Student Exams",
-    "all_exams": "All Exams",
-    "finished_exams": "Finished Exams",
-    "upcoming_exams": "Upcoming Exams",
+    "title": "امتحانات الطالب",
+    "all_exams": "جميع الامتحانات",
+    "finished_exams": "الامتحانات السابقة",
+    "upcoming_exams": "الامتحانات القادمة",
     "upcoming_list": {
-        "column_name": "Name",
-        "column_actions": "Actions"
+        "column_name": "الاسم",
+        "column_actions": "خيارات"
     },
     "finished_list": {
-        "column_name": "Name",
-        "column_actions": "Actions"
+        "column_name": "الاسم",
+        "column_actions": "خيارات"
     }
 }

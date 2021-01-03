@@ -41,9 +41,13 @@
 <script>
 import AgTable from "../../components/AgTable";
 import AcademicYearDataSource from "../../datasources/AcademicYearDataSource";
+import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
-    components: {AgTable},
+    components: {
+        AgTable,
+        tableActionColumnCell
+    },
     data() {
         return {
             filters: false,
@@ -56,49 +60,58 @@ export default {
         }
     },
     computed: {
+        // return self.$moment(params.data.created_at).format('iYYYY-iM-iD')
         agColumns() {
+            const self = this
+            const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
+            const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
             return [
                 {
                     headerName: this.$t('academic_years.list.column_name'),
-                    field: 'name',
-                    minWidth: 170,
-                    sortable: true
-                },
-                {
-                    headerName: this.$t('academic_years.list.column_hijri'),
-                    field: 'name',
+                    field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('academic_years.list.column_first_semester_start'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.semesters[0].start).format(dateFormat)} / ${self.$moment(params.data.semesters[0].start).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('academic_years.list.column_first_semester_end'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.semesters[0].end).format(dateFormat)} / ${self.$moment(params.data.semesters[0].end).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('academic_years.list.column_second_semester_start'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.semesters[1].start).format(dateFormat)} / ${self.$moment(params.data.semesters[1].start).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('academic_years.list.column_second_semester_end'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.semesters[1].end).format(dateFormat)} / ${self.$moment(params.data.semesters[1].end).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('academic_years.list.column_actions'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    cellRendererParams: {
+                        routeName: 'academic-year.edit',
+                    },
+                    cellRendererFramework: 'tableActionColumnCell'
                 }
             ]
         }

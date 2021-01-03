@@ -1,14 +1,14 @@
 {
-    "title": "Student Results",
-    "all_results": "All Results",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
+    "title": "نتائج الطالب",
+    "all_results": "جميع النتائج",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
     "list": {
-        "column_level": "Level",
-        "column_academic_year": "Academic Year",
-        "column_first_semester": "First Semester",
-        "column_second_semester": "Second Semester",
-        "column_total": "Total",
-        "column_actions": "Actions"
+        "column_level": "الصف",
+        "column_academic_year": "السنة الدراسية",
+        "column_first_semester": "الفصل الدراسي الاول",
+        "column_second_semester": "الفصل الدراسي الثاني",
+        "column_total": "المجموع",
+        "column_actions": "خيارات"
     }
 }

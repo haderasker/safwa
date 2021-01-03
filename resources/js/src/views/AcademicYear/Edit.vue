@@ -1,42 +1,62 @@
 <template>
-    <steps :year="year"></steps>
+    <steps :year="academicYear"></steps>
 </template>
 
 <script>
 import Steps from "./components/Steps";
+import safwaAxios from "../../axios";
 export default {
     components: {Steps},
     data() {
         return {
-            year: {
-                label: '',
-                first_semester: {
-                    start: new Date(),
-                    end: new Date(),
-                    levels: {
-                        level1: [],
-                        level2: [],
-                        level3: [],
-                        level4: [],
-                    }
-                },
-                second_semester: {
-                    start: new Date(),
-                    end: new Date(),
-                    levels: {
-                        level1: [],
-                        level2: [],
-                        level3: [],
-                        level4: [],
-                    }
-                }
-            }
+            academicYear: {},
+            // year: {
+            //     id: null,
+            //     label: '',
+            //     created_at: new Date(),
+            //     updated_at: new Date(),
+            //     semesters: [
+            //         {
+            //             id: null,
+            //             label: '',
+            //             academic_year_id: '',
+            //             end: '',
+            //             start: '',
+            //             created_at: '',
+            //             updated_at: '',
+            //             levels: [
+            //                 {
+            //                     id: '',
+            //                     course_ids: [],
+            //                     level_id: '',
+            //                     semester_id: '',
+            //                     created_at: '',
+            //                     updated_at: '',
+            //                 }
+            //             ]
+            //         }
+            //     ]
+            // }
         }
     },
+    mounted() {
+        this.getYear()
+    },
     methods: {
-        getYear () {
-            const yearId = this.$route.params.id
-            // load year data
+        async getYear () {
+            const { data } = await safwaAxios.get(`academic-years/${this.$route.params.id}`)
+
+            if(!data) {
+                return
+            }
+
+            data.semesters.forEach(semester => {
+                semester.levels.forEach(level => {
+                    level.course_ids = JSON.parse(level.course_ids)
+                })
+            })
+
+            this.academicYear = data
         }
     }
 }

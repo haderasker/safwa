@@ -1,13 +1,13 @@
 {
-    "title": "Student Year Results",
-    "all_courses": "All Courses",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
+    "title": "نتائج الطالب لسنة دراسية",
+    "all_courses": "جميع المواد",
+    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": "بحث",
     "list": {
-        "column_course_name": "Course Name",
-        "column_score": "Score",
-        "column_type": "Type",
-        "column_student_status": "Student Status",
-        "column_exam": "Exam"
+        "column_course_name": "اسم المادة",
+        "column_score": "النتيجة",
+        "column_type": "النوع",
+        "column_student_status": "حالة الطالب",
+        "column_exam": "الامتحان"
     }
 }

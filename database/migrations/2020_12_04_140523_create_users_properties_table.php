@@ -16,10 +16,10 @@ class CreateUsersPropertiesTable extends Migration
         Schema::create('users_properties', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('doctrine_id');
             $table->unsignedBigInteger('academic_year_id');
             $table->unsignedBigInteger('level_id');
+            $table->string('country');
+            $table->string('doctrine');
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->string('national_number')->nullable();
             $table->string('about_me')->nullable();
@@ -37,8 +37,6 @@ class CreateUsersPropertiesTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('doctrine_id')->references('id')->on('doctrines');
             $table->foreign('academic_year_id')->references('id')->on('academic_years');
             $table->foreign('level_id')->references('id')->on('levels');
         });

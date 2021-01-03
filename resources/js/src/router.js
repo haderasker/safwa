@@ -25,7 +25,7 @@ const router = new Router({
                 },
                 {
                     path: '/academic-year',
-                    name: 'academic-year.list',
+                    name: 'academic-years.list',
                     component: () => import('./views/AcademicYear'),
                     beforeEnter: hasRole('admin')
                 },

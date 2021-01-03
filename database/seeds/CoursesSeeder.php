@@ -22,7 +22,7 @@ class CoursesSeeder extends Seeder
                 'max_score' => '400',
                 'min_score' => '200',
                 'teacher_id' => 2,
-                'doctrine_id' => 4
+                'doctrine' => 'hanbali'
             ],
             [
                 'id' => 2,
@@ -31,7 +31,7 @@ class CoursesSeeder extends Seeder
                 'max_score' => '500',
                 'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine_id' => 4
+                'doctrine' => 'hanbali'
             ],
             [
                 'id' => 3,
@@ -40,7 +40,7 @@ class CoursesSeeder extends Seeder
                 'max_score' => '600',
                 'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine_id' => 4
+                'doctrine' => 'hanbali'
             ],
             [
                 'id' => 4,
@@ -49,7 +49,7 @@ class CoursesSeeder extends Seeder
                 'max_score' => '700',
                 'min_score' => '500',
                 'teacher_id' => 2,
-                'doctrine_id' => 4
+                'doctrine' => 'hanbali'
             ],
         ]);
     }

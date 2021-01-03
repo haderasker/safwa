@@ -1,35 +1,33 @@
 <template>
-    <steps :year="year"></steps>
+    <steps :year="academicYear"></steps>
 </template>
 
 <script>
 import Steps from "./components/Steps";
+
 export default {
     components: {Steps},
     data() {
         return {
-            year: {
-                label: '',
-                first_semester: {
-                    start: new Date(),
-                    end: new Date(),
-                    levels: {
-                        level1: [],
-                        level2: [],
-                        level3: [],
-                        level4: [],
+            academicYear: {
+                semesters: [
+                    {
+                        levels: [
+                            {courses: []},
+                            {courses: []},
+                            {courses: []},
+                            {courses: []}
+                        ]
+                    },
+                    {
+                        levels: [
+                            {courses: []},
+                            {courses: []},
+                            {courses: []},
+                            {courses: []}
+                        ]
                     }
-                },
-                second_semester: {
-                    start: new Date(),
-                    end: new Date(),
-                    levels: {
-                        level1: [],
-                        level2: [],
-                        level3: [],
-                        level4: [],
-                    }
-                }
+                ]
             }
         }
     }

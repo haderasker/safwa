@@ -13,7 +13,7 @@
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
                 :subtitle="null"
-                @on-complete="createYear"
+                @on-complete="createAcademicYear"
                 @on-change="validateStep"
                 :finishButtonText="$t('academic_years.create_year')"
                 :nextButtonText="$t('academic_years.next')"
@@ -42,7 +42,7 @@
                             <span>{{ $t('academic_years.create.first_semester.start') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="year.first_semester.start"></datepicker>
+                            <flat-picker class="w-full" placeholder="Select Date" v-model="year.semesters[0].start" :config="dateConfig"></flat-picker>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -50,7 +50,7 @@
                             <span>{{ $t('academic_years.create.first_semester.end') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="year.first_semester.end"></datepicker>
+                            <flat-picker class="w-full" placeholder="Select Date" v-model="year.semesters[0].end" :config="dateConfig"></flat-picker>
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                             <span>{{ $t('academic_years.create.second_semester.start') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="year.second_semester.start"></datepicker>
+                            <flat-picker class="w-full" placeholder="Select Date" v-model="year.semesters[1].start" :config="dateConfig"></flat-picker>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -70,7 +70,7 @@
                             <span>{{ $t('academic_years.create.second_semester.end') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker placeholder="Select Date" v-model="year.second_semester.end"></datepicker>
+                            <flat-picker class="w-full" placeholder="Select Date" v-model="year.semesters[1].end" :config="dateConfig"></flat-picker>
                         </div>
                     </div>
 
@@ -82,49 +82,19 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab :label="$t('academic_years.create.level1')">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-1-${index}`" :label="$t(`academic_years.create.${level.name}`)">
                             <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level1') }}
+                                {{
+                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`academic_years.create.${level.name}`)
+                                }}
                             </h4>
+
                             <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.first_semester.levels.level1" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level2')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level2') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.first_semester.levels.level2" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level3')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level3') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.first_semester.levels.level3" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level4')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level4') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.first_semester.levels.level4" :vs-value="course.id">
+                                <li v-for="course in getCourses" class="w-1/2 float-left">
+                                    <vs-checkbox
+                                        class="py-4"
+                                        :vs-value="course"
+                                        v-model="year.semesters[0].levels[index].courses">
                                         {{ course.name }}
                                     </vs-checkbox>
                                 </li>
@@ -139,49 +109,19 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab :label="$t('academic_years.create.level1')">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-2-${index}`" :label="$t(`academic_years.create.${level.name}`)">
                             <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level1') }}
+                                {{
+                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`academic_years.create.${level.name}`)
+                                }}
                             </h4>
+
                             <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.second_semester.levels.level1" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level2')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level2') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.second_semester.levels.level2" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level3')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level3') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.second_semester.levels.level3" :vs-value="course.id">
-                                        {{ course.name }}
-                                    </vs-checkbox>
-                                </li>
-                            </ul>
-                        </vs-tab>
-                        <vs-tab :label="$t('academic_years.create.level4')">
-                            <h4 class="mb-5 mt-5">
-                                {{ $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t('academic_years.create.level4') }}
-                            </h4>
-                            <ul>
-                                <li v-for="course in courses" class="w-1/2 float-left">
-                                    <vs-checkbox class="py-4" v-model="year.second_semester.levels.level4" :vs-value="course.id">
+                                <li v-for="course in getCourses" class="w-1/2 float-left">
+                                    <vs-checkbox
+                                        class="py-4"
+                                        :vs-value="course"
+                                        v-model="year.semesters[1].levels[index].courses">
                                         {{ course.name }}
                                     </vs-checkbox>
                                 </li>
@@ -197,67 +137,72 @@
 <script>
 import {FormWizard, TabContent} from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-import Datepicker from 'vuejs-datepicker'
+import flatPicker from 'vue-flatpickr-component';
+import {mapActions, mapGetters} from 'vuex'
+import safwaAxios from "../../../axios";
+
+import 'flatpickr/dist/flatpickr.css';
 
 export default {
     components: {
         FormWizard,
         TabContent,
-        Datepicker,
+        flatPicker,
     },
     props: ['year'],
     data() {
         return {
-            courses: [
-                {
-                    id: 1,
-                    name: 'course 1'
-                },
-                {
-                    id: 2,
-                    name: 'course 2'
-                },
-                {
-                    id: 3,
-                    name: 'course 3'
-                },
-                {
-                    id: 4,
-                    name: 'course 4'
-                },
-                {
-                    id: 5,
-                    name: 'course 5'
-                },
-                {
-                    id: 6,
-                    name: 'course 6'
-                },
-                {
-                    id: 7,
-                    name: 'course 7'
-                },
-                {
-                    id: 8,
-                    name: 'course 8'
-                },
-                {
-                    id: 9,
-                    name: 'course 9'
-                },
-                {
-                    id: 10,
-                    name: 'course 10'
-                },
-                {
-                    id: 11,
-                    name: 'course 11'
-                }
-            ],
+            dateConfig: {
+                enableTime: false,
+                dateFormat: 'Y-m-d'
+            }
         }
     },
+    computed: {
+        ...mapGetters({
+            getCourses: 'Courses/getCourses'
+        }),
+        getLevels() {
+            const levels = this.$store.getters['Levels/getLevels']
+
+            if (!levels.length) {
+                return [{}]
+            }
+
+            return levels
+        }
+    },
+    mounted() {
+        this.loadLevels()
+        this.loadCourses()
+    },
     methods: {
-        createYear() {
+        ...mapActions({
+            loadLevels: 'Levels/loadLevels',
+            loadCourses: 'Courses/loadCourses'
+        }),
+        async createAcademicYear() {
+            const year = JSON.parse(JSON.stringify(this.year))
+
+            year.semesters.forEach((semester, semesterIndex) => {
+                semester.label = `semester_${semesterIndex + 1}`
+
+                semester.levels.forEach((level, levelIndex) => {
+                    level.id = levelIndex + 1
+                    level.course_ids = level.courses.map(course => {
+                        return course.id
+                    })
+
+                    delete level.courses
+                })
+            })
+
+            if (this.$route.params.id) {
+                await safwaAxios.put(`academic-years/${this.$route.params.id}`, year)
+            } else {
+                await safwaAxios.post('academic-years', year)
+                this.$router.push({name: 'academic_years.list'});
+            }
         },
         validateStep() {
         }

@@ -43,6 +43,8 @@ Route::group(['prefix' => 'doctrines'], function() {
 
 Route::group(['prefix' => 'academic-years'], function() {
     Route::get('/', 'AcademicYearsController@index');
+    Route::post('/', 'AcademicYearsController@store');
+    Route::get('/{yearId}', 'AcademicYearsController@edit');
 });
 
 Route::group(['prefix' => 'levels'], function() {

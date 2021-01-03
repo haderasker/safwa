@@ -5,7 +5,8 @@ import _ from 'lodash'
 window._ = _
 
 import VueMoment from 'vue-moment'
-import moment from 'moment'
+// import moment from 'moment'
+import moment from 'moment-hijri'
 import 'moment/locale/ar'
 
 Vue.use(VueMoment, { moment })
