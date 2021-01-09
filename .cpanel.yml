@@ -1,6 +1,7 @@
 ---
 deployment:
   tasks:
+    - free -m
     - ./composer install
     - php artisan migrate:fresh --seed
     - php artisan optimize:clear
