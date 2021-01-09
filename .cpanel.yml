@@ -3,6 +3,8 @@ deployment:
   tasks:
     - free -m
     - rm composer.lock
+    - free -m
     - ./composer install
+    - free -m
     - php artisan migrate:fresh --seed
     - php artisan optimize:clear
