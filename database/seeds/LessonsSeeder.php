@@ -18,7 +18,7 @@ class LessonsSeeder extends Seeder
             [
                 'id' => 1,
                 'course_id' => 2,
-                'label' => 'lesson 1',
+                'label' => 'الدرس الاول',
                 'youtube' => 'https://www.youtube.com/watch?v=Shfi_tCSYrE&ab_channel=ChessSchool',
                 'soundcloud' => 'https://soundcloud.com/aboveandbeyond/group-therapy-412-with-above',
                 'pdf' => 'url to pds file',
@@ -27,7 +27,7 @@ class LessonsSeeder extends Seeder
             [
                 'id' => 2,
                 'course_id' => 2,
-                'label' => 'lesson 2',
+                'label' => 'الدرس الثاني',
                 'youtube' => 'https://www.youtube.com/watch?v=Shfi_tCSYrE&ab_channel=ChessSchool',
                 'soundcloud' => 'https://soundcloud.com/aboveandbeyond/group-therapy-412-with-above',
                 'pdf' => 'url to pds file',
@@ -36,7 +36,7 @@ class LessonsSeeder extends Seeder
             [
                 'id' => 3,
                 'course_id' => 2,
-                'label' => 'lesson 3',
+                'label' => 'الدرس الثالث',
                 'youtube' => 'https://www.youtube.com/watch?v=Shfi_tCSYrE&ab_channel=ChessSchool',
                 'soundcloud' => 'https://soundcloud.com/aboveandbeyond/group-therapy-412-with-above',
                 'pdf' => 'url to pds file',
@@ -45,7 +45,7 @@ class LessonsSeeder extends Seeder
             [
                 'id' => 4,
                 'course_id' => 2,
-                'label' => 'lesson 4',
+                'label' => 'الدرس الرابع',
                 'youtube' => 'https://www.youtube.com/watch?v=Shfi_tCSYrE&ab_channel=ChessSchool',
                 'soundcloud' => 'https://soundcloud.com/aboveandbeyond/group-therapy-412-with-above',
                 'pdf' => 'url to pds file',

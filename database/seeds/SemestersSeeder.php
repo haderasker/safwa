@@ -16,42 +16,42 @@ class SemestersSeeder extends Seeder
         DB::table('semesters')->insert([
             [
                 'id'               => 1,
-                'label'            => 'semester one for year one',
+                'label'            => 'الترم الاول للفرقه الاولي',
                 'academic_year_id' => 1,
                 'start'            => now(),
                 'end'              => now()
             ],
             [
                 'id'               => 2,
-                'label'            => 'semester two for year one',
+                'label'            => 'الترم الثاني للفرقه الاولي',
                 'academic_year_id' => 1,
                 'start'            => now(),
                 'end'              => now()
             ],
             [
                 'id'               => 3,
-                'label'            => 'semester one for year two',
+                'label'            => 'الترم الاول للفرقه الثانيه',
                 'academic_year_id' => 2,
                 'start'            => now(),
                 'end'              => now()
             ],
             [
                 'id'               => 4,
-                'label'            => 'semester two for year two',
+                'label'            => 'الترم الثاني للفرقه الثانيه',
                 'academic_year_id' => 2,
                 'start'            => now(),
                 'end'              => now()
             ],
             [
                 'id'               => 5,
-                'label'            => 'semester one for year three',
+                'label'            => 'الترم الاول للفرقه الثالثه',
                 'academic_year_id' => 3,
                 'start'            => now(),
                 'end'              => now()
             ],
             [
                 'id'               => 6,
-                'label'            => 'semester two for year three',
+                'label'            => 'الترم الثاني للفرقه الثالثه',
                 'academic_year_id' => 3,
                 'start'            => now(),
                 'end'              => now()

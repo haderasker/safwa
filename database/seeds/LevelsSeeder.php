@@ -17,19 +17,19 @@ class LevelsSeeder extends Seeder
         DB::table('levels')->insert([
             [
                 'id' => 1,
-                'name' => 'level1'
+                'name' => 'الفرقه الاولي'
             ],
             [
                 'id' => 2,
-                'name' => 'level2'
+                'name' => 'الفرقه الثانيه'
             ],
             [
                 'id' => 3,
-                'name' => 'level3'
+                'name' => 'الفرقه الثالثه'
             ],
             [
                 'id' => 4,
-                'name' => 'level4'
+                'name' => 'الفرقه الرابعه'
             ],
         ]);
     }

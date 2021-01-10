@@ -22,34 +22,34 @@ class CoursesSeeder extends Seeder
                 'max_score' => '400',
                 'min_score' => '200',
                 'teacher_id' => 2,
-                'doctrine' => 'hanbali'
+                'doctrine' => 'حنبلي'
             ],
             [
                 'id' => 2,
-                'name' => 'course 2',
-                'description' => 'desc 2',
+                'name' => 'ماده العقيده',
+                'description' => 'تفاصييل',
                 'max_score' => '500',
                 'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine' => 'hanbali'
+                'doctrine' => 'شافعي'
             ],
             [
                 'id' => 3,
-                'name' => 'course 3',
-                'description' => 'desc 3',
+                'name' => 'ماده اللغه العربيه',
+                'description' => 'تفاصييل',
                 'max_score' => '600',
                 'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine' => 'hanbali'
+                'doctrine' => ''
             ],
             [
                 'id' => 4,
-                'name' => 'course 4',
-                'description' => 'desc 4',
+                'name' => 'ماده التفسير',
+                'description' => 'تفاصييل',
                 'max_score' => '700',
                 'min_score' => '500',
                 'teacher_id' => 2,
-                'doctrine' => 'hanbali'
+                'doctrine' => ''
             ],
         ]);
     }

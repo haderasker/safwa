@@ -72,48 +72,16 @@ export default {
     methods: {
         async getCategoryContent(category) {
             if (!category) return
-            if (process.env.MIX_APP_ENV !== 'production') {
-                switch (category.id) {
-                    case 'teachers':
-                        return this.categoryContentOptions = [
-                            {id: -1, name: this.$t('notifications.all')},
-                            {id: 1, name: 'teacher 1'},
-                            {id: 2, name: 'teacher 2'},
-                        ]
-                    case 'levels':
-                        return this.categoryContentOptions = [
-                            {id: -1, name: this.$t('notifications.all')},
-                            {id: 1, name: 'level 1'},
-                            {id: 2, name: 'level 2'},
-                        ]
-                    case 'students':
-                        return this.categoryContentOptions = [
-                            {id: -1, name: this.$t('notifications.all')},
-                            {id: 1, name: 'student 1'},
-                            {id: 2, name: 'student 2'},
-                        ]
-                }
-            }
 
             const response = safwaAxios.get(`${category.id}`)
             this.categoryContentOptions = [
                 {id: -1, name: this.$t('notifications.all')},
-                ...response.data
+                ...response.data.data
             ]
         },
         async sendEmail() {
             this.$vs.loading()
             try {
-                if(process.env.MIX_APP_ENV !== 'production') {
-                    return setTimeout(() => {
-                        this.$vs.loading.close()
-                        this.successMessage({
-                            title: this.$t('notifications.success_title'),
-                            message: this.$t('notifications.success_message')
-                        })
-                    }, 1500)
-                }
-
                 await safwaAxios.post('notifications/email', {
                     content: this.emailContent
                 })
