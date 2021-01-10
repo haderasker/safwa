@@ -16,15 +16,15 @@ class AcademicYearsSeeder extends Seeder
         DB::table('academic_years')->insert([
             [
                 'id'   => 1,
-                'label' => 'year one'
+                'label' => 'السنة الدراسية ١'
             ],
             [
                 'id'   => 2,
-                'label' => 'year two'
+                'label' => 'السنة الدراسية ٢'
             ],
             [
                 'id'   => 3,
-                'label' => 'year three'
+                'label' => 'السنة الدراسية ٣'
             ],
         ]);
     }

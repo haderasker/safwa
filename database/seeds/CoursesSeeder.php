@@ -17,8 +17,8 @@ class CoursesSeeder extends Seeder
         DB::table('courses')->insert([
             [
                 'id' => 1,
-                'name' => 'course 1',
-                'description' => 'desc 1',
+                'name' => 'ماده الفقه',
+                'description' => 'تفاصييل',
                 'max_score' => '400',
                 'min_score' => '200',
                 'teacher_id' => 2,
