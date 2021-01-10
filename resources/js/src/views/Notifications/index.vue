@@ -95,7 +95,7 @@ export default {
                 }
             }
 
-            const response = safwaAxios.get(`/${category.id}`)
+            const response = safwaAxios.get(`${category.id}`)
             this.categoryContentOptions = [
                 {id: -1, name: this.$t('notifications.all')},
                 ...response.data
@@ -114,7 +114,7 @@ export default {
                     }, 1500)
                 }
 
-                await safwaAxios.post('/notifications/email', {
+                await safwaAxios.post('notifications/email', {
                     content: this.emailContent
                 })
 
