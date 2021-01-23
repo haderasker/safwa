@@ -9,11 +9,11 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 
 /**
- * Class TeachersController
+ * Class StudentsController
  * @package App\Http\Controllers
  * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
  */
-class TeachersController extends Controller
+class StudentsController extends Controller
 {
     /**
      * @param Request $request
@@ -22,17 +22,17 @@ class TeachersController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::role('teacher')->paginate($request->input('per_page', 10));
+        return User::role('student')->paginate($request->input('per_page', 10));
     }
 
     /**
-     * @param int $teacherId
+     * @param int $studentId
      * @return mixed
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function edit(int $teacherId)
+    public function edit(int $studentId)
     {
-        return User::findOrFail($teacherId);
+        return User::findOrFail($studentId);
     }
 
     /**
@@ -49,43 +49,43 @@ class TeachersController extends Controller
 
         $teacher->save();
 
-        $teacher->assignRole('teacher');
+        $teacher->assignRole('student');
 
         return $teacher;
     }
 
     /**
      * @param Request $request
-     * @param int $teacherId
+     * @param int $studentId
      * @return mixed
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function update(Request $request, int $teacherId)
+    public function update(Request $request, int $studentId)
     {
-        $this->validateRequest($request, $teacherId);
+        $this->validateRequest($request, $studentId);
 
-        $teacher = User::findOrFail($teacherId);
-        $teacher->fill($this->attributes($request->all()));
+        $student = User::findOrFail($studentId);
+        $student->fill($this->attributes($request->all()));
 
-        $teacher->save();
+        $student->save();
 
-        return $teacher;
+        return $student;
     }
 
     /**
      * @param Request $request
-     * @param null $teacherId
+     * @param null $studentId
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    private function validateRequest(Request $request, $teacherId = null)
+    private function validateRequest(Request $request, $studentId = null)
     {
         $this->validate($request, [
             'name'  => ['required'],
             'email' => [
                 'required',
-                Rule::unique('users')->ignore($teacherId),
+                Rule::unique('users')->ignore($studentId),
             ],
             'password' => ['min:6', 'confirmed']
         ]);

@@ -15,9 +15,11 @@
     "year_name": "Name",
     "filter": "Filter",
     "create_year_title": "Create New Academic Year",
+    "edit_year_title": "Edit Academic Year ",
     "next": "Next",
     "back": "Back",
     "create_year": "Create Year",
+    "edit_year": "Edit Year",
     "step1": {
         "title": "Basic Info"
     },

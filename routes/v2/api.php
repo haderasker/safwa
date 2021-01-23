@@ -35,16 +35,23 @@ Route::group(['prefix' => 'courses'], function() {
 
 Route::group(['prefix' => 'teachers'], function() {
     Route::get('/', 'TeachersController@index');
+    Route::post('/', 'TeachersController@store');
+    Route::get('/{teacherId}', 'TeachersController@edit');
+    Route::put('/{teacherId}', 'TeachersController@update');
 });
 
-Route::group(['prefix' => 'doctrines'], function() {
-    Route::get('/', 'DoctrinesController@index');
+Route::group(['prefix' => 'students'], function() {
+    Route::get('/', 'StudentsController@index');
+    Route::post('/', 'StudentsController@store');
+    Route::get('/{studentId}', 'StudentsController@edit');
+    Route::put('/{studentId}', 'StudentsController@update');
 });
 
 Route::group(['prefix' => 'academic-years'], function() {
     Route::get('/', 'AcademicYearsController@index');
     Route::post('/', 'AcademicYearsController@store');
     Route::get('/{yearId}', 'AcademicYearsController@edit');
+    Route::put('/{yearId}', 'AcademicYearsController@update');
 });
 
 Route::group(['prefix' => 'levels'], function() {
@@ -58,4 +65,6 @@ Route::group(['prefix' => 'exams'], function() {
     Route::put('/{examId}', 'ExamsController@update');
 });
 
-
+Route::group(['prefix' => 'notifications'], function() {
+    Route::post('/email', 'NotificationsController@sendEmail');
+});

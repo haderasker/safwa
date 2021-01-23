@@ -4,6 +4,7 @@
 
 <script>
 import teacher from './components/teacher'
+import safwaAxios from "../../axios";
 
 export default {
     components: {
@@ -12,6 +13,16 @@ export default {
     data() {
         return {
             teacherData: {}
+        }
+    },
+    mounted() {
+        this.loadTeacher()
+    },
+    methods: {
+        async loadTeacher() {
+            const response = await safwaAxios.get(`teachers/${this.$route.params.id}`)
+
+            this.teacherData = response.data
         }
     }
 }

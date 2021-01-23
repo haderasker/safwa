@@ -4,7 +4,7 @@
 
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $route.params.id ? $t('lessons.edit_title') : $t('lessons.create_title') }}</h2>
+                <h2 class="mb-1">{{ $route.params.id ? $t('lessons.edit_title') + lesson.label : $t('lessons.create_title') }}</h2>
             </div>
         </div>
 
@@ -229,7 +229,7 @@ export default {
                 await safwaAxios.put(`lessons/${this.$route.params.id}`, lesson);
             } else {
                 await safwaAxios.post('lessons', lesson);
-                this.$router.push({name: 'lessons.list'});
+                this.$router.push({name: 'lessons.list'}).catch();
             }
         },
         validateStep() {

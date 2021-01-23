@@ -13,18 +13,18 @@ export default {
                 semesters: [
                     {
                         levels: [
-                            {courses: []},
-                            {courses: []},
-                            {courses: []},
-                            {courses: []}
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []}
                         ]
                     },
                     {
                         levels: [
-                            {courses: []},
-                            {courses: []},
-                            {courses: []},
-                            {courses: []}
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []}
                         ]
                     }
                 ]

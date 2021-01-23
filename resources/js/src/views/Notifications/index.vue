@@ -64,6 +64,7 @@ export default {
     watch: {
         categoryOption(newValue) {
             this.getCategoryContent(newValue)
+            this.categoryContentOption = null
         }
     },
     mounted() {
@@ -73,7 +74,8 @@ export default {
         async getCategoryContent(category) {
             if (!category) return
 
-            const response = safwaAxios.get(`${category.id}`)
+            const response = await safwaAxios.get(`${category.id}`)
+
             this.categoryContentOptions = [
                 {id: -1, name: this.$t('notifications.all')},
                 ...response.data.data
@@ -83,7 +85,9 @@ export default {
             this.$vs.loading()
             try {
                 await safwaAxios.post('notifications/email', {
-                    content: this.emailContent
+                    content: this.emailContent,
+                    group: this.categoryOption.id,
+                    member: this.categoryContentOption.id
                 })
 
                 // show success message

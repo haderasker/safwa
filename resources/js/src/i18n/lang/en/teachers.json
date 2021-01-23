@@ -14,10 +14,12 @@
     "info": "Basic Information",
     "name": "Name",
     "email": "Email",
+    "password": "Password",
+    "password_confirmation": "Confirm Password",
     "add_lesson": "Allow to Add Lessons",
     "description": "Description",
     "create_title": "Create Teacher",
-    "edit_title": "Edit Teacher",
+    "edit_title": "Edit Teacher ",
     "save": "Save",
     "update": "Update"
 }

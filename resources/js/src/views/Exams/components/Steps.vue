@@ -4,20 +4,20 @@
 
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $t('exams.create_exam_title') }}</h2>
+                <h2 class="mb-1">{{ $route.params.id ? $t('exams.edit_exam_title') + exam.label : $t('exams.create_exam_title') }}</h2>
             </div>
         </div>
 
         <vx-card>
             <form-wizard
-                :startIndex="1"
+                :startIndex="0"
                 color="rgba(var(--vs-primary), 1)"
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
                 :subtitle="null"
                 @on-complete="createExam"
                 @on-change="validateStep"
-                :finishButtonText="$t('exams.create')"
+                :finishButtonText="$route.params.id ? $t('exams.edit') : $t('exams.create')"
                 :nextButtonText="$t('exams.next')"
                 :backButtonText="$t('exams.back')">
 
@@ -232,9 +232,15 @@ export default {
             this.sidebarOpened = false
         },
         async createExam() {
+            const published_at = this.$moment(this.exam.published_at)
+            published_at.locale('en')
+
+            const ended_at = this.$moment(this.exam.ended_at)
+            ended_at.locale('en')
+
             const exam = {
-                published_at: this.$moment(this.exam.published_at).format('YYYY-MM-DD'),
-                ended_at: this.$moment(this.exam.ended_at).format('YYYY-MM-DD'),
+                published_at: published_at.format('YYYY-MM-DD'),
+                ended_at: ended_at.format('YYYY-MM-DD'),
                 testable_type: 'course',
                 testable_id: window._.get(this, 'exam.testable.id', null),
                 duration: this.exam.duration,

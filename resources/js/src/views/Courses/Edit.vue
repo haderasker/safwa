@@ -22,9 +22,7 @@ export default {
         async loadCourse() {
             const response = await safwaAxios.get(`courses/${this.$route.params.id}`);
 
-            this.course = {
-                ...response.data
-            }
+            this.course = response.data
         }
     },
 }

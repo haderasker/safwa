@@ -2,7 +2,7 @@
     <div>
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $t('academic_years.create_year_title') }}</h2>
+                <h2 class="mb-1">{{ $route.params.id ? $t('academic_years.edit_year_title') + year.label : $t('academic_years.create_year_title') }}</h2>
             </div>
         </div>
 
@@ -15,7 +15,7 @@
                 :subtitle="null"
                 @on-complete="createAcademicYear"
                 @on-change="validateStep"
-                :finishButtonText="$t('academic_years.create_year')"
+                :finishButtonText="$route.params.id ? $t('academic_years.edit_year') : $t('academic_years.create_year')"
                 :nextButtonText="$t('academic_years.next')"
                 :backButtonText="$t('academic_years.back')">
 
@@ -93,8 +93,8 @@
                                 <li v-for="course in getCourses" class="w-1/2 float-left">
                                     <vs-checkbox
                                         class="py-4"
-                                        :vs-value="course"
-                                        v-model="year.semesters[0].levels[index].courses">
+                                        :vs-value="course.id"
+                                        v-model="year.semesters[0].levels[index].course_ids">
                                         {{ course.name }}
                                     </vs-checkbox>
                                 </li>
@@ -120,8 +120,8 @@
                                 <li v-for="course in getCourses" class="w-1/2 float-left">
                                     <vs-checkbox
                                         class="py-4"
-                                        :vs-value="course"
-                                        v-model="year.semesters[1].levels[index].courses">
+                                        :vs-value="course.id"
+                                        v-model="year.semesters[1].levels[index].course_ids">
                                         {{ course.name }}
                                     </vs-checkbox>
                                 </li>
@@ -189,11 +189,6 @@ export default {
 
                 semester.levels.forEach((level, levelIndex) => {
                     level.id = levelIndex + 1
-                    level.course_ids = level.courses.map(course => {
-                        return course.id
-                    })
-
-                    delete level.courses
                 })
             })
 
@@ -201,7 +196,7 @@ export default {
                 await safwaAxios.put(`academic-years/${this.$route.params.id}`, year)
             } else {
                 await safwaAxios.post('academic-years', year)
-                this.$router.push({name: 'academic_years.list'});
+                this.$router.push({name: 'academic-years.list'}).catch();
             }
         },
         validateStep() {

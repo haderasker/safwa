@@ -3,6 +3,7 @@
     "all_exams": "All Exams",
     "create_exam_tooltip": "Create New Exam",
     "create_exam_title": "Create New Exam",
+    "edit_exam_title": "Edit Exam ",
     "exam_name": "Name",
     "q_number": "Q. Number",
     "success_score": "Success Score",
@@ -12,6 +13,7 @@
     "filter": "Filter",
     "filter_tooltip": "Show/Hide Filter Form",
     "create": "Create Exam",
+    "edit": "Edit Exam",
     "step1": {
         "title": "Basic Info"
     },

@@ -3,7 +3,7 @@
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
                 <h2 class="mb-1">
-                    {{ $route.params.id ? $t('students.edit_title') : $t('students.create_title') }}
+                    {{ $route.params.id ? $t('students.edit_title') + student.name : $t('students.create_title') }}
                 </h2>
             </div>
         </div>
@@ -36,10 +36,18 @@
                     <vs-input class="w-full" v-model="student.password"/>
                 </div>
             </div>
+            <div class="vx-row mb-6">
+                <div class="vx-col w-1/4">
+                    <span>{{ $t('students.password_confirmation') }}</span>
+                </div>
+                <div class="vx-col w-3/4">
+                    <vs-input class="w-full" v-model="student.password_confirmation"/>
+                </div>
+            </div>
 
             <div class="vx-row">
                 <div class="vx-col w-full">
-                    <vs-button color="primary" type="filled">
+                    <vs-button color="primary" type="filled" @click="createStudent">
                         {{ $route.params.id ? $t('students.update') : $t('students.save') }}
                     </vs-button>
                 </div>
@@ -49,11 +57,22 @@
 </template>
 
 <script>
+import safwaAxios from "../../../axios";
+
 export default {
     name: 'student',
+    props: ['student'],
     data() {
-        return {
-            student: {}
+        return {}
+    },
+    methods: {
+        async createStudent() {
+            if (this.$route.params.id) {
+                await safwaAxios.put(`students/${this.$route.params.id}`, this.student);
+            } else {
+                await safwaAxios.post('students', this.student);
+                this.$router.push({name: 'students.list'}).catch();
+            }
         }
     }
 }

@@ -149,9 +149,9 @@ class LessonsController extends Controller
         return [
             'course_id'    => $request['course_id'],
             'label'        => $request['label'],
-            'youtube'      => $request['youtube'],
-            'soundcloud'   => $request['soundcloud'],
-            'pdf'          => $request['pdf'],
+            'youtube'      => $request['youtube'] ?? null,
+            'soundcloud'   => $request['soundcloud'] ?? null,
+            'pdf'          => $request['pdf'] ?? null,
             'published_at' => $request['published_at']
         ];
     }

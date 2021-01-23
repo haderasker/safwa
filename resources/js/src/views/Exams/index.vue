@@ -93,7 +93,6 @@ export default {
                     minWidth: 170,
                     cellRendererParams: {
                         routeName: 'exams.edit',
-                        // deletableType: 'lesson',
                     },
                     cellRendererFramework: 'tableActionColumnCell'
                 }

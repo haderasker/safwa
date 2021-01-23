@@ -19,37 +19,37 @@ class CoursesSeeder extends Seeder
                 'id' => 1,
                 'name' => 'ماده الفقه',
                 'description' => 'تفاصييل',
-                'max_score' => '400',
-                'min_score' => '200',
+//                'max_score' => '400',
+//                'min_score' => '200',
                 'teacher_id' => 2,
-                'doctrine' => 'حنبلي'
+                'doctrine' => 'الحنبلي'
             ],
             [
                 'id' => 2,
                 'name' => 'ماده العقيده',
                 'description' => 'تفاصييل',
-                'max_score' => '500',
-                'min_score' => '300',
+//                'max_score' => '500',
+//                'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine' => 'شافعي'
+                'doctrine' => 'الشافعي'
             ],
             [
                 'id' => 3,
                 'name' => 'ماده اللغه العربيه',
                 'description' => 'تفاصييل',
-                'max_score' => '600',
-                'min_score' => '300',
+//                'max_score' => '600',
+//                'min_score' => '300',
                 'teacher_id' => 2,
-                'doctrine' => ''
+                'doctrine' => 'المالكي'
             ],
             [
                 'id' => 4,
                 'name' => 'ماده التفسير',
                 'description' => 'تفاصييل',
-                'max_score' => '700',
-                'min_score' => '500',
+//                'max_score' => '700',
+//                'min_score' => '500',
                 'teacher_id' => 2,
-                'doctrine' => ''
+                'doctrine' => 'الحنفي'
             ],
         ]);
     }

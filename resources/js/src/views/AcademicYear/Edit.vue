@@ -9,34 +9,26 @@ export default {
     components: {Steps},
     data() {
         return {
-            academicYear: {},
-            // year: {
-            //     id: null,
-            //     label: '',
-            //     created_at: new Date(),
-            //     updated_at: new Date(),
-            //     semesters: [
-            //         {
-            //             id: null,
-            //             label: '',
-            //             academic_year_id: '',
-            //             end: '',
-            //             start: '',
-            //             created_at: '',
-            //             updated_at: '',
-            //             levels: [
-            //                 {
-            //                     id: '',
-            //                     course_ids: [],
-            //                     level_id: '',
-            //                     semester_id: '',
-            //                     created_at: '',
-            //                     updated_at: '',
-            //                 }
-            //             ]
-            //         }
-            //     ]
-            // }
+            academicYear: {
+                semesters: [
+                    {
+                        levels: [
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []}
+                        ]
+                    },
+                    {
+                        levels: [
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []},
+                            {course_ids: []}
+                        ]
+                    }
+                ]
+            }
         }
     },
     mounted() {
@@ -49,12 +41,6 @@ export default {
             if(!data) {
                 return
             }
-
-            data.semesters.forEach(semester => {
-                semester.levels.forEach(level => {
-                    level.course_ids = JSON.parse(level.course_ids)
-                })
-            })
 
             this.academicYear = data
         }

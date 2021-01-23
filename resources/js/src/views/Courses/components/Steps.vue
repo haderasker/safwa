@@ -2,7 +2,7 @@
     <div>
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $route.params.id ? $t('courses.edit_title') : $t('courses.create_title') }}</h2>
+                <h2 class="mb-1">{{ $route.params.id ? $t('courses.edit_title') + course.name : $t('courses.create_title') }}</h2>
             </div>
         </div>
 
@@ -35,32 +35,32 @@
                 </div>
             </div>
 
-            <div class="vx-row mb-6">
-                <div class="vx-col w-1/4">
-                    <span>{{ $t('courses.highest_score') }}</span>
-                </div>
-                <div class="vx-col w-3/4">
-                    <vs-input type="number" class="w-full" :placeholder="$t('courses.highest_score')"
-                              v-model="course.max_score"/>
-                </div>
-            </div>
+<!--            <div class="vx-row mb-6">-->
+<!--                <div class="vx-col w-1/4">-->
+<!--                    <span>{{ $t('courses.highest_score') }}</span>-->
+<!--                </div>-->
+<!--                <div class="vx-col w-3/4">-->
+<!--                    <vs-input type="number" class="w-full" :placeholder="$t('courses.highest_score')"-->
+<!--                              v-model="course.max_score"/>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="vx-row mb-6">
-                <div class="vx-col w-1/4">
-                    <span>{{ $t('courses.lowest_score') }}</span>
-                </div>
-                <div class="vx-col w-3/4">
-                    <vs-input type="number" class="w-full" :placeholder="$t('courses.lowest_score')"
-                              v-model="course.min_score"/>
-                </div>
-            </div>
+<!--            <div class="vx-row mb-6">-->
+<!--                <div class="vx-col w-1/4">-->
+<!--                    <span>{{ $t('courses.lowest_score') }}</span>-->
+<!--                </div>-->
+<!--                <div class="vx-col w-3/4">-->
+<!--                    <vs-input type="number" class="w-full" :placeholder="$t('courses.lowest_score')"-->
+<!--                              v-model="course.min_score"/>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="vx-row mb-6">
                 <div class="vx-col w-1/4">
                     <span>{{ $t('courses.doctrine') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <v-select label="name" :options="listOfDoctrines" v-model="course.doctrine"></v-select>
+                    <v-select :options="listOfDoctrines" v-model="course.doctrine"></v-select>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                     <vs-button color="primary" type="filled" @click="saveCourse">
                         {{ $route.params.id ? $t('courses.update') : $t('courses.save') }}
                     </vs-button>
-                    <vs-button v-if="$route.params.id" color="success" type="filled">
+                    <vs-button v-if="$route.params.id" color="success" type="filled" @click="lessonsList">
                         {{ $t('courses.lessons_list') }}
                     </vs-button>
                 </div>
@@ -85,37 +85,50 @@ import {mapActions, mapGetters} from 'vuex';
 
 export default {
     props: ['course'],
+    data() {
+        return {
+            listOfDoctrines: [
+                'الحنبلي',
+                'الشافعي',
+                'المالكي',
+                'الحنفي',
+            ]
+        }
+    },
     mounted() {
-        this.loadDoctrines()
         this.loadTeachers()
     },
     computed: {
         ...mapGetters({
-            listOfTeachers: 'Teachers/getTeachers',
-            listOfDoctrines: 'Doctrines/getDoctrines',
+            listOfTeachers: 'Teachers/getTeachers'
         })
     },
     methods: {
         ...mapActions({
-            loadDoctrines: 'Doctrines/loadDoctrines',
             loadTeachers: 'Teachers/loadTeachers'
         }),
         async saveCourse() {
             const course = {
                 ... this.course,
                 teacher_id:  window._.get(this, 'course.teacher.id', null),
-                doctrine_id:  window._.get(this, 'course.doctrine.id', null)
             }
 
-            delete course.doctrine;
             delete course.teacher;
 
             if(this.$route.params.id) {
                 await safwaAxios.put(`courses/${this.$route.params.id}`, course);
             } else {
                 await safwaAxios.post('courses', course);
-                this.$router.push({name: 'courses.list'});
+                this.$router.push({name: 'courses.list'}).catch();
             }
+        },
+        lessonsList() {
+            this.$router.push({
+                name: 'lessons.list',
+                query: {
+                    course_id: this.$route.params.id
+                }
+            }).catch()
         }
     },
 }

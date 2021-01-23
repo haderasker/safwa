@@ -13,11 +13,12 @@
         "column_actions": "خيارات"
     },
     "create_title": "تسجيل طالب",
-    "edit_title": "تعديل طالب",
+    "edit_title": "تعديل الطالب ",
     "info": "المعلومات الأساسية",
     "save": "حفظ",
     "update": "تعديل",
     "name": "الاسم",
     "email": "الايميل",
-    "password": "كلمة المرور"
+    "password": "كلمة المرور",
+    "password_confirmation": "تأكيد كلمة المرور"
 }

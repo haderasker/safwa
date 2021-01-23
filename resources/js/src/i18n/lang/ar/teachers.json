@@ -14,10 +14,12 @@
     "info": "المعلومات الأساسية",
     "name": "الاسم",
     "email": "الايميل",
+    "password": "كلمة المرور",
+    "password_confirmation": "تاكيد كلمة المرور",
     "add_lesson": "السماح بإضافة دروس",
     "description": "معلومات عن المعلم",
     "create_title": "تسجيل معلم",
-    "edit_title": "تعديل معلم",
+    "edit_title": "تعديل المعلم ",
     "save": "حفظ",
     "update": "تعديل"
 }

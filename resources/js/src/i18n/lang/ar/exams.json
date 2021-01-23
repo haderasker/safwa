@@ -3,6 +3,7 @@
     "all_exams": "جميع الامتحانات",
     "create_exam_tooltip": "انشاء امتحان جديد",
     "create_exam_title": "انشاء امتحان جديد",
+    "edit_exam_title": "تعديل الامتحان ",
     "exam_name": "الاسم",
     "q_number": "عدد الأسئلة",
     "success_score": "درجة النجاح",
@@ -12,6 +13,7 @@
     "filter": "بحث",
     "filter_tooltip": "اظهار/اخفاء مربع البحث",
     "create": "انشاء امتحان",
+    "edit": "تعديل الامتحان",
     "step1": {
         "title": "المعلومات الاساسية"
     },

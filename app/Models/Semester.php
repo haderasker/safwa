@@ -34,11 +34,17 @@ class Semester extends Model
      */
     public function getLevelsAttribute(): array
     {
-        return DB::select("
+        $levels =  DB::select("
             select *
             from semester_level_course
             where semester_level_course.semester_id = " . $this->attributes['id'] . "
         ");
+
+        foreach ($levels as $level) {
+            $level->course_ids = json_decode($level->course_ids, true);
+        }
+
+        return $levels;
     }
 }
 

@@ -17,21 +17,12 @@ class Course extends Model
      */
     protected $fillable = [
         'name',
-        'doctrine_id',
+        'doctrine',
         'teacher_id',
         'description',
-        'max_score',
-        'min_score'
+//        'max_score',
+//        'min_score'
     ];
-
-    /**
-     * @return BelongsTo
-     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
-     */
-    public function doctrine(): BelongsTo
-    {
-        return $this->belongsTo(Doctrine::class, 'doctrine_id', 'id');
-    }
 
     /**
      * @return BelongsTo

@@ -17,9 +17,9 @@ class CreateLessonsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->string('label');
-            $table->string('youtube');
-            $table->string('soundcloud');
-            $table->string('pdf');
+            $table->string('youtube')->nullable();
+            $table->string('soundcloud')->nullable();
+            $table->string('pdf')->nullable();
             $table->timestamp('published_at');
             $table->timestamps();
 

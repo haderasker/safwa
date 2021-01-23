@@ -34,7 +34,7 @@ class CoursesController extends Controller
      */
     public function edit(int $courseId): Course
     {
-        return Course::with(['doctrine', 'teacher'])->findOrFail($courseId);
+        return Course::with(['teacher'])->findOrFail($courseId);
     }
 
     /**
@@ -97,9 +97,9 @@ class CoursesController extends Controller
     {
         $this->validate($request, [
             'description' => ['string', 'min:3'],
-            'doctrine_id' => ['required', 'integer', 'in:0,1,2,3,4'],
-            'max_score' => ['required', 'integer'],
-            'min_score' => ['required', 'integer'],
+            'doctrine' => ['required', 'string', 'in:الحنبلي,الشافعي,المالكي,الحنفي'],
+//            'max_score' => ['required', 'integer'],
+//            'min_score' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:3', 'max:150'],
             'teacher_id' => ['required', 'integer']
         ]);
@@ -115,10 +115,10 @@ class CoursesController extends Controller
         return [
             'name' => $request['name'],
             'description' => $request['description'],
-            'max_score' => $request['max_score'],
-            'min_score' => $request['min_score'],
+//            'max_score' => $request['max_score'],
+//            'min_score' => $request['min_score'],
             'teacher_id' => $request['teacher_id'],
-            'doctrine_id' => $request['doctrine_id']
+            'doctrine' => $request['doctrine']
         ];
     }
 }

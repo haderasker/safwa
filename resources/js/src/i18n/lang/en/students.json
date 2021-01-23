@@ -13,11 +13,12 @@
         "column_actions": "Actions"
     },
     "create_title": "Create Student",
-    "edit_title": "Edit Student",
+    "edit_title": "Edit Student ",
     "info": "Basic Information",
     "save": "Save",
     "update": "Update",
     "name": "Name",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "password_confirmation": "Confirm Password"
 }
