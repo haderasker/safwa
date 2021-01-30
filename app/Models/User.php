@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +20,27 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'academic_year_id',
+        'level_id',
+        'country',
+        'doctrine',
+        'sex',
+        'national_number',
+        'about_me',
+        'phone',
+        'birth_date',
+        'nationality',
+        'address',
+        'language',
+        'ar_level',
+        'qualification',
+        'job',
+        'quran_level',
+        'religion',
+        'upload_lessons'
     ];
 
     /**
@@ -51,5 +73,44 @@ class User extends Authenticatable
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'users_courses',
+            'user_id',
+            'course_id',
+            'id',
+            'id'
+        )->using(UserCourse::class)->withPivot('type');
+    }
+
+    public function teacherCourses(): HasMany
+    {
+        return $this->hasMany(Course::class, 'teacher_id', 'id');
+    }
+
+    public function teacherLessons()
+    {
+        return $this->hasManyThrough(
+            Lesson::class,
+            Course::class,
+            'teacher_id',
+            'course_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function academicYear(): BelongsTo
+    {
+        return $this->belongsTo(AcademicYear::class, 'academic_year_id', 'id');
+    }
+
+    public function level(): BelongsTo
+    {
+        return $this->belongsTo(Level::class, 'level_id', 'id');
     }
 }

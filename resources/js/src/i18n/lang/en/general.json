@@ -3,5 +3,9 @@
     "edit": "Edit",
     "lessons": "Lessons",
     "delete": "Delete",
-    "timer_message": "Time to End of Exam"
+    "timer_message": "Time to End of Exam",
+    "start_exam": "Start Exam",
+    "current_year": "Current Academic Year",
+    "course_type_default": "Default",
+    "course_type_fail": "Fail"
 }

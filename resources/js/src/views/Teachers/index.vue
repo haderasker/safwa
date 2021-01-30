@@ -40,10 +40,14 @@
 
 <script>
 import AgTable from "../../components/AgTable";
-import CoursesDataSource from "../../datasources/CoursesDataSource";
+import TeachersDataSource from "../../datasources/TeachersDataSource";
+import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
-    components: {AgTable},
+    components: {
+        AgTable,
+        tableActionColumnCell
+    },
     data() {
         return {
             filters: false,
@@ -51,12 +55,16 @@ export default {
                 name: ''
             },
             agOptions: {
-                dataSource: CoursesDataSource
+                dataSource: TeachersDataSource
             }
         }
     },
     computed: {
         agColumns() {
+            const self = this
+            const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
+            const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
+
             return [
                 {
                     headerName: this.$t('teachers.list.column_name'),
@@ -66,28 +74,38 @@ export default {
                 },
                 {
                     headerName: this.$t('teachers.list.column_add_lessons'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return params.data.upload_lessons === 1 ?
+                            self.$t('teachers.allow_add_lesson') :
+                            self.$t('teachers.disallow_add_lesson')
+                    }
                 },
                 {
                     headerName: this.$t('teachers.list.column_lessons_number'),
-                    field: 'name',
+                    field: 'teacher_lessons_count',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('teachers.list.column_created_at'),
-                    field: 'name',
+                    field: 'created_at',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.created_at).format(dateFormat)} / ${self.$moment(params.data.created_at).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('teachers.list.column_actions'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
-                },
+                    sortable: false,
+                    cellRendererParams: {
+                        routeName: 'teachers.edit',
+                    },
+                    cellRendererFramework: 'tableActionColumnCell'
+                }
             ]
         }
     },

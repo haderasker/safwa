@@ -61,6 +61,7 @@ export default {
     },
     computed: {
         agColumns() {
+            const self = this
             const columns = [
                 {
                     headerName: this.$t('courses.list.column_name'),
@@ -70,15 +71,19 @@ export default {
                 },
                 {
                     headerName: this.$t('courses.list.column_lessons_number'),
-                    // field: 'name',
+                    field: 'lessons_count',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_level'),
-                    // field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return params.data.level_names.map(level_name => {
+                            return self.$t('levels.' + level_name)
+                        }).join(', ')
+                    }
                 },
                 {
                     headerName: this.$t('courses.list.column_students_success_number'),

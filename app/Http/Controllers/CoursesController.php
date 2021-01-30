@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicYear;
 use App\Models\Course;
+use App\Models\Semester;
+use App\Models\SemesterLevelCourse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -24,7 +28,43 @@ class CoursesController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return Course::with('teacher')->paginate($request->input('per_page', 10));
+        $currentYearCourses = DB::select("
+            select levels.name,
+                   semester_level_course.course_ids
+            from semester_level_course
+            left join semesters on semester_level_course.semester_id = semesters.id
+            left join levels on semester_level_course.level_id = levels.id
+            left join academic_years on semesters.academic_year_id = academic_years.id
+            where academic_years.current = 1;
+        ");
+
+        $courses = Course::with('teacher')
+            ->withCount('lessons')
+            ->paginate($request->input('per_page', 10));
+
+        foreach ($courses->items() as $item) {
+            $levels = array_filter($currentYearCourses, function ($currentYearCourse) use ($item) {
+                if (in_array($item->id, json_decode($currentYearCourse->course_ids))) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            $level_names = [];
+
+            foreach ($levels as $level) {
+                if (in_array($level->name, $level_names)) {
+                    continue;
+                }
+
+                $level_names[] = $level->name;
+            }
+
+            $item->level_names = $level_names;
+        }
+
+        return $courses;
     }
 
     /**
@@ -97,11 +137,11 @@ class CoursesController extends Controller
     {
         $this->validate($request, [
             'description' => ['string', 'min:3'],
-            'doctrine' => ['required', 'string', 'in:الحنبلي,الشافعي,المالكي,الحنفي'],
+            'doctrine'    => ['required', 'string', 'in:الحنبلي,الشافعي,المالكي,الحنفي'],
 //            'max_score' => ['required', 'integer'],
 //            'min_score' => ['required', 'integer'],
-            'name' => ['required', 'string', 'min:3', 'max:150'],
-            'teacher_id' => ['required', 'integer']
+            'name'        => ['required', 'string', 'min:3', 'max:150'],
+            'teacher_id'  => ['required', 'integer']
         ]);
     }
 
@@ -113,12 +153,12 @@ class CoursesController extends Controller
     private function attributes(array $request): array
     {
         return [
-            'name' => $request['name'],
+            'name'        => $request['name'],
             'description' => $request['description'],
 //            'max_score' => $request['max_score'],
 //            'min_score' => $request['min_score'],
-            'teacher_id' => $request['teacher_id'],
-            'doctrine' => $request['doctrine']
+            'teacher_id'  => $request['teacher_id'],
+            'doctrine'    => $request['doctrine']
         ];
     }
 }

@@ -2,12 +2,14 @@
     <div class="relative">
 
         <div class="vx-navbar-wrapper" :class="classObj">
-
             <vs-navbar class="vx-navbar navbar-custom navbar-skelton" :color="navbarColorLocal" :class="textColor">
-
                 <!-- SM - OPEN SIDEBAR BUTTON -->
                 <feather-icon class="sm:inline-flex xl:hidden cursor-pointer p-2" icon="MenuIcon"
                               @click.stop="showSidebar"/>
+
+                <h6>
+                    {{ $t('general.current_year') }} : {{ activeUserInfo.current_academic_year }}
+                </h6>
 
                 <vs-spacer/>
 
@@ -36,6 +38,9 @@ export default {
         I18n
     },
     computed: {
+        activeUserInfo() {
+            return this.$store.getters['Authentication/getProfile']
+        },
         navbarColorLocal() {
             return this.$store.state.Default.theme === 'dark' && this.navbarColor === '#fff' ? '#10163a' : this.navbarColor
         },

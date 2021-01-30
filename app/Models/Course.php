@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Course extends Model
@@ -37,8 +38,17 @@ class Course extends Model
      * @return MorphMany
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function exam(): MorphMany
+    public function exams(): MorphMany
     {
         return $this->morphMany(Exam::class, 'testable', 'testable_type', 'testable_id', 'id');
+    }
+
+    /**
+     * @return HasMany
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public function lessons(): HasMany
+    {
+        return $this->hasMany(Lesson::class, 'course_id', 'id');
     }
 }

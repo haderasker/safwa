@@ -56,30 +56,33 @@ export default {
     },
     computed: {
         agColumns() {
+            const self = this
             return [
                 {
                     headerName: this.$t('student_courses.list.column_name'),
-                    field: 'label',
+                    field: 'name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_courses.list.column_teacher'),
-                    field: 'label',
+                    field: 'teacher.name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_courses.list.column_lesson_num'),
-                    field: 'label',
+                    field: 'lessons_count',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_courses.list.column_type'),
-                    field: 'type',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return self.$t(`general.course_type_${params.data.pivot.type}`)
+                    }
                 },
                 {
                     headerName: this.$t('student_courses.list.column_actions'),

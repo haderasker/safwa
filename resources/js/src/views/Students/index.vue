@@ -40,10 +40,14 @@
 
 <script>
 import AgTable from "../../components/AgTable";
-import CoursesDataSource from "../../datasources/CoursesDataSource";
+import StudentsDataSource from "../../datasources/StudentsDataSource";
+import tableActionColumnCell from '../../components/TableActionColumnCell'
 
 export default {
-    components: {AgTable},
+    components: {
+        AgTable,
+        tableActionColumnCell
+    },
     data() {
         return {
             filters: false,
@@ -51,7 +55,7 @@ export default {
                 name: ''
             },
             agOptions: {
-                dataSource: CoursesDataSource
+                dataSource: StudentsDataSource
             }
         }
     },
@@ -66,33 +70,33 @@ export default {
                 },
                 {
                     headerName: this.$t('students.list.column_email'),
-                    field: 'name',
+                    field: 'email',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('students.list.column_nationality'),
-                    field: 'name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('students.list.column_level'),
-                    field: 'name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('students.list.column_status'),
-                    field: 'name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('students.list.column_actions'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: false,
+                    cellRendererParams: {
+                        routeName: 'students.edit',
+                    },
+                    cellRendererFramework: 'tableActionColumnCell'
                 },
             ]
         }

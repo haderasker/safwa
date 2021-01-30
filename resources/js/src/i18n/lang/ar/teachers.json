@@ -21,5 +21,7 @@
     "create_title": "تسجيل معلم",
     "edit_title": "تعديل المعلم ",
     "save": "حفظ",
-    "update": "تعديل"
+    "update": "تعديل",
+    "allow_add_lesson": "مسموح",
+    "disallow_add_lesson": "غير مسموح"
 }

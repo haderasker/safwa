@@ -33,6 +33,14 @@
                             <vs-input class="w-full" v-model="year.label"/>
                         </div>
                     </div>
+                    <div class="vx-row mb-6">
+                        <div class="vx-col w-1/4">
+                            <label for="cuurent_year">{{ $t('academic_years.create.current_year') }}</label>
+                        </div>
+                        <div class="vx-col w-3/4">
+                            <vs-checkbox id="cuurent_year" v-model="year.current"></vs-checkbox>
+                        </div>
+                    </div>
 
                     <h4 class="mb-5">
                         {{ $t('academic_years.create.first_semester.label') }}
@@ -82,10 +90,10 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-1-${index}`" :label="$t(`academic_years.create.${level.name}`)">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-1-${index}`" :label="$t(`levels.${level.name}`)">
                             <h4 class="mb-5 mt-5">
                                 {{
-                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`academic_years.create.${level.name}`)
+                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`levels.${level.name}`)
                                 }}
                             </h4>
 
@@ -109,10 +117,10 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-2-${index}`" :label="$t(`academic_years.create.${level.name}`)">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-2-${index}`" :label="$t(`levels.${level.name}`)">
                             <h4 class="mb-5 mt-5">
                                 {{
-                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`academic_years.create.${level.name}`)
+                                    $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`levels.${level.name}`)
                                 }}
                             </h4>
 

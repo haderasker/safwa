@@ -50,9 +50,18 @@ class AcademicYearsController extends Controller
     {
         $this->validateRequest($request);
 
-        DB::transaction(function() use($request) {
+        DB::transaction(function () use ($request) {
+            // if request has current = 1
+            $current = (int)$request->input('current', 0);
+            if ($current === 1) {
+                AcademicYear::where('id', '>', 0)->update(['current' => 0]);
+            }
+
             // create academic year
-            $year = new AcademicYear(['label' => $request->input('label')]);
+            $year = new AcademicYear([
+                'label'   => $request->input('label'),
+                'current' => $current
+            ]);
             $year->save();
 
             // create semesters
@@ -87,15 +96,22 @@ class AcademicYearsController extends Controller
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function update(Request $request, int $yearId)
+    public function update(Request $request, int $yearId): array
     {
         $this->validateRequest($request);
 
-        DB::transaction(function() use($request, $yearId) {
+        DB::transaction(function () use ($request, $yearId) {
+            $current = (int)$request->input('current', 0);
+            if ($current === 1) {
+                AcademicYear::where('id', '>', 0)->update(['current' => 0]);
+            }
+
+
             // update academic year
             $year = AcademicYear::find($yearId);
 
             $year->label = $request->input('label');
+            $year->current = $current;
 
             $year->save();
 
@@ -110,7 +126,7 @@ class AcademicYearsController extends Controller
                 $semester->save();
 
                 // delete old level_courses
-                SemesterLevelCourse::where('semester_id',  $semester->id)->delete();
+                SemesterLevelCourse::where('semester_id', $semester->id)->delete();
 
                 // create new level_courses
                 foreach ($semesterData['levels'] as $levelData) {

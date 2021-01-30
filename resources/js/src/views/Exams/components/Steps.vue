@@ -178,9 +178,18 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getLevels: 'Levels/getLevels',
             getCourses: 'Courses/getCourses'
         }),
+        getLevels() {
+            const levels = this.$store.getters['Levels/getLevels']
+
+            return levels.map(level => {
+                return {
+                    id: level.id,
+                    name: this.$t(`levels.${level.name}`)
+                }
+            })
+        },
         typesOptions() {
             return [
                 {

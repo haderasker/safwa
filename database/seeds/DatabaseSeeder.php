@@ -11,6 +11,7 @@ use Database\Seeders\LevelsSeeder;
 use Database\Seeders\AcademicYearsSeeder;
 use Database\Seeders\SemestersSeeder;
 use Database\Seeders\SemestersLevelsCoursesSeeder;
+use Database\Seeders\UserCoursesSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AcademicYearsSeeder::class);
         $this->call(SemestersSeeder::class);
         $this->call(SemestersLevelsCoursesSeeder::class);
+        $this->call(UserCoursesSeeder::class);
     }
 }

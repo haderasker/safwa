@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcademicYear;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -44,13 +45,14 @@ class LoginController extends Controller
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  mixed  $user
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
         $user->load('roles');
+        $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
         return $user;
     }
 }

@@ -22,7 +22,7 @@ class TeachersController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::role('teacher')->paginate($request->input('per_page', 10));
+        return User::withCount('teacherLessons')->role('teacher')->paginate($request->input('per_page', 10));
     }
 
     /**
@@ -32,7 +32,7 @@ class TeachersController extends Controller
      */
     public function edit(int $teacherId)
     {
-        return User::findOrFail($teacherId);
+        return User::with('courses.lessons')->findOrFail($teacherId);
     }
 
     /**
@@ -41,7 +41,7 @@ class TeachersController extends Controller
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function store(Request $request)
+    public function store(Request $request): User
     {
         $this->validateRequest($request);
 
@@ -57,11 +57,11 @@ class TeachersController extends Controller
     /**
      * @param Request $request
      * @param int $teacherId
-     * @return mixed
+     * @return User
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function update(Request $request, int $teacherId)
+    public function update(Request $request, int $teacherId): User
     {
         $this->validateRequest($request, $teacherId);
 
@@ -82,8 +82,8 @@ class TeachersController extends Controller
     private function validateRequest(Request $request, $teacherId = null)
     {
         $this->validate($request, [
-            'name'  => ['required'],
-            'email' => [
+            'name'     => ['required'],
+            'email'    => [
                 'required',
                 Rule::unique('users')->ignore($teacherId),
             ],
@@ -94,11 +94,13 @@ class TeachersController extends Controller
     private function attributes(array $fields): array
     {
         $attrs = [
-            'name'     => $fields['name'],
-            'email'    => $fields['email']
+            'name'           => $fields['name'],
+            'email'          => $fields['email'],
+            'upload_lessons' => $fields['upload_lessons'],
+            'about_me'       => $fields['about_me']
         ];
 
-        if(isset($fields['password'])) {
+        if (isset($fields['password'])) {
             $attrs['password'] = bcrypt($fields['password']);
         }
 

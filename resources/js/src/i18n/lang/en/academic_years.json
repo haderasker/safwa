@@ -31,6 +31,7 @@
     },
     "create": {
         "label": "Label",
+        "current_year": "Is Current Year",
         "first_semester": {
             "label": "First Semester",
             "start": "Start Date",
@@ -41,10 +42,6 @@
             "start": "Start Date",
             "end": "End Date"
         },
-        "level1": "Level One",
-        "level2": "Level Two",
-        "level3": "Level Three",
-        "level4": "Level Four",
         "select_courses": "Select Semester Courses",
         "for": "for"
     }

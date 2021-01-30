@@ -3,5 +3,9 @@
     "edit": "تعديل",
     "lessons": "الدروس",
     "delete": "حذف",
-    "timer_message": "الوقت حتى انتهاء الامتحان"
+    "timer_message": "الوقت حتى انتهاء الامتحان",
+    "start_exam": "بدء الامتحان",
+    "current_year": "السنة الدراسية الحالية",
+    "course_type_default": "اساسي",
+    "course_type_fail": "تخلفات"
 }

@@ -70,7 +70,7 @@ export default {
                 },
                 {
                     headerName: this.$t('lessons.list.column_course'),
-                    field: 'label',
+                    field: 'course.name',
                     minWidth: 170,
                     sortable: true
                 },

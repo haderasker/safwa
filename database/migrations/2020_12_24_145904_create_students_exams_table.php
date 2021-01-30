@@ -18,9 +18,9 @@ class CreateStudentsExamsTable extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('exam_id');
             $table->integer('retries');
-            $table->integer('score');
-            $table->boolean('passed');
-            $table->boolean('is_submitted');
+            $table->integer('score')->nullable();
+            $table->boolean('passed')->nullable();
+            $table->boolean('is_submitted')->nullable();
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('users');

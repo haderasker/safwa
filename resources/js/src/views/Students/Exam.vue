@@ -33,8 +33,13 @@
                     </h3>
                     <ul>
                         <li class="answer text-center" v-for="(answer, answerIndex) in question.answers">
-                            <input type="radio" :id="`${questionIndex}-${answerIndex}-answer`"
-                                   :name="`${questionIndex}-answer`" :value="answerIndex">
+                            <input
+                                type="radio"
+                                :id="`${questionIndex}-${answerIndex}-answer`"
+                                :name="`${questionIndex}-answer`"
+                                :value="answer.id"
+                                v-model="userAnswers[question.id]">
+
                             <label :for="`${questionIndex}-${answerIndex}-answer`">
                                 {{ answer.label }}
                             </label>
@@ -64,125 +69,8 @@ export default {
             leaveMessage: 'you are about to leave exam, if you did, you will loose your progress.',
             totalSeconds: 0,
             timer: null,
-            exam: {
-                id: 1,
-                label: 'exam one',
-                duration: 3, // H
-                published_at: '2020-12-25 07:37:21',
-                ended_at: '2020-12-25 07:37:21',
-                level_id: 1,
-                type: 'default',
-                created_at: '2020-12-25 07:37:21',
-                updated_at: '2020-12-25 07:37:21',
-                level: {
-                    id: 1,
-                    name: 'Level One'
-                },
-                questions: [
-                    {
-                        id: 1,
-                        exam_id: 1,
-                        label: 'Question one',
-                        score: 30,
-                        order: 1,
-                        answers: [
-                            {
-                                id: 1,
-                                question_id: 1,
-                                label: 'Question One Answer One',
-                                is_correct: true
-                            },
-                            {
-                                id: 2,
-                                question_id: 1,
-                                label: 'Question One Answer Two',
-                                is_correct: false
-                            },
-                            {
-                                id: 3,
-                                question_id: 1,
-                                label: 'Question One Answer Three',
-                                is_correct: false
-                            },
-                        ]
-                    },
-                    {
-                        id: 2,
-                        exam_id: 1,
-                        label: 'Question Two',
-                        score: 40,
-                        order: 2,
-                        answers: [
-                            {
-                                id: 4,
-                                question_id: 2,
-                                label: 'Question Two Answer One',
-                                is_correct: false
-                            },
-                            {
-                                id: 5,
-                                question_id: 2,
-                                label: 'Question Two Answer Two',
-                                is_correct: true
-                            }
-                        ]
-                    },
-                    {
-                        id: 3,
-                        exam_id: 1,
-                        label: 'Question Three',
-                        score: 40,
-                        order: 3,
-                        answers: [
-                            {
-                                id: 6,
-                                question_id: 3,
-                                label: 'Question Three Answer One',
-                                is_correct: false
-                            },
-                            {
-                                id: 7,
-                                question_id: 3,
-                                label: 'Question Three Answer Two',
-                                is_correct: false
-                            },
-                            {
-                                id: 8,
-                                question_id: 3,
-                                label: 'Question Three Answer Three',
-                                is_correct: true
-                            },
-                            {
-                                id: 9,
-                                question_id: 3,
-                                label: 'Question Three Answer Four',
-                                is_correct: false
-                            }
-                        ]
-                    },
-                    {
-                        id: 4,
-                        exam_id: 1,
-                        label: 'Question Four',
-                        score: 40,
-                        order: 4,
-                        answers: [
-                            {
-                                id: 10,
-                                question_id: 4,
-                                label: 'Question Four Answer One',
-                                is_correct: true
-                            },
-                            {
-                                id: 11,
-                                question_id: 4,
-                                label: 'Question Four Answer Two',
-                                is_correct: false
-                            }
-                        ]
-                    }
-                ]
-            }
+            exam: {},
+            userAnswers: {}
         }
     },
     beforeMount() {
@@ -190,7 +78,6 @@ export default {
     },
     mounted() {
         this.loadExam()
-        this.setTime()
     },
     beforeDestroy() {
         window.removeEventListener("beforeunload", this.preventNav);
@@ -211,15 +98,28 @@ export default {
             this.totalSeconds = this.exam.duration * 60 * 60
         },
         async loadExam() {
-            // const response = safwaAxios.get(`exams/start/${this.$route.params.id}`)
-            //
-            // this.exam = response.data
+            const response = await safwaAxios.get(`exams/${this.$route.params.id}`)
+
+            this.exam = response.data
+
+            this.exam.questions.forEach(question => {
+                this.userAnswers[question.id] = -1
+            })
+
+            this.setTime()
         },
         validateQuestion() {
 
         },
-        submitExam() {
+        async submitExam() {
+            const response = await safwaAxios.post(`students/exams/${this.$route.params.id}`, {
+                answers: this.userAnswers
+            })
 
+            // display a popup and redirect to all exams
+            this.$router.push({
+                name: 'student-exams'
+            }).catch()
         },
         timeFinished() {
         }

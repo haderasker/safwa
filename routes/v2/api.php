@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/profile', function (Request $request) {
     $user = $request->user();
     $user = $user->load('roles');
+    $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
     return $user;
 });
 
@@ -43,6 +45,16 @@ Route::group(['prefix' => 'teachers'], function() {
 Route::group(['prefix' => 'students'], function() {
     Route::get('/', 'StudentsController@index');
     Route::post('/', 'StudentsController@store');
+    Route::get('/courses', 'StudentsController@courses');
+
+    Route::group(['prefix' => 'exams'], function() {
+        Route::get('/upcoming', 'StudentsController@upcomingExams');
+        Route::get('/finished', 'StudentsController@finishedExams');
+        Route::get('/{examId}/start', 'StudentsController@startExam');
+        Route::get('/{examId}', 'StudentsController@getExam');
+        Route::post('/{examId}', 'StudentsController@submitExam');
+    });
+
     Route::get('/{studentId}', 'StudentsController@edit');
     Route::put('/{studentId}', 'StudentsController@update');
 });

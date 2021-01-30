@@ -33,7 +33,7 @@
                     <label for="add_lessons">{{ $t('teachers.add_lesson') }}</label>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-checkbox id="add_lessons" v-model="teacher.add_lessons"></vs-checkbox>
+                    <vs-checkbox id="add_lessons" v-model="teacher.upload_lessons"></vs-checkbox>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -41,7 +41,7 @@
                     <span>{{ $t('teachers.description') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-textarea v-model="teacher.description" />
+                    <vs-textarea v-model="teacher.about_me" />
                 </div>
             </div>
             <div class="vx-row mb-6">

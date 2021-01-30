@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersPropertiesTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class CreateUsersPropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_properties', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('academic_year_id');
-            $table->unsignedBigInteger('level_id');
-            $table->string('country');
-            $table->string('doctrine');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+
+            $table->unsignedBigInteger('academic_year_id')->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->string('country')->nullable();
+            $table->string('doctrine')->nullable();
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->string('national_number')->nullable();
             $table->string('about_me')->nullable();
@@ -36,7 +40,6 @@ class CreateUsersPropertiesTable extends Migration
             $table->integer('upload_lessons')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('academic_year_id')->references('id')->on('academic_years');
             $table->foreign('level_id')->references('id')->on('levels');
         });
@@ -49,6 +52,6 @@ class CreateUsersPropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_properties');
+        Schema::dropIfExists('users');
     }
 }

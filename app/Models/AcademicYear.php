@@ -11,6 +11,7 @@ class AcademicYear extends Model
 
     protected $fillable = [
         'label',
+        'current'
     ];
 
     /**

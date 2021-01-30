@@ -40,6 +40,8 @@ import en_student_results from './lang/en/student_results.json'
 import ar_student_results from './lang/ar/student_results.json'
 import en_student_result_profile from './lang/en/student_result_profile.json'
 import ar_student_result_profile from './lang/ar/student_result_profile.json'
+import en_levels from './lang/en/levels.json'
+import ar_levels from './lang/ar/levels.json'
 
 Vue.use(VueI18n)
 
@@ -67,6 +69,7 @@ export default new VueI18n({
             student_exam: en_student_exam,
             student_results: en_student_results,
             student_result_profile: en_student_result_profile,
+            levels: en_levels,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -89,6 +92,7 @@ export default new VueI18n({
             student_exam: ar_student_exam,
             student_results: ar_student_results,
             student_result_profile: ar_student_result_profile,
+            levels: ar_levels,
         }
     },
     silentTranslationWarn: true

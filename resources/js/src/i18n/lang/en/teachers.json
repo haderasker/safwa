@@ -21,5 +21,7 @@
     "create_title": "Create Teacher",
     "edit_title": "Edit Teacher ",
     "save": "Save",
-    "update": "Update"
+    "update": "Update",
+    "allow_add_lesson": "Allow",
+    "disallow_add_lesson": "Disallow"
 }
