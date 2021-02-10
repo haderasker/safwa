@@ -21,24 +21,29 @@ class UsersSeeder extends Seeder
         // create test users
         DB::table('users')->insert([
             [
-                'id' => 1,
-                'name' => 'Admin',
-                'email' => 'admin@email.com',
+                'id'       => 1,
+                'name'     => 'Admin',
+                'email'    => 'admin@email.com',
+                'level_id' => null,
+                'doctrine_id' => 1,
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             ],
             [
-                'id' => 2,
-                'name' => 'Teacher',
-                'email' => 'teacher@email.com',
+                'id'       => 2,
+                'name'     => 'Teacher',
+                'email'    => 'teacher@email.com',
+                'level_id' => null,
+                'doctrine_id' => 2,
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             ],
             [
-                'id' => 3,
-                'name' => 'Student',
-                'email' => 'student@email.com',
+                'id'       => 3,
+                'name'     => 'Student',
+                'email'    => 'student@email.com',
                 'level_id' => 1,
+                'doctrine_id' => 3,
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            ]
+            ],
         ]);
     }
 }

@@ -32,13 +32,15 @@
 <script>
 import AgTable from "../../components/AgTable";
 import examTableActionColumnCell from "../../components/ExamTableActionColumnCell";
+import examProfileTableActionColumnCell from "../../components/ExamProfileTableActionColumnCell";
 import StudentUpcomingExamsDataSource from "../../datasources/StudentUpcomingExamsDataSource";
 import StudentFinishedExamsDataSource from "../../datasources/StudentFinishedExamsDataSource";
 
 export default {
     components: {
         AgTable,
-        examTableActionColumnCell
+        examTableActionColumnCell,
+        examProfileTableActionColumnCell
     },
     data() {
         return {
@@ -79,7 +81,7 @@ export default {
             return [
                 {
                     headerName: this.$t('student_exams.finished_list.column_name'),
-                    field: 'exam.label',
+                    field: 'label',
                     minWidth: 170,
                     sortable: true
                 },
@@ -87,9 +89,9 @@ export default {
                     headerName: this.$t('student_exams.finished_list.column_actions'),
                     minWidth: 170,
                     cellRendererParams: {
-                        routeName: 'student-course.profile'
+                        routeName: 'student-exam-profile'
                     },
-                    cellRendererFramework: 'examTableActionColumnCell'
+                    cellRendererFramework: 'examProfileTableActionColumnCell'
                 },
             ]
         }

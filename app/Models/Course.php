@@ -21,8 +21,6 @@ class Course extends Model
         'doctrine',
         'teacher_id',
         'description',
-//        'max_score',
-//        'min_score'
     ];
 
     /**

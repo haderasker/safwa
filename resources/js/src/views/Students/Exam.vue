@@ -8,7 +8,7 @@
 
         <vx-card :title="null">
 
-            <div class="timer">
+            <div class="timer" v-if="exam.duration">
                 <Timer v-model="totalSeconds" @finished="timeFinished"/>
             </div>
 
@@ -111,6 +111,7 @@ export default {
         validateQuestion() {
 
         },
+
         async submitExam() {
             const response = await safwaAxios.post(`students/exams/${this.$route.params.id}`, {
                 answers: this.userAnswers
@@ -121,7 +122,14 @@ export default {
                 name: 'student-exams'
             }).catch()
         },
-        timeFinished() {
+
+        async timeFinished() {
+            // we should submit the exam anyway
+            await safwaAxios.post(`students/exams/${this.$route.params.id}`, {
+                answers: this.userAnswers
+            })
+
+            // show popup
         }
     }
 }

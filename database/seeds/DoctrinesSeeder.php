@@ -17,19 +17,19 @@ class DoctrinesSeeder extends Seeder
         DB::table('doctrines')->insert([
             [
                 'id' => 1,
-                'name' => 'شافعي'
+                'label' => 'Shafi'
             ],
             [
                 'id' => 2,
-                'name' => 'ملكي'
+                'label' => 'Maliki'
             ],
             [
                 'id' => 3,
-                'name' => 'حنفي'
+                'label' => 'Hanafi'
             ],
             [
                 'id' => 4,
-                'name' => 'حنبلي'
+                'label' => 'Hanbali'
             ],
         ]);
     }

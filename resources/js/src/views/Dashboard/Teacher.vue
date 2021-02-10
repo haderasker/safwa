@@ -5,7 +5,7 @@
                 hideChart
                 class="mb-base"
                 icon="EyeIcon"
-                :statistic="subject.lessons"
+                :statistic="subject.lessons_count"
                 :statisticTitle="subject.name"/>
         </div>
     </div>
@@ -13,6 +13,7 @@
 
 <script>
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
+import safwaAxios from "../../axios";
 
 export default {
     components: {
@@ -27,25 +28,10 @@ export default {
         this.getTeacherSubjects()
     },
     methods: {
-        getTeacherSubjects () {
-            this.subjects = [
-                {
-                    name: 'subject one',
-                    lessons: '15'
-                },
-                {
-                    name: 'subject two',
-                    lessons: '20'
-                },
-                {
-                    name: 'subject three',
-                    lessons: '25'
-                },
-                {
-                    name: 'subject four',
-                    lessons: '30'
-                }
-            ]
+        async getTeacherSubjects () {
+            const response = await safwaAxios.get(`statistics/teacher`)
+
+            this.subjects = response.data
         }
     }
 }

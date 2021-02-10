@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Exam;
+use App\Models\Lesson;
 use App\Models\Question;
+use App\Models\Semester;
 use App\Models\StudentExam;
 use App\Models\StudentResponse;
+use App\Models\StudentResult;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -51,7 +55,7 @@ class StudentsController extends Controller
     {
         $this->validateRequest($request);
 
-        return DB::transaction(function() use ($request) {
+        return DB::transaction(function () use ($request) {
             $student = new User($this->attributes($request->all(), [
                 'level_id' => 1
             ]));
@@ -70,7 +74,7 @@ class StudentsController extends Controller
                 and levels.id = 1;
         ");
 
-            $levelOneCoursesForCurrentYear = array_reduce($levelOneCoursesForCurrentYear, function($total, $item) {
+            $levelOneCoursesForCurrentYear = array_reduce($levelOneCoursesForCurrentYear, function ($total, $item) {
                 return array_merge($total, json_decode($item->course_ids));
             }, []);
 
@@ -159,48 +163,37 @@ class StudentsController extends Controller
     }
 
     /**
-     * @return array
+     * @param Request $request
+     * @return LengthAwarePaginator
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function upcomingExams(): array
+    public function upcomingExams(Request $request): LengthAwarePaginator
     {
-        $exams = [];
-        $levelId = Auth::user()->level_id;
-        $courses = Auth::user()
-            ->courses()
-            ->with([
-                'exams' => function ($query) use ($levelId) {
-                    $query->doesntHave('studentExam')->where([
-                        ['level_id', '=', $levelId],
-                        ['published_at', '<=', now()],
-                        ['ended_at', '>', now()]
-                    ]);
-                }
-            ])
-            ->get();
-
-        foreach ($courses as $course) {
-            $exams = array_merge($exams, $course->exams->toArray());
-        }
-
-        return [
-            'data'  => $exams,
-            'total' => count($exams)
-        ];
+        return Exam::where([
+            ['level_id', '=', Auth::user()->level_id],
+            ['published_at', '<=', now()],
+            ['ended_at', '>', now()],
+            ['testable_type', Course::class]
+        ])
+            ->whereIn('testable_id', Auth::user()->courses()->pluck('courses.id')->toArray())
+            ->whereDoesntHave('studentExam', function($query) {
+                $query->where('student_id', Auth::user()->id);
+            })
+            ->paginate($request->input('per_page', 10));
     }
 
     /**
-     * @return array
+     * @param Request $request
+     * @return LengthAwarePaginator
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function finishedExams(): array
+    public function finishedExams(Request $request): LengthAwarePaginator
     {
-        $exams =  StudentExam::with('exam')->where('student_id', Auth::user()->id)->get();
-
-        return [
-            'data' => $exams,
-            'total' => count($exams)
-        ];
+        return Exam::where('level_id', Auth::user()->level_id)
+            ->whereHas('studentExam', function ($query) {
+                $query->where('student_id', Auth::user()->id);
+            })
+            ->paginate($request->input('per_page', 10));
     }
 
     /**
@@ -222,7 +215,7 @@ class StudentsController extends Controller
         return $exam;
     }
 
-    public function submitExam(Request $request, int $examId)
+    public function submitExam(Request $request, int $examId): array
     {
         $studentId = Auth::user()->id;
         $studentAnswers = $request->input('answers');
@@ -287,5 +280,52 @@ class StudentsController extends Controller
                 $query->with('answers');
             }
         ])->findOrFail($examId);
+    }
+
+    public function getFinishedExam(int $examId)
+    {
+        return Exam::with([
+            'level',
+            'questions' => function ($query) {
+                $query->with('answers');
+            },
+            'responses' => function($query) {
+                $query->where('student_id', Auth::user()->id);
+            }
+        ])->findOrFail($examId);
+    }
+
+    public function getCourse(int $courseId)
+    {
+        return Course::with('lessons:id,label,course_id')->findOrFail($courseId);
+    }
+
+    public function getLesson(int $lessonId)
+    {
+        return Lesson::with([
+            'course',
+            'quiz' => function($query) use ($lessonId) {
+            $query->with('studentExam');
+//                $query->whereHas('studentExam', function($query) use ($lessonId) {
+//                    $query->where('exam_id', $lessonId);
+//                });
+            },
+            'quiz.questions.answers'
+        ])->findOrFail($lessonId);
+    }
+
+    /**
+     * @param Request $request
+     * @return LengthAwarePaginator
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public function getResults(Request $request): LengthAwarePaginator
+    {
+        return StudentResult::where('student_id', Auth::user()->id)
+            ->with([
+                'level:id,name',
+                'academicYear:id,label'
+            ])
+            ->paginate($request->input('per_page', 10));
     }
 }

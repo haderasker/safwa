@@ -19,6 +19,7 @@ class CreateExamsTable extends Migration
             $table->string('testable_type');
             $table->string('label')->nullable();
             $table->integer('duration')->default(0);
+            $table->integer('score')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamp('ended_at')->nullable();
             $table->unsignedBigInteger('level_id')->nullable();

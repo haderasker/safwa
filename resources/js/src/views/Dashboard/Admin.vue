@@ -6,7 +6,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="totalStudents"
+                    :statistic="statistic.totalStudents"
                     :statisticTitle="$t('dashboard.total_students')"/>
             </div>
             <div class="vx-col w-1/2">
@@ -14,7 +14,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="totalGraduates"
+                    :statistic="statistic.totalGraduates"
                     :statisticTitle="$t('dashboard.total_graduates')"/>
             </div>
         </div>
@@ -24,7 +24,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="levelOneStudents"
+                    :statistic="statistic.levelOneStudents"
                     :statisticTitle="$t('dashboard.level_one_students')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -32,7 +32,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="levelTwoStudents"
+                    :statistic="statistic.levelTwoStudents"
                     :statisticTitle="$t('dashboard.level_two_students')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -40,7 +40,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="levelThreeStudents"
+                    :statistic="statistic.levelThreeStudents"
                     :statisticTitle="$t('dashboard.level_three_students')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -48,7 +48,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="levelFourStudents"
+                    :statistic="statistic.levelFourStudents"
                     :statisticTitle="$t('dashboard.level_four_students')"/>
             </div>
         </div>
@@ -58,7 +58,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="doctrineShafi"
+                    :statistic="statistic.doctrineShafi"
                     :statisticTitle="$t('dashboard.doctrine_shafi')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -66,7 +66,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="doctrineMaliki"
+                    :statistic="statistic.doctrineMaliki"
                     :statisticTitle="$t('dashboard.doctrine_maliki')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -74,7 +74,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="doctrineHanafi"
+                    :statistic="statistic.doctrineHanafi"
                     :statisticTitle="$t('dashboard.doctrine_hanafi')"/>
             </div>
             <div class="vx-col w-1/4">
@@ -82,7 +82,7 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="doctrineHanbali"
+                    :statistic="statistic.doctrineHanbali"
                     :statisticTitle="$t('dashboard.doctrine_hanbali')"/>
             </div>
         </div>
@@ -91,6 +91,7 @@
 
 <script>
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
+import safwaAxios from "../../axios";
 
 export default {
     components: {
@@ -98,18 +99,32 @@ export default {
     },
     data() {
         return {
-            totalStudents: 100,
-            totalGraduates: 50,
-            levelOneStudents: 10,
-            levelTwoStudents: 10,
-            levelThreeStudents: 10,
-            levelFourStudents: 10,
-            doctrineShafi: 30,
-            doctrineMaliki: 30,
-            doctrineHanafi: 30,
-            doctrineHanbali: 30,
+            statistic: {
+                totalStudents: 100,
+                totalGraduates: 50,
+                levelOneStudents: 10,
+                levelTwoStudents: 10,
+                levelThreeStudents: 10,
+                levelFourStudents: 10,
+                doctrineShafi: 30,
+                doctrineMaliki: 30,
+                doctrineHanafi: 30,
+                doctrineHanbali: 30,
+            }
         }
     },
+
+    mounted() {
+        this.loadStatistics()
+    },
+
+    methods: {
+        async loadStatistics() {
+            const response = await safwaAxios.get(`statistics/admin`)
+
+            this.statistic = response.data
+        }
+    }
 }
 </script>
 

@@ -7,5 +7,6 @@
     "start_exam": "Start Exam",
     "current_year": "Current Academic Year",
     "course_type_default": "Default",
-    "course_type_fail": "Fail"
+    "course_type_fail": "Fail",
+    "exam_results": "Exam Results"
 }

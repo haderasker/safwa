@@ -6,8 +6,8 @@
                     hideChart
                     class="mb-base"
                     icon="remove-red-eye"
-                    :statistic="lesson.name"
-                    :statisticTitle="lesson.subject"/>
+                    :statistic="lesson.label"
+                    :statisticTitle="lesson.course_name"/>
             </div>
         </div>
         <div class="vx-row">
@@ -16,8 +16,8 @@
                     hideChart
                     class="mb-base"
                     icon="EyeIcon"
-                    :statistic="subject.percentage"
-                    :statisticTitle="subject.name"/>
+                    :statistic="subject.name"
+                    :statisticTitle="subject.lessons_count"/>
             </div>
         </div>
     </div>
@@ -25,6 +25,7 @@
 
 <script>
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
+import safwaAxios from "../../axios";
 
 export default {
     components: {
@@ -37,57 +38,14 @@ export default {
         }
     },
     mounted() {
-        this.getStudentSubjects()
-        this.getStudentLessons()
+        this.loadStatistics()
     },
     methods: {
-        getStudentSubjects() {
-            this.subjects = [
-                {
-                    name: 'Subject one',
-                    percentage: 50
-                },
-                {
-                    name: 'Subject Two',
-                    percentage: 30
-                },
-                {
-                    name: 'Subject Three',
-                    percentage: 70
-                },
-                {
-                    name: 'Subject Four',
-                    percentage: 60
-                },
-                {
-                    name: 'Subject Five',
-                    percentage: 40
-                },
-                {
-                    name: 'Subject Six',
-                    percentage: 90
-                }
-            ]
-        },
-        getStudentLessons() {
-            this.lessons = [
-                {
-                    name: 'Lesson One',
-                    subject: 'Subject One'
-                },
-                {
-                    name: 'Lesson Two',
-                    subject: 'Subject Two'
-                },
-                {
-                    name: 'Lesson Three',
-                    subject: 'Subject Three'
-                },
-                {
-                    name: 'Lesson Four',
-                    subject: 'Subject Four'
-                }
-            ]
+        async loadStatistics() {
+            const response = await safwaAxios.get('statistics/student')
+
+            this.subjects = response.data.courses
+            this.lessons = response.data.lessons
         }
     }
 }

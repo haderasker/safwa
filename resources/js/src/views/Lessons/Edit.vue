@@ -26,6 +26,10 @@ export default {
         async loadLesson() {
             const response = await safwaAxios.get(`lessons/${this.$route.params.id}`)
 
+            if(!response.data.quiz) response.data.quiz = {
+                questions: []
+            }
+
             this.lesson = response.data
         }
     }

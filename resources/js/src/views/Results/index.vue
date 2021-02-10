@@ -52,42 +52,45 @@ export default {
     },
     computed: {
         agColumns() {
+            const self = this
             return [
                 {
                     headerName: this.$t('results.list.column_student_name'),
-                    field: 'name',
+                    field: 'student.name',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_student_email'),
-                    field: 'name',
+                    field: 'student.email',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_exam_name'),
-                    field: 'name',
+                    field: 'exam.label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_total_score'),
-                    field: 'name',
+                    field: 'exam.score',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_student_score'),
-                    field: 'name',
+                    field: 'score',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_status'),
-                    field: 'name',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return params.data.passed ? self.$t('results.list.column_passed') : self.$t('results.list.column_failed')
+                    }
                 },
                 {
                     headerName: this.$t('results.list.column_actions'),

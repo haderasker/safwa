@@ -11,6 +11,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -38,9 +39,13 @@ class CoursesController extends Controller
             where academic_years.current = 1;
         ");
 
-        $courses = Course::with('teacher')
-            ->withCount('lessons')
-            ->paginate($request->input('per_page', 10));
+        $courses = Course::with('teacher');
+
+        if (Auth::user()->hasRole('teacher')) {
+            $courses->where('teacher_id', Auth::user()->id);
+        }
+
+        $courses = $courses->withCount('lessons')->paginate($request->input('per_page', 10));
 
         foreach ($courses->items() as $item) {
             $levels = array_filter($currentYearCourses, function ($currentYearCourse) use ($item) {

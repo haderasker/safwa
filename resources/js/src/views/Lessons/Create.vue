@@ -4,6 +4,7 @@
 
 <script>
 import Steps from './components/Steps'
+import store from "../../store/store";
 
 export default {
     components: {
@@ -16,6 +17,16 @@ export default {
                     questions: []
                 }
             }
+        }
+    },
+    beforeMount() {
+        const roles = store.getters['Authentication/getRoles']
+        const user = store.getters['Authentication/getProfile']
+
+        if(roles.indexOf('teacher') > -1 && !user.upload_lessons) {
+            this.$router.push({
+                name: 'dashboard'
+            })
         }
     }
 }

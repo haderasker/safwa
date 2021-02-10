@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
 
             $table->unsignedBigInteger('academic_year_id')->nullable();
             $table->unsignedBigInteger('level_id')->nullable();
+            $table->unsignedBigInteger('doctrine_id')->nullable();
             $table->string('country')->nullable();
-            $table->string('doctrine')->nullable();
             $table->enum('sex', ['male', 'female'])->nullable();
             $table->string('national_number')->nullable();
             $table->string('about_me')->nullable();
@@ -42,6 +42,7 @@ class CreateUsersTable extends Migration
 
             $table->foreign('academic_year_id')->references('id')->on('academic_years');
             $table->foreign('level_id')->references('id')->on('levels');
+            $table->foreign('doctrine_id')->references('id')->on('doctrines');
         });
     }
 

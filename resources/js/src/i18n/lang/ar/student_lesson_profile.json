@@ -7,5 +7,7 @@
     "youtube": "يوتيوب",
     "soundcloud": "ساوند كلود",
     "pdf": "بي دي اف",
-    "published_at": "تاريخ النشر"
+    "published_at": "تاريخ النشر",
+    "start_quiz": "بدء الامتحان",
+    "last_score": "نتيجة المحاولة الاخيرة"
 }

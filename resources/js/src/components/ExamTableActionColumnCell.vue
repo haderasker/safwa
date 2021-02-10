@@ -12,7 +12,7 @@ import safwaAxios from "../axios";
 export default {
     methods: {
         async startExam() {
-            const response = await safwaAxios.get(`students/exams/${this.params.data.id}/start`)
+            await safwaAxios.get(`students/exams/${this.params.data.id}/start`)
 
             this.$router.push({
                 name: 'student-exam',

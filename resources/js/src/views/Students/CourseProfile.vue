@@ -74,24 +74,7 @@ export default {
     data() {
         return {
             course: {
-                name: 'Physics',
-                description: 'I am a description',
-                type: 'Default',
-                progress: '40',
-                lessons: [
-                    {
-                        id: 1,
-                        label: 'Lesson 1',
-                    },
-                    {
-                        id: 2,
-                        label: 'Lesson 2',
-                    },
-                    {
-                        id: 3,
-                        label: 'Lesson 3',
-                    },
-                ]
+                lessons: []
             }
         }
     },
@@ -100,9 +83,9 @@ export default {
     },
     methods: {
         async loadCourse() {
-            // const response = await safwaAxios.get(`courses/${this.$route.params.id}`)
-            //
-            // this.course = response.data
+            const response = await safwaAxios.get(`students/courses/${this.$route.params.id}`)
+
+            this.course = response.data
         }
     }
 }

@@ -7,5 +7,7 @@
     "youtube": "YouTube",
     "soundcloud": "Soundcloud",
     "pdf": "PDF",
-    "published_at": "Published At"
+    "published_at": "Published At",
+    "start_quiz": "Start Quiz",
+    "last_score": "Last Score"
 }

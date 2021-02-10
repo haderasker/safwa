@@ -11,6 +11,8 @@
         "column_student_score": "درجة الطالب",
         "column_exam_duration": "مدة الامتحان",
         "column_status": "الحالة",
-        "column_actions": "خيارات"
+        "column_actions": "خيارات",
+        "column_passed": "ناجح",
+        "column_failed": "راسب"
     }
 }

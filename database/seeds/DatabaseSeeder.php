@@ -12,6 +12,8 @@ use Database\Seeders\AcademicYearsSeeder;
 use Database\Seeders\SemestersSeeder;
 use Database\Seeders\SemestersLevelsCoursesSeeder;
 use Database\Seeders\UserCoursesSeeder;
+use Database\Seeders\StudentResultsSeeder;
+use Database\Seeders\DoctrinesSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,16 +24,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PermissionsSeeder::class);
+        $this->call(LevelsSeeder::class);
+        $this->call(DoctrinesSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(CoursesSeeder::class);
         $this->call(LessonsSeeder::class);
         $this->call(ExamsSeeder::class);
         $this->call(QuestionsSeeder::class);
         $this->call(AnswersSeeder::class);
-        $this->call(LevelsSeeder::class);
         $this->call(AcademicYearsSeeder::class);
         $this->call(SemestersSeeder::class);
         $this->call(SemestersLevelsCoursesSeeder::class);
         $this->call(UserCoursesSeeder::class);
+        $this->call(StudentResultsSeeder::class);
     }
 }

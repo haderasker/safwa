@@ -42,6 +42,7 @@ class ExamsController extends Controller
      * @param int $examId
      * @return Application|ResponseFactory|Response
      * @throws ValidationException
+     * @throws Exception
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
     public function update(Request $request, int $examId)
@@ -52,7 +53,7 @@ class ExamsController extends Controller
 
         try {
             DB::transaction(function () use ($inputs, $examId) {
-                $exam = Exam::findOrFail($examId);
+                $exam = $examId === 0 ? new Exam() : Exam::findOrFail($examId);
                 $exam->fill($this->examAttributes($inputs));
                 $exam->save();
 
@@ -69,7 +70,7 @@ class ExamsController extends Controller
                 }
             });
         } catch (Exception $e) {
-            throw new Exception('exam update failed, please try again');
+            throw new Exception('exam update failed, please try again: ' . $e->getMessage());
         }
 
         return response([], 204);
@@ -140,6 +141,7 @@ class ExamsController extends Controller
     /**
      * @param array $inputs
      * @return array
+     * @throws Exception
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
     private function examAttributes(array $inputs): array
@@ -152,7 +154,10 @@ class ExamsController extends Controller
             'published_at'  => $inputs['published_at'],
             'ended_at'      => $inputs['ended_at'],
             'level_id'      => $inputs['level_id'],
-            'type'          => $inputs['type']
+            'type'          => $inputs['type'],
+            'score'         => array_reduce($inputs['questions'], function ($total, $current) {
+                return $total + $current['score'];
+            }, 0)
         ];
     }
 }

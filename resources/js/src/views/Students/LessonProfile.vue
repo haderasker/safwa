@@ -34,7 +34,7 @@
                     <h4 class="mb-6">{{ $t('student_lesson_profile.content') }}</h4>
 
                     <div class="vx-row">
-                        <div class="vx-col w-1/3">
+                        <div v-if="lesson.youtube" class="vx-col w-1/3">
                             <a :href="lesson.youtube" target="_blank">
                                 <statistics-card-line
                                     hideChart
@@ -43,7 +43,7 @@
                                     :statistic="$t('student_lesson_profile.youtube')"/>
                             </a>
                         </div>
-                        <div class="vx-col w-1/3">
+                        <div v-if="lesson.soundcloud" class="vx-col w-1/3">
                             <a :href="lesson.soundcloud" target="_blank">
                                 <statistics-card-line
                                     hideChart
@@ -52,7 +52,7 @@
                                     :statistic="$t('student_lesson_profile.soundcloud')"/>
                             </a>
                         </div>
-                        <div class="vx-col w-1/3">
+                        <div v-if="lesson.pdf" class="vx-col w-1/3">
                             <a :href="lesson.pdf" target="_blank">
                                 <statistics-card-line
                                     hideChart
@@ -60,6 +60,22 @@
                                     icon="FileTextIcon"
                                     :statistic="$t('student_lesson_profile.pdf')"/>
                             </a>
+                        </div>
+                    </div>
+                    <div class="vx-row">
+                        <div class="vx-col w-1/3">
+
+                            <vs-button
+                                v-if="lesson.quiz.id && lesson.quiz.student_exam && !lesson.quiz.student_exam[0].passed"
+                                color="primary"
+                                type="filled"
+                                @click.prevent="startQuiz">
+                                {{ $t('student_lesson_profile.start_quiz') }}
+                            </vs-button>
+                        </div>
+
+                        <div class="vx-col w-1/3">
+                            {{ $t('student_lesson_profile.last_score') }}: {{ lesson.quiz.student_exam ? lesson.quiz.student_exam[0].score : 0 }} / {{ lesson.quiz.totalScore }}
                         </div>
                     </div>
                 </vs-tab>
@@ -87,15 +103,8 @@ export default {
         return {
             commentableType: 'lesson',
             lesson: {
-                label: 'lesson one',
-                youtube: 'https://www.youtube.com/watch?v=Shfi_tCSYrE&ab_channel=ChessSchool',
-                soundcloud: 'https://soundcloud.com/aboveandbeyond/group-therapy-412-with-above',
-                pdf: '',
-                published_at: '2021-01-07 07:35:51',
-                course: {
-                    id: 44,
-                    name: 'Course One'
-                }
+                course: {},
+                quiz: {}
             }
         }
     },
@@ -104,9 +113,24 @@ export default {
     },
     methods: {
         async loadLesson() {
-            // const response = await safwaAxios.get(`lessons/${this.$route.params.id}`)
-            //
-            // this.lesson = response.data
+            const response = await safwaAxios.get(`students/lessons/${this.$route.params.id}`)
+
+            response.data.quiz.totalScore = response.data.quiz.questions.reduce((total, current) => total + current.score, 0)
+
+            this.lesson = response.data
+        },
+
+        async startQuiz() {
+            const quizId = this.lesson.quiz.id
+
+            await safwaAxios.get(`students/exams/${quizId}/start`)
+
+            this.$router.push({
+                name: 'student-exam',
+                params: {
+                    id: quizId
+                }
+            }).catch()
         }
     }
 }

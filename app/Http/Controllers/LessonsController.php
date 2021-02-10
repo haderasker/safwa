@@ -10,6 +10,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -26,7 +27,15 @@ class LessonsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return Lesson::with('course')->paginate($request->input('per_page'));
+        $lessons = Lesson::with('course');
+
+        if(Auth::user()->hasRole('teacher')) {
+            $lessons->whereHas('course', function($query) {
+                $query->where('teacher_id', Auth::user()->id);
+            });
+        }
+
+        return $lessons->paginate($request->input('per_page'));
     }
 
     public function edit(int $lessonId)

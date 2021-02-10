@@ -56,44 +56,52 @@ export default {
     },
     computed: {
         agColumns() {
+            const self = this
             return [
                 {
                     headerName: this.$t('student_results.list.column_level'),
-                    field: 'label',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return self.$t(`levels.${params.data.level.name}`)
+                    }
                 },
                 {
                     headerName: this.$t('student_results.list.column_academic_year'),
-                    field: 'label',
+                    field: 'academic_year.label',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_results.list.column_first_semester'),
-                    field: 'label',
+                    field: 'semester_one_score',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_results.list.column_second_semester'),
-                    field: 'label',
+                    field: 'semester_two_score',
                     minWidth: 170,
                     sortable: true
                 },
                 {
                     headerName: this.$t('student_results.list.column_total'),
-                    field: 'label',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    valueGetter(params) {
+                        return params.data.semester_one_score + params.data.semester_two_score
+                    }
                 },
                 {
                     headerName: this.$t('student_results.list.column_actions'),
                     minWidth: 170,
-                    cellRendererParams: {
-                        routeName: 'student-result.profile'
-                    },
-                    cellRendererFramework: 'tableActionColumnCell'
+                    valueGetter(params) {
+                        return 'result details'
+                    }
+                    // cellRendererParams: {
+                    //     routeName: 'student-result.profile'
+                    // },
+                    // cellRendererFramework: 'tableActionColumnCell'
                 },
             ]
         }

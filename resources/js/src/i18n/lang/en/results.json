@@ -11,6 +11,8 @@
         "column_student_score": "Student Score",
         "column_exam_duration": "Duration",
         "column_status": "Status",
-        "column_actions": "Actions"
+        "column_actions": "Actions",
+        "column_passed": "Passed",
+        "column_failed": "Failed"
     }
 }

@@ -19,7 +19,8 @@ class Exam extends Model
         'published_at',
         'ended_at',
         'level_id',
-        'type'
+        'type',
+        'score'
     ];
 
     public function testable(): MorphTo
@@ -39,7 +40,12 @@ class Exam extends Model
 
     public function studentExam(): HasMany
     {
-        return $this->hasMany(StudentExam::class, 'exam_id', 'testable_id');
+        return $this->hasMany(StudentExam::class, 'exam_id', 'id');
+    }
+
+    public function responses(): HasMany
+    {
+        return $this->hasMany(StudentResponse::class, 'exam_id', 'id');
     }
 }
 
