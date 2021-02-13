@@ -4,11 +4,12 @@ use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/profile', function (Request $request) {
-    $user = $request->user();
-    $user = $user->load('roles');
-    $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
-    return $user;
+Route::get('/profile', 'ProfileController@profile');
+Route::post('/profile', 'ProfileController@updateProfile');
+
+Route::group(['prefix' => 'media'], function() {
+    Route::post('upload/{modelType}/{modelId}', 'ImageController@upload');
+    Route::get('remove/{modelType}/{modelId}', 'ImageController@remove');
 });
 
 Route::group(['prefix' => 'comments'], function () {
@@ -99,4 +100,8 @@ Route::group(['prefix' => 'statistics'], function () {
     Route::get('admin', 'StatisticsController@admin');
     Route::get('teacher', 'StatisticsController@teacher');
     Route::get('student', 'StatisticsController@student');
+});
+
+Route::group(['prefix' => 'doctrines'], function () {
+    Route::get('/', 'DoctrinesController@index');
 });

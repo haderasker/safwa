@@ -1,0 +1,47 @@
+{
+    "title": "Profile",
+    "avatar": "Avatar",
+    "change_avatar": "Change Avatar",
+    "remove_avatar": "Remove Avatar",
+    "save": "Save Changes",
+    "change_password": "Change Password",
+    "main_info": "Main Information",
+    "inputs": {
+        "name": "Name",
+        "email": "Email",
+        "address": "Address",
+        "job": "Job",
+        "national_number": "National Number",
+        "nationality": "Nationality",
+        "phone": "Phone",
+        "birth_date": "Birth Date",
+        "about_me": "About Me",
+        "gender": {
+            "title": "Gender",
+            "male": "Male",
+            "female": "Female"
+        },
+        "religion": {
+            "title": "Religion",
+            "muslim": "Muslim",
+            "other": "Other"
+        },
+        "quran_level": "Quran Level",
+        "language": {
+            "title": "Language",
+            "arabic": "Arabic",
+            "english": "English"
+        },
+        "ar_level": {
+            "title": "Arabic Level",
+            "beginner": "Beginner",
+            "intermediate": "Intermediate",
+            "advanced": "Advanced"
+        },
+        "doctrine": "Doctrine",
+        "qualification": "Qualification",
+        "country": "Country",
+        "password": "Password",
+        "password_confirmation": "Confirm Password"
+    }
+}

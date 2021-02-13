@@ -17,7 +17,7 @@
                     class="mb-base"
                     icon="EyeIcon"
                     :statistic="subject.name"
-                    :statisticTitle="subject.lessons_count"/>
+                    :statisticTitle="subject.lessons_count.toString()"/>
             </div>
         </div>
     </div>

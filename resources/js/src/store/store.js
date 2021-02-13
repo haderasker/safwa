@@ -6,6 +6,7 @@ import Authentication from './modules/Authentication'
 import Teachers from './modules/Teachers'
 import Courses from './modules/Courses'
 import Levels from './modules/Levels'
+import Doctrines from './modules/Doctrines'
 import Default from './modules/Default'
 
 Vue.use(Vuex)
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         Authentication,
         Teachers,
         Courses,
-        Levels
+        Levels,
+        Doctrines
     },
     strict: process.env.NODE_ENV !== 'production'
 })

@@ -42,6 +42,12 @@ import en_student_result_profile from './lang/en/student_result_profile.json'
 import ar_student_result_profile from './lang/ar/student_result_profile.json'
 import en_levels from './lang/en/levels.json'
 import ar_levels from './lang/ar/levels.json'
+import en_profile from './lang/en/profile.json'
+import ar_profile from './lang/ar/profile.json'
+import en_doctrines from './lang/en/doctrines.json'
+import ar_doctrines from './lang/ar/doctrines.json'
+import en_countries from './lang/en/countries.json'
+import ar_countries from './lang/ar/countries.json'
 
 Vue.use(VueI18n)
 
@@ -70,6 +76,9 @@ export default new VueI18n({
             student_results: en_student_results,
             student_result_profile: en_student_result_profile,
             levels: en_levels,
+            profile: en_profile,
+            doctrines: en_doctrines,
+            countries: en_countries,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -93,6 +102,9 @@ export default new VueI18n({
             student_results: ar_student_results,
             student_result_profile: ar_student_result_profile,
             levels: ar_levels,
+            profile: ar_profile,
+            doctrines: ar_doctrines,
+            countries: ar_countries,
         }
     },
     silentTranslationWarn: true

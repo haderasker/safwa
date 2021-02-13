@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -26,8 +28,8 @@ class User extends Authenticatable
         'academic_year_id',
         'level_id',
         'country',
-        'doctrine',
-        'sex',
+        'doctrine_id',
+        'gender',
         'national_number',
         'about_me',
         'phone',
@@ -113,4 +115,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Level::class, 'level_id', 'id');
     }
+
+    public function doctrine(): BelongsTo
+    {
+        return $this->belongsTo(Doctrine::class, 'doctrine_id', 'id');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->useDisk('custom')->singleFile();
+    }
+
 }

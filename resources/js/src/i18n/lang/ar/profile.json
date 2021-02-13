@@ -1,0 +1,47 @@
+{
+    "title": "الملف الشخصي",
+    "avatar": "الصورة الشخصية",
+    "change_avatar": "تغيير الصورة",
+    "remove_avatar": "حذف الصورة",
+    "save": "حفظ التغييرات",
+    "change_password": "تغيير كلمة المرور",
+    "main_info": "المعلومات الاساسية",
+    "inputs": {
+        "name": "الاسم",
+        "email": "البريد الالكتروني",
+        "address": "العنوان",
+        "job": "المهنة",
+        "national_number": "الرقم القومي",
+        "nationality": "الجنسية",
+        "phone": "التليفون",
+        "birth_date": "تاريخ الميلاد",
+        "about_me": "معلومات عني",
+        "gender": {
+            "title": "النوع",
+            "male": "ذكر",
+            "female": "انثى"
+        },
+        "religion": {
+            "title": "الديانة",
+            "muslim": "مسلم",
+            "other": "اخرى"
+        },
+        "quran_level": "مستوى القران",
+        "language": {
+            "title": "اللغة",
+            "arabic": "العربية",
+            "english": "الانجليزية"
+        },
+        "ar_level": {
+            "title": "مستوي اللغة العربية",
+            "beginner": "مبتدئ",
+            "intermediate": "متوسط",
+            "advanced": "متقدم"
+        },
+        "doctrine": "المذهب",
+        "qualification": "المؤهل",
+        "country": "الدولة",
+        "password": "كلمة المرور الجديدة",
+        "password_confirmation": "تأكيد كلمة المرور"
+    }
+}
