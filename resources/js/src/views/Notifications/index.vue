@@ -10,6 +10,18 @@
                 <v-select label="name" :options="categoryContentOptions" v-model="categoryContentOption"></v-select>
             </div>
 
+            <div class="inline-block w-full lg:w-1/3">
+                <h6>{{ $t('notifications.type_title') }}</h6>
+                <div class="mt-4">
+                    <vs-radio v-model="type" vs-value="notification" class="mr-4">
+                        {{ $t('notifications.type_notification') }}
+                    </vs-radio>
+                    <vs-radio v-model="type" vs-value="email" class="mr-4">
+                        {{ $t('notifications.type_email') }}
+                    </vs-radio>
+                </div>
+            </div>
+
             <div class="w-full mt-6">
                 <h6>{{ $t('notifications.email_content') }}</h6>
                 <vs-textarea v-model="emailContent"/>
@@ -32,7 +44,8 @@ export default {
             emailContent: '',
             categoryOption: null,
             categoryContentOption: null,
-            categoryContentOptions: []
+            categoryContentOptions: [],
+            type: 'notification'
         }
     },
     computed: {
@@ -87,7 +100,8 @@ export default {
                 await safwaAxios.post('notifications/email', {
                     content: this.emailContent,
                     group: this.categoryOption.id,
-                    member: this.categoryContentOption.id
+                    member: this.categoryContentOption.id,
+                    type: this.type
                 })
 
                 // show success message

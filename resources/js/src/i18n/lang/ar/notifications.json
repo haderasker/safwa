@@ -11,5 +11,8 @@
     "success_message": "تم ارسال الرسالة",
     "failed_title": "فشل العملية",
     "failed_message": "فشل في ارسال الرسالة من فضلك حاول مرة اخرى",
-    "send": "ارسال"
+    "send": "ارسال",
+    "type_notification": "داخل النظام",
+    "type_email": "بريد الكتروني",
+    "type_title": "نوع الاخطارات"
 }

@@ -13,7 +13,11 @@
 
                 <vs-spacer/>
 
+
                 <profile-drop-down/>
+
+                <notification-drop-down />
+
                 <i18n/>
 
             </vs-navbar>
@@ -24,6 +28,7 @@
 <script>
 import I18n from './components/I18n.vue'
 import ProfileDropDown from './components/ProfileDropDown.vue'
+import NotificationDropDown from "./components/NotificationDropDown";
 
 export default {
     name: 'the-navbar-vertical',
@@ -35,7 +40,8 @@ export default {
     },
     components: {
         ProfileDropDown,
-        I18n
+        I18n,
+        NotificationDropDown
     },
     computed: {
         activeUserInfo() {

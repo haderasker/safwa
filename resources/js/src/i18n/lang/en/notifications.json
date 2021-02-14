@@ -11,5 +11,8 @@
     "success_message": "Message Sent :)",
     "failed_title": "Failed",
     "failed_message": "Failed to send the Message :(",
-    "send": "Send"
+    "send": "Send",
+    "type_notification": "Notification",
+    "type_email": "Email",
+    "type_title": "Notification Type"
 }
