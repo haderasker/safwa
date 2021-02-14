@@ -89,7 +89,9 @@ Route::group(['prefix' => 'exams'], function () {
 });
 
 Route::group(['prefix' => 'notifications'], function () {
-    Route::post('/email', 'NotificationsController@sendEmail');
+    Route::get('/', 'NotificationsController@index');
+    Route::post('/', 'NotificationsController@sendNotification');
+    Route::post('/mark-read', 'NotificationsController@markAsRead');
 });
 
 Route::group(['prefix' => 'results'], function () {

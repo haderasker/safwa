@@ -23,11 +23,16 @@
             </div>
 
             <div class="w-full mt-6">
-                <h6>{{ $t('notifications.email_content') }}</h6>
-                <vs-textarea v-model="emailContent"/>
+                <h6>{{ $t('notifications.notification_title') }}</h6>
+                <vs-input class="w-full" v-model="title"/>
             </div>
 
-            <vs-button class="mr-4" @click="sendEmail">{{ $t('notifications.send') }}</vs-button>
+            <div class="w-full mt-6">
+                <h6>{{ $t('notifications.content') }}</h6>
+                <vs-textarea v-model="content"/>
+            </div>
+
+            <vs-button class="mr-4" @click="sendNotification">{{ $t('notifications.send') }}</vs-button>
         </vx-card>
     </div>
 </template>
@@ -41,7 +46,8 @@ export default {
     data() {
         return {
             activePopup: false,
-            emailContent: '',
+            content: '',
+            title: '',
             categoryOption: null,
             categoryContentOption: null,
             categoryContentOptions: [],
@@ -94,14 +100,15 @@ export default {
                 ...response.data.data
             ]
         },
-        async sendEmail() {
+        async sendNotification() {
             this.$vs.loading()
             try {
-                await safwaAxios.post('notifications/email', {
-                    content: this.emailContent,
+                await safwaAxios.post('notifications', {
+                    content: this.content,
                     group: this.categoryOption.id,
                     member: this.categoryContentOption.id,
-                    type: this.type
+                    type: this.type,
+                    title: this.title
                 })
 
                 // show success message

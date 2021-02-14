@@ -18,10 +18,11 @@ class CreateNotificationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('body');
-            $table->dateTime('sent_at');
+            $table->dateTime('sent_at')->nullable();
+            $table->dateTime('seen_at')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
 
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

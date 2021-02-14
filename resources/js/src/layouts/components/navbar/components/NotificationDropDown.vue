@@ -1,26 +1,24 @@
 <template>
     <!-- NOTIFICATIONS -->
-    <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
-        <feather-icon icon="BellIcon" class="cursor-pointer mt-1 sm:ml-6 mr-2" :badge="unreadNotifications.length"/>
+    <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer" @click="markAsRead">
+        <feather-icon icon="BellIcon" class="cursor-pointer mt-1 sm:ml-6 mr-2" :badge="unSeenCount"/>
 
         <vs-dropdown-menu>
             <ul class="bordered-items notification-dropdown">
-                <li v-for="ntf in unreadNotifications" :key="ntf.index"
+                <li v-for="ntf in notifications" :key="ntf.id"
                     class="flex justify-between px-4 py-4 notification cursor-pointer">
                     <div class="flex items-start">
-                        <feather-icon :icon="ntf.icon"
-                                      :svgClasses="[`text-${ntf.category}`, 'stroke-current mr-1 h-6 w-6']"></feather-icon>
                         <div class="mx-2">
                             <span class="font-medium block notification-title"
-                                  :class="[`text-${ntf.category}`]">{{ ntf.title }}</span>
-                            <small>{{ ntf.msg }}</small>
+                                  :class="[`text-${ ntf.seen_at ? 'primary' : 'success'}`]">{{ ntf.title }}</span>
+                            <small>{{ ntf.body }}</small>
                         </div>
                     </div>
-                    <small class="mt-1 whitespace-no-wrap">{{ elapsedTime(ntf.time) }}</small>
+                    <small class="mt-1 whitespace-no-wrap">{{ elapsedTime(ntf.sent_at) }}</small>
                 </li>
             </ul>
 
-            <div class="notification-footer">
+            <div class="notification-footer" @click="loadNotifications()">
                 <span>
                     Load More
                 </span>
@@ -30,90 +28,19 @@
 </template>
 
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import safwaAxios from "../../../../axios";
 
 export default {
-    components: {
-        VuePerfectScrollbar
-    },
     data() {
         return {
-            unreadNotifications: [
-                {
-                    index: 0,
-                    title: 'New Message',
-                    msg: 'Are your going to meet me tonight?',
-                    icon: 'MessageSquareIcon',
-                    time: this.randomDate({sec: 10}),
-                    category: 'primary'
-                },
-                {
-                    index: 1,
-                    title: 'New Message',
-                    msg: 'Are your going to meet me tonight?',
-                    icon: 'MessageSquareIcon',
-                    time: this.randomDate({sec: 10}),
-                    category: 'primary'
-                },
-                {
-                    index: 2,
-                    title: 'New Message',
-                    msg: 'Are your going to meet me tonight?',
-                    icon: 'MessageSquareIcon',
-                    time: this.randomDate({sec: 10}),
-                    category: 'primary'
-                },
-                {
-                    index: 3,
-                    title: 'New Message',
-                    msg: 'Are your going to meet me tonight?',
-                    icon: 'MessageSquareIcon',
-                    time: this.randomDate({sec: 10}),
-                    category: 'primary'
-                },
-                {
-                    index: 4,
-                    title: 'New Order Recieved',
-                    msg: 'You got new order of goods.',
-                    icon: 'PackageIcon',
-                    time: this.randomDate({sec: 40}),
-                    category: 'success'
-                },
-                {
-                    index: 5,
-                    title: 'Server Limit Reached!',
-                    msg: 'Server have 99% CPU usage.',
-                    icon: 'AlertOctagonIcon',
-                    time: this.randomDate({min: 1}),
-                    category: 'danger'
-                },
-                {
-                    index: 6,
-                    title: 'New Mail From Peter',
-                    msg: 'Cake sesame snaps cupcake',
-                    icon: 'MailIcon',
-                    time: this.randomDate({min: 6}),
-                    category: 'primary'
-                },
-                {
-                    index: 7,
-                    title: 'Bruce\'s Party',
-                    msg: 'Chocolate cake oat cake tiramisu',
-                    icon: 'CalendarIcon',
-                    time: this.randomDate({hr: 2}),
-                    category: 'warning'
-                }
-            ],
-            settings: {
-                maxScrollbarLength: 60,
-                wheelSpeed: .60
-            }
+            notifications: [],
+            unSeenCount: 0,
+            page: 0,
+            total: 9999999
         }
     },
-    computed: {
-        scrollbarTag() {
-            return this.$store.getters.scrollbarTag
-        }
+    mounted() {
+        this.loadNotifications()
     },
     methods: {
         elapsedTime(startTime) {
@@ -159,6 +86,33 @@ export default {
             if (sec) date.setSeconds(date.getSeconds() - sec)
 
             return date
+        },
+
+        async loadNotifications() {
+            if (this.notifications.length >= this.total) {
+                return
+            }
+
+            this.page = this.page + 1
+
+            const response = await safwaAxios.get('notifications', {
+                params: {
+                    per_page: 5,
+                    page: this.page
+                }
+            })
+
+            this.total = response.data.total
+
+            this.notifications = this.notifications.concat(response.data.data)
+
+            this.unSeenCount = this.notifications.filter(ntf => ntf.seen_at === null).length
+        },
+
+        async markAsRead() {
+            await safwaAxios.post('notifications/mark-read', {
+                notifications_ids: this.notifications.map(ntf => ntf.id)
+            })
         }
     }
 }
@@ -170,6 +124,7 @@ export default {
     max-height: 354px;
     overflow-y: scroll;
 }
+
 .notification-footer {
     background-color: #f8f8f8;
     padding: 0.5rem;
