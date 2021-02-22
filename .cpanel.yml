@@ -6,5 +6,5 @@ deployment:
     - free -m
     - ./composer install
     - free -m
-    - php artisan migrate:fresh --seed
+    - php artisan migrate --seed
     - php artisan optimize:clear
