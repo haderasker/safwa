@@ -323,7 +323,7 @@ $border-color: rgba(0, 0, 0, 0);
 
 .page-sizes .page-sizes-menu {
     display: inline-block;
-    width: calc(100% - 90px);
+    width: 100%;
 }
 
 .page-sizes::v-deep .vs__dropdown-toggle {
@@ -389,7 +389,7 @@ $border-color: rgba(0, 0, 0, 0);
 }
 
 .previous-next {
-    width: 50%;
+    width: 48%;
 }
 
 .previous {
@@ -500,7 +500,7 @@ $border-color: rgba(0, 0, 0, 0);
     .links {
         width: calc(60% - 10px);
         float: right;
-        margin: 0;
+        margin: 21px 0 0 0;
     }
     .page-sizes {
         width: calc(40% - 10px);
