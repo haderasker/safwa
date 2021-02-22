@@ -80,7 +80,7 @@ export default {
                     minWidth: 170,
                     sortable: true,
                     valueGetter(params) {
-                        return params.data.level_names.map(level_name => {
+                        return window._.get(params, 'data.level_names', []).map(level_name => {
                             return self.$t('levels.' + level_name)
                         }).join(', ')
                     }

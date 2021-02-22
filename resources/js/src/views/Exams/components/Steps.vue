@@ -268,8 +268,8 @@ export default {
             if (this.$route.params.id) {
                 await safwaAxios.put(`exams/${this.$route.params.id}`, exam);
             } else {
-                await safwaAxios.post('exams/', exam)
-                this.$router.push({name: 'exams.list'});
+                await safwaAxios.post('exams', exam)
+                this.$router.push({name: 'exams.list'}).catch();
             }
         },
         validateStep(prevIndex, nextIndex) {

@@ -18,7 +18,7 @@ class Course extends Model
      */
     protected $fillable = [
         'name',
-        'doctrine',
+        'doctrine_id',
         'teacher_id',
         'description',
     ];
@@ -48,5 +48,14 @@ class Course extends Model
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'course_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public function doctrine(): BelongsTo
+    {
+        return $this->belongsTo(Doctrine::class, 'doctrine_id', 'id');
     }
 }

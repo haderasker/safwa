@@ -18,11 +18,10 @@ class CreateCoursesTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('image')->nullable();
-//            $table->integer('max_score');
-//            $table->integer('min_score');
-            $table->string('doctrine');
-            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('doctrine_id')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->foreign('teacher_id')->references('id')->on('users');
+            $table->foreign('doctrine_id')->references('id')->on('doctrines');
             $table->timestamps();
         });
     }

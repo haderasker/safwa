@@ -87,33 +87,47 @@ export default {
     props: ['course'],
     data() {
         return {
-            listOfDoctrines: [
-                'الحنبلي',
-                'الشافعي',
-                'المالكي',
-                'الحنفي',
-            ]
         }
     },
     mounted() {
         this.loadTeachers()
+        this.loadDoctrines()
     },
     computed: {
         ...mapGetters({
             listOfTeachers: 'Teachers/getTeachers'
-        })
+        }),
+        listOfDoctrines() {
+            const doctrines = [
+                    {
+                        id: 0,
+                        label: 'all'
+                    },
+                ...this.$store.getters['Doctrines/getDoctrines']
+            ]
+
+            return doctrines.map(doctrine => {
+                const doctrine1 = JSON.parse(JSON.stringify(doctrine))
+                doctrine1.label = this.$t(`doctrines.${doctrine.label}`)
+
+                return doctrine1
+            })
+        },
     },
     methods: {
         ...mapActions({
-            loadTeachers: 'Teachers/loadTeachers'
+            loadTeachers: 'Teachers/loadTeachers',
+            loadDoctrines: 'Doctrines/loadDoctrines'
         }),
         async saveCourse() {
             const course = {
                 ... this.course,
                 teacher_id:  window._.get(this, 'course.teacher.id', null),
+                doctrine_id: window._.get(this, 'course.doctrine.id', null)
             }
 
             delete course.teacher;
+            delete course.doctrine;
 
             if(this.$route.params.id) {
                 await safwaAxios.put(`courses/${this.$route.params.id}`, course);

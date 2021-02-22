@@ -79,7 +79,7 @@ class CoursesController extends Controller
      */
     public function edit(int $courseId): Course
     {
-        return Course::with(['teacher'])->findOrFail($courseId);
+        return Course::with(['teacher', 'doctrine'])->findOrFail($courseId);
     }
 
     /**
@@ -142,7 +142,7 @@ class CoursesController extends Controller
     {
         $this->validate($request, [
             'description' => ['string', 'min:3'],
-            'doctrine'    => ['required', 'string', 'in:الحنبلي,الشافعي,المالكي,الحنفي'],
+            'doctrine_id' => ['required', 'numeric'],
             'name'        => ['required', 'string', 'min:3', 'max:150'],
             'teacher_id'  => ['required', 'integer']
         ]);
@@ -159,7 +159,7 @@ class CoursesController extends Controller
             'name'        => $request['name'],
             'description' => $request['description'],
             'teacher_id'  => $request['teacher_id'],
-            'doctrine'    => $request['doctrine']
+            'doctrine_id' => $request['doctrine_id'] > 0 ? $request['doctrine_id'] : null
         ];
     }
 }

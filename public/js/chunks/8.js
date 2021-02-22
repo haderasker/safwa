@@ -539,12 +539,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
 
               case 10:
                 _context.next = 12;
-                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].post('exams/', exam);
+                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].post('exams', exam);
 
               case 12:
                 this.$router.push({
                   name: 'exams.list'
-                });
+                }).catch();
 
               case 13:
               case "end":

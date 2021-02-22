@@ -22,6 +22,13 @@ export default {
         async loadCourse() {
             const response = await safwaAxios.get(`courses/${this.$route.params.id}`);
 
+            response.data.doctrine = response.data.doctrine || {
+                id: 0,
+                label: 'all'
+            }
+
+            response.data.doctrine.label = this.$t(`doctrines.${response.data.doctrine.label}`)
+
             this.course = response.data
         }
     },
