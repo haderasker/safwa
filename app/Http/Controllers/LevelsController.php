@@ -21,6 +21,6 @@ class LevelsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return Level::paginate($request->input('per_page', 10));
+        return Level::paginate((int)$request->input('per_page', 10));
     }
 }

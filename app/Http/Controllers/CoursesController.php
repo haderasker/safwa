@@ -45,7 +45,7 @@ class CoursesController extends Controller
             $courses->where('teacher_id', Auth::user()->id);
         }
 
-        $courses = $courses->withCount('lessons')->paginate($request->input('per_page', 10));
+        $courses = $courses->withCount('lessons')->paginate((int)$request->input('per_page', 10));
 
         foreach ($courses->items() as $item) {
             $levels = array_filter($currentYearCourses, function ($currentYearCourse) use ($item) {
@@ -143,8 +143,6 @@ class CoursesController extends Controller
         $this->validate($request, [
             'description' => ['string', 'min:3'],
             'doctrine'    => ['required', 'string', 'in:الحنبلي,الشافعي,المالكي,الحنفي'],
-//            'max_score' => ['required', 'integer'],
-//            'min_score' => ['required', 'integer'],
             'name'        => ['required', 'string', 'min:3', 'max:150'],
             'teacher_id'  => ['required', 'integer']
         ]);
@@ -160,8 +158,6 @@ class CoursesController extends Controller
         return [
             'name'        => $request['name'],
             'description' => $request['description'],
-//            'max_score' => $request['max_score'],
-//            'min_score' => $request['min_score'],
             'teacher_id'  => $request['teacher_id'],
             'doctrine'    => $request['doctrine']
         ];

@@ -19,16 +19,11 @@ class AcademicYearsSeeder extends Seeder
                 'label' => 'السنة الدراسية ١',
                 'current' => 1
             ],
-            [
-                'id'   => 2,
-                'label' => 'السنة الدراسية ٢',
-                'current' => 0
-            ],
-            [
-                'id'   => 3,
-                'label' => 'السنة الدراسية ٣',
-                'current' => 0
-            ],
+//            [
+//                'id'   => 2,
+//                'label' => 'السنة الدراسية ٢',
+//                'current' => 0
+//            ]
         ]);
     }
 }

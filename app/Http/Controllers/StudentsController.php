@@ -32,7 +32,7 @@ class StudentsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::role('student')->paginate($request->input('per_page', 10));
+        return User::role('student')->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -159,7 +159,7 @@ class StudentsController extends Controller
             ->courses()
             ->with('teacher')
             ->withCount('lessons')
-            ->paginate($request->input('per_page', 10));
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -179,7 +179,7 @@ class StudentsController extends Controller
             ->whereDoesntHave('studentExam', function($query) {
                 $query->where('student_id', Auth::user()->id);
             })
-            ->paginate($request->input('per_page', 10));
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -193,7 +193,7 @@ class StudentsController extends Controller
             ->whereHas('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })
-            ->paginate($request->input('per_page', 10));
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -326,6 +326,6 @@ class StudentsController extends Controller
                 'level:id,name',
                 'academicYear:id,label'
             ])
-            ->paginate($request->input('per_page', 10));
+            ->paginate((int)$request->input('per_page', 10));
     }
 }

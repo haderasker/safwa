@@ -35,7 +35,7 @@ class LessonsController extends Controller
             });
         }
 
-        return $lessons->paginate($request->input('per_page'));
+        return $lessons->paginate((int)$request->input('per_page', 10));
     }
 
     public function edit(int $lessonId)

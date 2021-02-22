@@ -25,6 +25,6 @@ class ResultsController extends Controller
             'exam:id,label,score',
             'student:id,name,email'
         ])
-        ->paginate($request->input('per_page', 10));
+        ->paginate((int)$request->input('per_page', 10));
     }
 }

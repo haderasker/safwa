@@ -27,7 +27,7 @@ class AcademicYearsController extends Controller
      */
     public function index(): LengthAwarePaginator
     {
-        return AcademicYear::with('semesters')->paginate(request()->input('par_page'));
+        return AcademicYear::with('semesters')->paginate((int)request()->input('per_page', 10));
     }
 
     /**

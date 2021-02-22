@@ -24,7 +24,7 @@ class ExamsController extends Controller
 {
     public function index(Request $request): LengthAwarePaginator
     {
-        return Exam::withCount('questions')->paginate($request->input('per_page', 10));
+        return Exam::withCount('questions')->paginate((int)$request->input('per_page', 10));
     }
 
     /**

@@ -8,6 +8,8 @@
             :modules="modules"
             @grid-ready="onGridReady"
             @modelUpdated="calculateHeight"
+            @selectionChanged="handleSelectionChanged"
+            @sortChanged="handleSortChanged"
             @paginationChanged="paginationChanged">
         </ag-grid-vue>
         <div class="pagination-bar" v-if="pager.totalItems > (perPageDefault || 10)">
@@ -18,12 +20,12 @@
 
             <div class="links clearfix">
                 <button @click="setPage(1)" class="first" :class="{'disabled': pager.currentPage === 1}">
-                    <span class="speakol speakol-double-arrow-left"></span>
+                    <span class="feather icon-arrow-right"></span>
                 </button>
                 <ul class="page-numbers">
                     <li class="page-item previous" :class="{'disabled': pager.currentPage === 1}">
                         <a class="page-link" @click="setPage(pager.currentPage - 1)">
-                            <span class="speakol speakol-arrow-left"></span>
+                            <span class="feather icon-skip-forward"></span>
                         </a>
                     </li>
 
@@ -34,13 +36,13 @@
 
                     <li class="page-item next" :class="{'disabled': pager.currentPage === pager.totalPages}">
                         <a class="page-link" @click="setPage(pager.currentPage + 1)">
-                            <span class="speakol speakol-arrow-right"></span>
+                            <span class="feather icon-skip-back"></span>
                         </a>
                     </li>
                 </ul>
                 <button @click="setPage(pager.totalPages)" class="last"
                         :class="{'disabled': pager.currentPage === pager.totalPages}">
-                    <span class="speakol speakol-double-arrow-right"></span>
+                    <span class="feather icon-arrow-left"></span>
                 </button>
             </div>
         </div>
@@ -111,69 +113,73 @@ export default {
             // merge default Options with user options
             return Object.assign({
                 enableRtl: this.$i18n.locale === 'ar',
-                overlayNoRowsTemplate: this.overlayNoRowsTemplate(),
+                suppressRowClickSelection: true,
                 suppressColumnVirtualisation: true,
+                suppressMultiSort: true,
+                suppressPaginationPanel: true,
+                suppressContextMenu: true,
                 suppressHorizontalScroll: true,
+                suppressCellSelection: true,
+                rowBuffer: 100,
+
+                overlayNoRowsTemplate: this.overlayNoRowsTemplate(),
                 enableCellChangeFlash: true,
                 defaultColDef: {
                     flex: 1,
                     resizable: true,
                     suppressMenu: true,
                     unSortIcon: true,
-                    suppressMovable: true
+                    suppressMovable: true,
                 },
                 columnDefs: this.columns,
                 rowModelType: 'serverSide',
                 paginationPageSize: this.perPage,
-                cacheBlockSize: this.perPage,
-                suppressPaginationPanel: true,
-                suppressContextMenu: true,
+                cacheBlockSize: 10,
                 pagination: true,
                 animateRows: true,
                 headerHeight: 60,
                 rowHeight: 56,
-                // sideBar: {
-                //     toolPanels: [
-                //         {
-                //             id: 'columns',
-                //             labelDefault: 'Columns',
-                //             labelKey: 'columns',
-                //             iconKey: 'columns',
-                //             toolPanel: 'agColumnsToolPanel',
-                //             toolPanelParams: {
-                //                 suppressRowGroups: true,
-                //                 suppressValues: true,
-                //                 suppressPivots: true,
-                //                 suppressPivotMode: true,
-                //                 suppressSideButtons: true,
-                //                 suppressColumnFilter: true,
-                //                 suppressColumnSelectAll: true,
-                //                 suppressColumnExpandAll: true
-                //             }
-                //         }
-                //     ]
-                // }
             }, this.options)
         }
     },
     watch: {
-        '$i18n.locale' () {
-            this.key = Math.random()
-        },
         totalItems () {
             this.initPager()
         },
         perPage () {
             if (this.api) {
-                this.api.paginationSetPageSize(this.perPage || this.perPageDefault || 10)
+                this.options = {
+                    ...this.options,
+                    cacheBlockSize: this.perPage || this.perPageDefault || 10,
+                    paginationPageSize: this.perPage || this.perPageDefault || 10
+                }
+
+                this.reloadGrid()
                 this.initPager()
             }
         }
     },
     methods: {
+        handleSelectionChanged (params) {
+            this.$emit('selectionChanged', params.api.getSelectedNodes().map((node) => {
+                return node.data
+            }))
+        },
+
+        handleSortChanged ($event) {
+            this.$emit('sortChanged', $event.api.getSortModel())
+        },
+
+        clearSelection () {
+            if (this.api) {
+                this.api.deselectAll()
+            }
+        },
+
         overlayNoRowsTemplate () {
             return '<span class="table-empty-state ag-overlay-loading-center" style="margin-top: 65px !important; padding: 6px 20px;">No Results Found</span>'
         },
+
         setupResponsive () {
             this.initColumnResponsive()
             window.matchMedia('(max-width: 767px)').addEventListener('change', this.initColumnResponsive)
@@ -230,8 +236,12 @@ export default {
         },
 
         paginationChanged (params) {
+            this.$emit('paginationChanged')
             this.calculateHeight(params)
+            // clear any selected data
+            this.clearSelection()
         },
+
         calculateHeight (params) {
             // set height = header + row * row_num
             // if not last page then rows_number = this.pageSizes
@@ -240,16 +250,21 @@ export default {
 
             const isLastPage = (params.api.paginationGetTotalPages() - 1) === params.api.paginationGetCurrentPage()
             const lastPageRows = this.totalItems % params.api.paginationGetPageSize()
-            const rows_number = isLastPage ? (lastPageRows === 0 ? params.api.paginationGetPageSize() : lastPageRows) : this.totalItems ? params.api.paginationGetPageSize() : 0
+            const dynamicRowsNumber = isLastPage ? (lastPageRows === 0 ? params.api.paginationGetPageSize() : lastPageRows) : this.totalItems ? params.api.paginationGetPageSize() : 0
+            const pinnedRows = params.api.getPinnedTopRowCount()
+            const calculatedRowNumber = dynamicRowsNumber + pinnedRows
+            const displayedChildRowsWithoutPagination = 'paginateChildRows' in this.gridOptions && this.gridOptions.paginateChildRows === false ? params.api.getDisplayedRowCount() - calculatedRowNumber : 0
+            const rowsNumber = calculatedRowNumber + displayedChildRowsWithoutPagination
 
-            if (rows_number) {
-                this.calculatedHeight = 80 + (56 * rows_number)
+            if (rowsNumber) {
+                this.calculatedHeight = 80 + (56 * rowsNumber)
             } else {
                 this.calculatedHeight = 120
             }
 
             this.$emit('dataChange', {totalItems: this.totalItems})
         },
+
         setColumnDefs (columns) {
             this.api.setColumnDefs(columns)
         },
@@ -258,14 +273,18 @@ export default {
             this.api.purgeServerSideCache([])
         },
 
-        getTotalRows () {
-            return this.api.getDisplayedRowCount()
-        },
-
         applyFilters () {
             this.refreshGrid()
             this.setPage(1, true)
             this.setupResponsive()
+        },
+
+        reloadGrid () {
+            this.key = Math.random()
+        },
+
+        getTotalRows () {
+            return this.api.getDisplayedRowCount()
         }
     }
 }

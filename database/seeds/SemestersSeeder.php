@@ -28,34 +28,20 @@ class SemestersSeeder extends Seeder
                 'start'            => now(),
                 'end'              => now()
             ],
-            [
-                'id'               => 3,
-                'label'            => 'الترم الاول للفرقه الثانيه',
-                'academic_year_id' => 2,
-                'start'            => now(),
-                'end'              => now()
-            ],
-            [
-                'id'               => 4,
-                'label'            => 'الترم الثاني للفرقه الثانيه',
-                'academic_year_id' => 2,
-                'start'            => now(),
-                'end'              => now()
-            ],
-            [
-                'id'               => 5,
-                'label'            => 'الترم الاول للفرقه الثالثه',
-                'academic_year_id' => 3,
-                'start'            => now(),
-                'end'              => now()
-            ],
-            [
-                'id'               => 6,
-                'label'            => 'الترم الثاني للفرقه الثالثه',
-                'academic_year_id' => 3,
-                'start'            => now(),
-                'end'              => now()
-            ]
+//            [
+//                'id'               => 3,
+//                'label'            => 'الترم الاول للفرقه الثانيه',
+//                'academic_year_id' => 2,
+//                'start'            => now(),
+//                'end'              => now()
+//            ],
+//            [
+//                'id'               => 4,
+//                'label'            => 'الترم الثاني للفرقه الثانيه',
+//                'academic_year_id' => 2,
+//                'start'            => now(),
+//                'end'              => now()
+//            ]
         ]);
     }
 }

@@ -12,6 +12,6 @@ class DoctrinesController extends Controller
      */
     public function index()
     {
-        return Doctrine::paginate(request()->input('par_page'));
+        return Doctrine::paginate((int)request()->input('par_page', 10));
     }
 }

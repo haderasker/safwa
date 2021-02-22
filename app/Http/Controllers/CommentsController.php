@@ -33,7 +33,7 @@ class CommentsController extends Controller
             ])
             ->whereNull('parent_id')
             ->orderBy('created_at', 'desc')
-            ->simplePaginate($request->input('perPage', 10));
+            ->simplePaginate((int)$request->input('per_page', 10));
     }
 
     /**

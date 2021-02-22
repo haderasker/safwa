@@ -22,7 +22,7 @@ class TeachersController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::withCount('teacherLessons')->role('teacher')->paginate($request->input('per_page', 10));
+        return User::withCount('teacherLessons')->role('teacher')->paginate((int)$request->input('per_page', 10));
     }
 
     /**

@@ -22,7 +22,7 @@ class NotificationsController extends Controller
     {
         return Notification::where('user_id', Auth::user()->id)
             ->whereNull('seen_at')
-            ->paginate($request->input('per_page', 10));
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     public function markAsRead(Request $request): array
