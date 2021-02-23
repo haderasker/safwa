@@ -1,0 +1,30 @@
+{
+    "title": "Create Account",
+    "sub_title": "Fill the below form to create a new account.",
+    "student": {
+        "title": "Student",
+        "inputs": {
+            "name": "Full Name",
+            "email": "Email",
+            "password": "Password",
+            "confirm": "Confirm Password"
+        },
+        "links": {
+            "login": "Back To Login",
+            "register": "Register"
+        }
+    },
+    "teacher": {
+        "title": "Teacher",
+        "inputs": {
+            "name": "Full Name",
+            "email": "Email",
+            "password": "Password",
+            "confirm": "Confirm Password"
+        },
+        "links": {
+            "login": "Back To Login",
+            "register": "Register"
+        }
+    }
+}

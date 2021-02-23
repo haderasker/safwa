@@ -144,12 +144,6 @@ const router = new Router({
                     beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
-                    path: '/cms',
-                    name: 'cms',
-                    component: () => import('./views/CMS'),
-                    beforeEnter: hasRole('admin')
-                },
-                {
                     path: 'teacher-courses/:id',
                     name: 'teacher-course.profile',
                     component: () => import('./views/Teachers/CourseProfile'),

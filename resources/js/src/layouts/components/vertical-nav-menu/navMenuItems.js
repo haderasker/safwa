@@ -63,13 +63,6 @@ export default [
         roles: ['admin', 'teacher']
     },
     {
-        url: "/cms",
-        name: "sidebar.cms",
-        slug: "cms",
-        icon: "HomeIcon",
-        roles: ['admin']
-    },
-    {
         url: "/student-courses",
         name: "sidebar.student-courses",
         slug: "student-courses",

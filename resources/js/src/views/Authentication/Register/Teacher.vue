@@ -3,9 +3,9 @@
         <vs-input
             v-validate="'required|min:3'"
             data-vv-validate-on="blur"
-            label-placeholder="Full Name"
+            :label-placeholder="$t('register.teacher.inputs.name')"
             name="name"
-            placeholder="Full Name"
+            :placeholder="$t('register.teacher.inputs.name')"
             v-model="name"
             class="w-full"/>
         <span class="text-danger text-sm">{{ errors.first('name') }}</span>
@@ -15,8 +15,8 @@
             data-vv-validate-on="blur"
             name="email"
             type="email"
-            label-placeholder="Email"
-            placeholder="Email"
+            :label-placeholder="$t('register.teacher.inputs.email')"
+            :placeholder="$t('register.teacher.inputs.email')"
             v-model="email"
             class="w-full mt-6"/>
         <span class="text-danger text-sm">{{ errors.first('email') }}</span>
@@ -27,8 +27,8 @@
             data-vv-validate-on="blur"
             v-validate="'required|min:6'"
             name="password"
-            label-placeholder="Password"
-            placeholder="Password"
+            :label-placeholder="$t('register.teacher.inputs.password')"
+            :placeholder="$t('register.teacher.inputs.password')"
             v-model="password"
             class="w-full mt-6"/>
         <span class="text-danger text-sm">{{ errors.first('password') }}</span>
@@ -39,14 +39,18 @@
             data-vv-validate-on="blur"
             data-vv-as="password"
             name="password_confirmation"
-            label-placeholder="Confirm Password"
-            placeholder="Confirm Password"
+            :label-placeholder="$t('register.teacher.inputs.confirm')"
+            :placeholder="$t('register.teacher.inputs.confirm')"
             v-model="password_confirmation"
             class="w-full mt-6"/>
         <span class="text-danger text-sm">{{ errors.first('password_confirmation') }}</span>
 
-        <vs-button type="border" :to="{ name: 'login' }" class="mt-6">Back To Login</vs-button>
-        <vs-button class="float-right mt-6" @click="registerTeacher" :disabled="!validateForm">Register</vs-button>
+        <vs-button type="border" :to="{ name: 'login' }" class="mt-6">
+            {{ $t('register.teacher.links.login') }}
+        </vs-button>
+        <vs-button class="float-right mt-6" @click="registerTeacher" :disabled="!validateForm">
+            {{ $t('register.teacher.links.register') }}
+        </vs-button>
     </div>
 </template>
 

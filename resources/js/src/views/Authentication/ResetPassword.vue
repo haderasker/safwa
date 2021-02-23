@@ -10,22 +10,32 @@
                         <div class="vx-col sm:w-full md:w-full lg:w-1/2 mx-auto self-center  d-theme-dark-bg">
                             <div class="p-8">
                                 <div class="vx-card__title mb-8">
-                                    <h4 class="mb-4">Reset Password</h4>
-                                    <p>Please enter your new password.</p>
+                                    <h4 class="mb-4">
+                                        {{ $t('reset_password.title') }}
+                                    </h4>
+                                    <p>
+                                        {{ $t('reset_password.sub_title') }}
+                                    </p>
                                 </div>
-                                <vs-input type="email" label-placeholder="Email" v-model="email" class="w-full mb-6"/>
-                                <vs-input type="password" label-placeholder="Password" v-model="password"
+                                <vs-input type="email" :label-placeholder="$t('reset_password.inputs.email')"
+                                          v-model="email"
                                           class="w-full mb-6"/>
-                                <vs-input type="password" label-placeholder="Confirm Password" v-model="confirmPassword"
+                                <vs-input type="password" :label-placeholder="$t('reset_password.inputs.password')"
+                                          v-model="password"
+                                          class="w-full mb-6"/>
+                                <vs-input type="password" :label-placeholder="$t('reset_password.inputs.confirm')"
+                                          v-model="confirmPassword"
                                           class="w-full mb-8"/>
 
                                 <div class="flex flex-wrap justify-between flex-col-reverse sm:flex-row">
                                     <vs-button type="border" :to="{ name: 'login' }"
-                                               class="w-full sm:w-auto mb-8 sm:mb-auto mt-3 sm:mt-auto">Go Back To Login
+                                               class="w-full sm:w-auto mb-8 sm:mb-auto mt-3 sm:mt-auto">
+                                        {{ $t('reset_password.links.login') }}
                                     </vs-button>
-                                    <vs-button @click="reset" class="w-full sm:w-auto">Reset</vs-button>
+                                    <vs-button @click="reset" class="w-full sm:w-auto">
+                                        {{ $t('reset_password.links.reset') }}
+                                    </vs-button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -53,7 +63,8 @@ export default {
                 password_confirmation: this.confirmPassword
             })
 
-            this.$router.push({ name: 'dashboard' }).catch(() => {})
+            this.$router.push({name: 'dashboard'}).catch(() => {
+            })
         }
     }
 }

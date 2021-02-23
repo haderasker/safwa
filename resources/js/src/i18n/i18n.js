@@ -48,6 +48,14 @@ import en_doctrines from './lang/en/doctrines.json'
 import ar_doctrines from './lang/ar/doctrines.json'
 import en_countries from './lang/en/countries.json'
 import ar_countries from './lang/ar/countries.json'
+import en_login from './lang/en/login.json'
+import ar_login from './lang/ar/login.json'
+import en_reset_password from './lang/en/reset_password.json'
+import ar_reset_password from './lang/ar/reset_password.json'
+import en_forget_password from './lang/en/forget_password.json'
+import ar_forget_password from './lang/ar/forget_password.json'
+import en_register from './lang/en/register.json'
+import ar_register from './lang/ar/register.json'
 
 Vue.use(VueI18n)
 
@@ -79,6 +87,10 @@ export default new VueI18n({
             profile: en_profile,
             doctrines: en_doctrines,
             countries: en_countries,
+            login: en_login,
+            register: en_register,
+            forget_password: en_forget_password,
+            reset_password: en_reset_password,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -105,6 +117,10 @@ export default new VueI18n({
             profile: ar_profile,
             doctrines: ar_doctrines,
             countries: ar_countries,
+            login: ar_login,
+            register: ar_register,
+            forget_password: ar_forget_password,
+            reset_password: ar_reset_password,
         }
     },
     silentTranslationWarn: true
