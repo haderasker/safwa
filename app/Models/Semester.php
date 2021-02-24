@@ -40,6 +40,7 @@ class Semester extends Model
             select *
             from semester_level_course
             where semester_level_course.semester_id = " . $this->attributes['id'] . "
+            order by level_id asc
         ");
 
         foreach ($levels as $level) {
