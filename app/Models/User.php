@@ -16,6 +16,8 @@ class User extends Authenticatable implements HasMedia
 {
     use Notifiable, HasRoles, HasMediaTrait;
 
+    protected $connection = 'mysql';
+
     /**
      * The attributes that are mass assignable.
      *

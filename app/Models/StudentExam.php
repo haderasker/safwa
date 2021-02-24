@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StudentExam extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'students_exams';
 
     protected $fillable = [

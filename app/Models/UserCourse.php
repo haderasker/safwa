@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class UserCourse extends Pivot
 {
+    protected $connection = 'mysql';
+
     protected $table = 'users_courses';
 
     protected $fillable = [

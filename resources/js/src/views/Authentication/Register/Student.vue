@@ -35,7 +35,7 @@
 
         <vs-input
             type="password"
-            v-validate="'min:6|max:10|confirmed:password'"
+            v-validate="'min:6|confirmed:password'"
             data-vv-validate-on="blur"
             data-vv-as="password"
             name="password_confirmation"

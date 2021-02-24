@@ -5,7 +5,8 @@
                 <h2 class="mb-1">{{ $t('lessons.title') }}</h2>
             </div>
 
-            <vx-tooltip v-if="activeUserInfo.upload_lessons" position="right" :text="$t('lessons.create_lesson_tooltip')"
+            <vx-tooltip v-if="activeUserInfo.upload_lessons || $hasRole('admin')" position="right"
+                        :text="$t('lessons.create_lesson_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
                 <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'lessons.create' }"/>
             </vx-tooltip>

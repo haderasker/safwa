@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AcademicYear extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'academic_years';
 
     protected $fillable = [

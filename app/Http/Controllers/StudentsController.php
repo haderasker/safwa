@@ -11,6 +11,7 @@ use App\Models\StudentExam;
 use App\Models\StudentResponse;
 use App\Models\StudentResult;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -190,6 +191,7 @@ class StudentsController extends Controller
     public function finishedExams(Request $request): LengthAwarePaginator
     {
         return Exam::where('level_id', Auth::user()->level_id)
+            ->where('ended_at', '>=', Carbon::now()->addDay())
             ->whereHas('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class Semester extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'semesters';
 
     protected $fillable = [

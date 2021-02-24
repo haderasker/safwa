@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SemesterLevelCourse extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'semester_level_course';
 
     protected $fillable = [

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Exam extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'exams';
 
     protected $fillable = [

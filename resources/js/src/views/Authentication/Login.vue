@@ -30,7 +30,7 @@
 
                                     <vs-input
                                         data-vv-validate-on="blur"
-                                        v-validate="'required|min:6|max:10'"
+                                        v-validate="'required|min:6'"
                                         type="password"
                                         name="password"
                                         icon-no-border
@@ -72,8 +72,8 @@ export default {
     data() {
         return {
             cred: {
-                email: 'admin@email.com',
-                password: 'password',
+                email: '',
+                password: '',
                 remember: false
             }
         }

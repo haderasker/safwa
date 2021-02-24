@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Course extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'courses';
 
     /**

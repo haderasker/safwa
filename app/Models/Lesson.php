@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Lesson extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'lessons';
 
     protected $fillable = [

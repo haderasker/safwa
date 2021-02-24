@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Level extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'levels';
 
     protected $fillable = [

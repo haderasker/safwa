@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
+    protected $connection = 'mysql';
+
     protected $table = 'questions';
 
     protected $fillable = [

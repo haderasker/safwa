@@ -13,15 +13,15 @@ class SemestersLevelsCoursesSeeder extends Seeder
         DB::table('semester_level_course')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        DB::table('semester_level_course')->insert([
-            ['id' => 1, 'semester_id' => 1, 'level_id' => 1, 'course_ids' => json_encode([1, 2])],
-            ['id' => 2, 'semester_id' => 1, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
-            ['id' => 3, 'semester_id' => 1, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
-            ['id' => 4, 'semester_id' => 1, 'level_id' => 4, 'course_ids' => json_encode([2, 3])],
-            ['id' => 5, 'semester_id' => 2, 'level_id' => 1, 'course_ids' => json_encode([1, 2])],
-            ['id' => 6, 'semester_id' => 2, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
-            ['id' => 7, 'semester_id' => 2, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
-            ['id' => 8, 'semester_id' => 2, 'level_id' => 4, 'course_ids' => json_encode([2, 3])],
+//        DB::table('semester_level_course')->insert([
+//            ['id' => 1, 'semester_id' => 1, 'level_id' => 1, 'course_ids' => json_encode([1, 2])],
+//            ['id' => 2, 'semester_id' => 1, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
+//            ['id' => 3, 'semester_id' => 1, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
+//            ['id' => 4, 'semester_id' => 1, 'level_id' => 4, 'course_ids' => json_encode([2, 3])],
+//            ['id' => 5, 'semester_id' => 2, 'level_id' => 1, 'course_ids' => json_encode([1, 2])],
+//            ['id' => 6, 'semester_id' => 2, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
+//            ['id' => 7, 'semester_id' => 2, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
+//            ['id' => 8, 'semester_id' => 2, 'level_id' => 4, 'course_ids' => json_encode([2, 3])],
 //            ['id' => 9, 'semester_id' => 3, 'level_id' => 1, 'course_ids' => json_encode([1, 2])],
 //            ['id' => 10, 'semester_id' => 3, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
 //            ['id' => 11, 'semester_id' => 3, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
@@ -38,6 +38,6 @@ class SemestersLevelsCoursesSeeder extends Seeder
 //            ['id' => 22, 'semester_id' => 6, 'level_id' => 2, 'course_ids' => json_encode([3, 4])],
 //            ['id' => 23, 'semester_id' => 6, 'level_id' => 3, 'course_ids' => json_encode([1, 4])],
 //            ['id' => 24, 'semester_id' => 6, 'level_id' => 4, 'course_ids' => json_encode([2, 3])],
-        ]);
+//        ]);
     }
 }
