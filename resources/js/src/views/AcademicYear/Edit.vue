@@ -5,6 +5,7 @@
 <script>
 import Steps from "./components/Steps";
 import safwaAxios from "../../axios";
+
 export default {
     components: {Steps},
     data() {
@@ -35,12 +36,23 @@ export default {
         this.getYear()
     },
     methods: {
-        async getYear () {
-            const { data } = await safwaAxios.get(`academic-years/${this.$route.params.id}`)
+        async getYear() {
+            const {data} = await safwaAxios.get(`academic-years/${this.$route.params.id}`)
 
-            if(!data) {
+            if (!data) {
                 return
             }
+
+            data.semesters.forEach(semester => {
+                if (!semester.levels.length) {
+                    semester.levels = [
+                        {course_ids: []},
+                        {course_ids: []},
+                        {course_ids: []},
+                        {course_ids: []}
+                    ]
+                }
+            })
 
             this.academicYear = data
         }
