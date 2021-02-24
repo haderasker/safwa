@@ -8,11 +8,17 @@
 
         <vx-card>
             <div class="px-6 pt-6">
+                <vs-alert icon-pack="feather" icon="icon-info" color="warning" class="mb-6"
+                          :active="userIsReady">
+                    {{ $t('profile.fill_content') }}
+                </vs-alert>
+
                 <!-- Avatar Row -->
                 <div class="vx-row">
                     <div class="vx-col w-full">
                         <div class="flex items-start flex-col sm:flex-row">
-                            <img v-if="profile.avatar" :src="profile.avatar" class="mr-8 rounded h-24 w-24" alt="avatar"/>
+                            <img v-if="profile.avatar" :src="profile.avatar" class="mr-8 rounded h-24 w-24"
+                                 alt="avatar"/>
                             <div>
                                 <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
                                     {{ $t('profile.avatar') }}
@@ -43,7 +49,7 @@
 
                     <div class="vx-col md:w-1/2 w-full">
                         <vs-input class="w-full mt-4" :label="$t('profile.inputs.name')" v-model="profile.name"
-                                  v-validate="'required|alpha_num'"
+                                  v-validate="'required'"
                                   name="username"/>
                         <span class="text-danger text-sm" v-show="errors.has('name')">
                             {{ errors.first('name') }}
@@ -352,6 +358,9 @@ export default {
         ...mapGetters({
             doctrines: 'Doctrines/getDoctrines'
         }),
+        userIsReady() {
+            return this.$hasRole('student') && !this.profile.doctrine_id
+        },
         translatedDoctrines() {
             return this.doctrines.map(doctrine => {
                 const doctrine1 = JSON.parse(JSON.stringify(doctrine))
@@ -394,20 +403,29 @@ export default {
         translateProfile() {
             const profile = JSON.parse(JSON.stringify(this.$store.getters['Authentication/getProfile']))
 
-            profile.doctrine.label = this.$t(`doctrines.${profile.doctrine.label}`)
-
-            profile.country = {
-                label: this.$t(`countries.${profile.country}`),
-                code: profile.country
-            }
-            profile.nationality = {
-                label: this.$t(`countries.${profile.nationality}`),
-                code: profile.nationality
+            if (profile.doctrine) {
+                profile.doctrine.label = this.$t(`doctrines.${profile.doctrine.label}`)
             }
 
-            profile.quran_level = {
-                label: `${this.$t('general.quran_part')} ${profile.quran_level}`,
-                part: profile.quran_level
+            if (profile.country) {
+                profile.country = {
+                    label: this.$t(`countries.${profile.country}`),
+                    code: profile.country
+                }
+            }
+
+            if (profile.nationality) {
+                profile.nationality = {
+                    label: this.$t(`countries.${profile.nationality}`),
+                    code: profile.nationality
+                }
+            }
+
+            if (profile.quran_level) {
+                profile.quran_level = {
+                    label: `${this.$t('general.quran_part')} ${profile.quran_level}`,
+                    part: profile.quran_level
+                }
             }
 
             return profile
@@ -440,7 +458,7 @@ export default {
         async save() {
             // validate
             await this.$validator.validate()
-
+            console.log(this.$validator.errors)
             if (this.$validator.errors.any()) {
                 return
             }

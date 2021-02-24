@@ -12,14 +12,29 @@ import safwaAxios from "../axios";
 export default {
     methods: {
         async startExam() {
-            await safwaAxios.get(`students/exams/${this.params.data.id}/start`)
+            this.$vs.dialog({
+                type: 'confirm',
+                color: 'warning',
+                title: this.$t('general.start_exam_popup_title'),
+                text: this.$t('general.start_exam_popup_body', {
+                    label: this.params.data.label,
+                    start_at_date: this.$moment(this.params.data.published_at).format('D-M-YYYY'),
+                    start_at_hour: this.$moment(this.params.data.published_at).format('h'),
+                    end_at_date:  this.$moment(this.params.data.ended_at).format('D-M-YYYY'),
+                    end_at_hour: this.$moment(this.params.data.ended_at).format('h'),
+                    duration: this.params.data.duration
+                }),
+                accept: async () => {
+                    await safwaAxios.get(`students/exams/${this.params.data.id}/start`)
 
-            this.$router.push({
-                name: 'student-exam',
-                params: {
-                    id: this.params.data.id
+                    this.$router.push({
+                        name: 'student-exam',
+                        params: {
+                            id: this.params.data.id
+                        }
+                    }).catch()
                 }
-            }).catch()
+            })
         }
     }
 }

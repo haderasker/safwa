@@ -191,7 +191,7 @@ class StudentsController extends Controller
     public function finishedExams(Request $request): LengthAwarePaginator
     {
         return Exam::where('level_id', Auth::user()->level_id)
-            ->where('ended_at', '>=', Carbon::now()->addDay())
+            ->where('ended_at', '<=', Carbon::now()->addDay())
             ->whereHas('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })

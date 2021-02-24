@@ -5,6 +5,8 @@
     "delete": "Delete",
     "timer_message": "Time to End of Exam",
     "start_exam": "Start Exam",
+    "start_exam_popup_title": "Warn",
+    "start_exam_popup_body": "you are about to start an exam. ",
     "current_year": "Current Academic Year",
     "course_type_default": "Default",
     "course_type_fail": "Fail",

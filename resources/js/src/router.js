@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {beforeEnterAuthenticatedRoutes} from './middlewares/enterAuthenticatedRoutes'
 import {beforeEnterPublicRoutes} from './middlewares/enterPublicRoutes'
+import {checkStudentProfile} from './middlewares/checkStudentProfile'
 import {hasRole, hasAnyRole} from "./middlewares/hasRole";
+import multiguard from 'vue-router-multiguard';
 
 Vue.use(Router)
 
@@ -21,7 +23,7 @@ const router = new Router({
                     path: '/',
                     name: 'dashboard',
                     component: () => import('./views/Dashboard'),
-                    beforeEnter: hasAnyRole('admin', 'teacher', 'student')
+                    beforeEnter: multiguard([hasAnyRole('admin', 'teacher', 'student'), checkStudentProfile])
                 },
                 {
                     path: '/academic-year',
@@ -63,7 +65,7 @@ const router = new Router({
                     path: '/results',
                     name: 'results.list',
                     component: () => import('./views/Results'),
-                    beforeEnter: hasRole('admin')
+                    beforeEnter:hasRole('admin')
                 },
                 {
                     path: '/courses',
@@ -153,55 +155,55 @@ const router = new Router({
                     path: '/student-courses',
                     name: 'student-courses',
                     component: () => import('./views/Students/Courses'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-courses/:id',
                     name: 'student-course.profile',
                     component: () => import('./views/Students/CourseProfile'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-lessons/:id',
                     name: 'student-lesson.profile',
                     component: () => import('./views/Students/LessonProfile'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-exams',
                     name: 'student-exams',
                     component: () => import('./views/Students/Exams'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-exams/:id',
                     name: 'student-exam',
                     component: () => import('./views/Students/Exam'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-exam-profile/:id',
                     name: 'student-exam-profile',
                     component: () => import('./views/Students/ExamProfile'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-results',
                     name: 'student-results',
                     component: () => import('./views/Students/Results'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/student-results/:id',
                     name: 'student-result.profile',
                     component: () => import('./views/Students/ResultProfile'),
-                    beforeEnter: hasRole('student')
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
                 },
                 {
                     path: '/me',
                     name: 'me', // profile
                     component: () => import('./views/Me'),
-                    beforeEnter: hasAnyRole('admin', 'teacher', 'student')
+                    beforeEnter: multiguard([hasAnyRole('admin', 'teacher', 'student'), checkStudentProfile])
                 },
             ],
             beforeEnter: beforeEnterAuthenticatedRoutes
