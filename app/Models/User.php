@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Events\UserUpdatingEvent;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -63,6 +65,15 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'updating' => UserUpdatingEvent::class
     ];
 
     /**
@@ -126,6 +137,36 @@ class User extends Authenticatable implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images')->useDisk('custom')->singleFile();
+    }
+
+    /**
+     * @param User $user
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public static function assignCourses(User $user)
+    {
+        $levelCoursesForCurrentYear = DB::select("
+            select semester_level_course.course_ids
+            from semester_level_course
+            left join semesters on semester_level_course.semester_id = semesters.id
+            left join levels on semester_level_course.level_id = levels.id
+            left join academic_years on semesters.academic_year_id = academic_years.id
+            where academic_years.current = 1
+                and levels.id = " . $user->level_id . ";
+        ");
+
+        $levelCoursesForCurrentYear = array_reduce($levelCoursesForCurrentYear, function ($total, $item) {
+            return array_merge($total, json_decode($item->course_ids));
+        }, []);
+
+        $levelCoursesForCurrentYear = array_values(array_unique($levelCoursesForCurrentYear));
+
+        $courses = Course::whereIn('id', $levelCoursesForCurrentYear)->where(function ($query) use ($user) {
+            $query->where('doctrine_id', $user->doctrine_id)
+                ->orWhereNull('doctrine_id');
+        })->pluck('id')->toArray();
+
+        $user->courses()->attach($courses);
     }
 
 }

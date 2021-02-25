@@ -65,7 +65,7 @@ class RegisterController extends Controller
      * @param array $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
         $user = User::updateOrCreate([
             'email' => $data['email']
@@ -76,24 +76,6 @@ class RegisterController extends Controller
 
         // assign role to the user
         $user->assignRole($data['type']);
-
-        $levelOneCoursesForCurrentYear = DB::select("
-            select semester_level_course.course_ids
-            from semester_level_course
-            left join semesters on semester_level_course.semester_id = semesters.id
-            left join levels on semester_level_course.level_id = levels.id
-            left join academic_years on semesters.academic_year_id = academic_years.id
-            where academic_years.current = 1
-                and levels.id = 1;
-        ");
-
-        $levelOneCoursesForCurrentYear = array_reduce($levelOneCoursesForCurrentYear, function ($total, $item) {
-            return array_merge($total, json_decode($item->course_ids));
-        }, []);
-
-        $levelOneCoursesForCurrentYear = array_values(array_unique($levelOneCoursesForCurrentYear));
-
-        $user->courses()->attach($levelOneCoursesForCurrentYear);
 
         return $user;
     }

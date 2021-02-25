@@ -224,6 +224,7 @@
                             </label>
                             <div>
                                 <v-select
+                                    :disabled="!!profile.doctrine_id"
                                     name="doctrine"
                                     class="w-full"
                                     :options="translatedDoctrines"
@@ -458,7 +459,7 @@ export default {
         async save() {
             // validate
             await this.$validator.validate()
-            console.log(this.$validator.errors)
+
             if (this.$validator.errors.any()) {
                 return
             }
