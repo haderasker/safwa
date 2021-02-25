@@ -152,9 +152,9 @@ class AcademicYearsController extends Controller
     private function validateRequest(Request $request)
     {
         $this->validate($request, [
-            'label'                             => ['required', 'string', 'min:3', 'max:200'],
-            'semesters'                         => ['required', 'array', 'min:2', 'max:2'],
-            'semesters.*.label'                 => ['required', 'string', 'min:3', 'max:200'],
+            'label'                             => ['required', 'string', 'max:200'],
+            'semesters'                         => ['required', 'array', 'max:2'],
+            'semesters.*.label'                 => ['required', 'string', 'max:200'],
             'semesters.*.start'                 => ['required', 'date_format:Y-m-d'],
             'semesters.*.end'                   => ['required', 'date_format:Y-m-d'],
             'semesters.*.levels'                => ['required', 'array', 'min:4', 'max:4'],

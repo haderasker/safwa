@@ -133,17 +133,17 @@ class LessonsController extends Controller
     {
         $this->validate($request, [
             'course_id'                        => ['required', 'integer'],
-            'label'                            => ['required', 'min:3', 'max:150'],
+            'label'                            => ['required', 'max:150'],
             'published_at'                     => ['required', 'date_format:Y-m-d H:i'],
             'youtube'                          => ['nullable', 'regex:/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/'],
             'soundcloud'                       => ['nullable', 'regex:/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/'],
             'pdf'                              => ['nullable', 'string'],
             'questions'                        => ['required', 'array', 'min:1'],
-            'questions.*.label'                => ['required', 'string', 'min:3', 'max:150'],
+            'questions.*.label'                => ['required', 'string', 'max:150'],
             'questions.*.score'                => ['required', 'integer', 'min:1'],
             'questions.*.order'                => ['required', 'integer'],
             'questions.*.answers'              => ['required', 'array', 'min:1'],
-            'questions.*.answers.*.label'      => ['required', 'string', 'min:3', 'max:150'],
+            'questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
             'questions.*.answers.*.is_correct' => ['required', 'boolean']
         ]);
     }

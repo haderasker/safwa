@@ -143,7 +143,7 @@ class CoursesController extends Controller
         $this->validate($request, [
             'description' => ['string', 'min:3'],
             'doctrine_id' => ['required', 'numeric'],
-            'name'        => ['required', 'string', 'min:3', 'max:150'],
+            'name'        => ['required', 'string', 'max:150'],
             'teacher_id'  => ['required', 'integer']
         ]);
     }

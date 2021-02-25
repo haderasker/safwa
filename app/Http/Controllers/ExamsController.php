@@ -120,7 +120,7 @@ class ExamsController extends Controller
     private function validateRequest(Request $request)
     {
         $this->validate($request, [
-            'label'                            => ['required', 'string', 'min:3', 'max:150'],
+            'label'                            => ['required', 'string', 'max:150'],
             'testable_id'                      => ['required', 'integer'],
             'testable_type'                    => ['required', 'string', 'in:lesson,course'],
             'duration'                         => ['required', 'integer'],
@@ -129,11 +129,11 @@ class ExamsController extends Controller
             'level_id'                         => ['nullable', 'integer'],
             'type'                             => ['required', 'string', 'in:default,fail'],
             'questions'                        => ['required', 'array', 'min:1'],
-            'questions.*.label'                => ['required', 'string', 'min:3', 'max:150'],
+            'questions.*.label'                => ['required', 'string', 'max:150'],
             'questions.*.score'                => ['required', 'integer', 'min:1'],
             'questions.*.order'                => ['required', 'integer'],
             'questions.*.answers'              => ['required', 'array', 'min:1'],
-            'questions.*.answers.*.label'      => ['required', 'string', 'min:3', 'max:150'],
+            'questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
             'questions.*.answers.*.is_correct' => ['required', 'boolean']
         ]);
     }
