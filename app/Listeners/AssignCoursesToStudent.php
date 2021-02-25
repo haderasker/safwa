@@ -15,7 +15,7 @@ class AssignCoursesToStudent
         $newUser = $event->user;
         $oldUser = $event->user->getOriginal();
 
-         if ($oldUser['doctrine_id']) {
+         if ($oldUser['doctrine_id'] || !$newUser->doctrine_id) {
              return;
          }
 
