@@ -154,10 +154,10 @@ class StudentsController extends Controller
     {
         return Exam::where([
             ['level_id', '=', Auth::user()->level_id],
-            ['published_at', '<=', now()],
-            ['ended_at', '>=', now()],
             ['testable_type', Course::class]
         ])
+            ->whereDate('published_at', '<=', now())
+            ->whereDate('ended_at', '>=', now())
             ->whereIn('testable_id', Auth::user()->courses()->pluck('courses.id')->toArray())
             ->whereDoesntHave('studentExam', function($query) {
                 $query->where('student_id', Auth::user()->id);
