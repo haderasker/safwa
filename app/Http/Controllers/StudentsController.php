@@ -159,7 +159,7 @@ class StudentsController extends Controller
             ->whereDate('published_at', '<=', now())
             ->whereDate('ended_at', '>=', now())
             ->whereIn('testable_id', Auth::user()->courses()->pluck('courses.id')->toArray())
-            ->whereDoesntHave('studentExam', function($query) {
+            ->whereDoesntHave('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })
             ->paginate((int)$request->input('per_page', 10));
@@ -235,6 +235,10 @@ class StudentsController extends Controller
             $studentExams->save();
 
             foreach ($studentAnswers as $question => $answer) {
+                if ($answer === -1) {
+                    continue;
+                }
+
                 $studentAnswersRows[] = [
                     'student_id'  => $studentId,
                     'exam_id'     => $examId,
@@ -273,7 +277,7 @@ class StudentsController extends Controller
             'questions' => function ($query) {
                 $query->with('answers');
             },
-            'responses' => function($query) {
+            'responses' => function ($query) {
                 $query->where('student_id', Auth::user()->id);
             }
         ])->findOrFail($examId);
@@ -288,8 +292,8 @@ class StudentsController extends Controller
     {
         return Lesson::with([
             'course',
-            'quiz' => function($query) use ($lessonId) {
-            $query->with('studentExam');
+            'quiz' => function ($query) use ($lessonId) {
+                $query->with('studentExam');
 //                $query->whereHas('studentExam', function($query) use ($lessonId) {
 //                    $query->where('exam_id', $lessonId);
 //                });

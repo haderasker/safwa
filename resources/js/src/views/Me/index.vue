@@ -466,15 +466,15 @@ export default {
 
             const profile = {
                 ...JSON.parse(JSON.stringify(this.profile)),
-                doctrine_id: this.profile.doctrine.id || null,
-                country: this.profile.country.code || null,
-                nationality: this.profile.nationality.code || null,
-                quran_level: this.profile.quran_level.part
+                doctrine_id: window._.get(this, 'profile.doctrine.id', null),
+                country: window._.get(this, 'profile.country.code', null),
+                nationality: window._.get(this, 'profile.nationality.code', null),
+                quran_level: window._.get(this, 'profile.quran_level.part', null)
             }
 
             await safwaAxios.post('profile', profile)
 
-            window.location.reload()
+            window.location.href = '/'
         }
     }
 }

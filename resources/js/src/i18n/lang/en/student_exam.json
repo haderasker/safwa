@@ -1,3 +1,8 @@
 {
-
+    "exam": "Exam",
+    "leave_message": "you are about to leave exam, if you did, you will loose your progress.",
+    "leave_exam_title": "Exam Finished",
+    "leave_exam_message": "You will finish and submit Exam Questions, Are you Sure.",
+    "time_finished_title": "Exam Time Finished",
+    "time_finished_message": "all your answers are submitted"
 }

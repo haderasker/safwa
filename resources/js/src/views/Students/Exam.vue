@@ -66,11 +66,12 @@ export default {
     },
     data() {
         return {
-            leaveMessage: 'you are about to leave exam, if you did, you will loose your progress.',
+            leaveMessage: this.$t('student_exam.leave_message'),
             totalSeconds: 0,
             timer: null,
             exam: {},
-            userAnswers: {}
+            userAnswers: {},
+            submitExamFlag: false
         }
     },
     beforeMount() {
@@ -83,10 +84,14 @@ export default {
         window.removeEventListener("beforeunload", this.preventNav);
     },
     beforeRouteLeave(to, from, next) {
+        if(this.submitExamFlag) {
+            return next()
+        }
+
         if (!window.confirm(this.leaveMessage)) {
             return;
         }
-        next();
+        return next();
     },
     methods: {
         preventNav(event) {
@@ -113,14 +118,25 @@ export default {
         },
 
         async submitExam() {
-            const response = await safwaAxios.post(`students/exams/${this.$route.params.id}`, {
-                answers: this.userAnswers
+            // display a popup and redirect to all exams
+            this.$vs.dialog({
+                type: 'confirm',
+                color: 'warning',
+                title: this.$t('student_exam.leave_exam_title'),
+                text: this.$t('student_exam.leave_exam_message'),
+                accept: async () => {
+                    await safwaAxios.post(`students/exams/${this.$route.params.id}`, {
+                        answers: this.userAnswers
+                    })
+
+                    // stop alert message
+                    this.submitExamFlag = true
+                    this.$router.push({
+                        name: 'student-exams'
+                    }).catch()
+                }
             })
 
-            // display a popup and redirect to all exams
-            this.$router.push({
-                name: 'student-exams'
-            }).catch()
         },
 
         async timeFinished() {
@@ -129,7 +145,19 @@ export default {
                 answers: this.userAnswers
             })
 
+            this.submitExamFlag = true
+            await this.$router.push({
+                name: 'student-exams'
+            })
+
             // show popup
+            this.$vs.dialog({
+                type: 'alert',
+                color: 'warning',
+                buttonCancel: false,
+                title: this.$t('student_exam.time_finished_title'),
+                text: this.$t('student_exam.time_finished_message')
+            })
         }
     }
 }

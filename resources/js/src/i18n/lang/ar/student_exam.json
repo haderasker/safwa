@@ -1,3 +1,8 @@
 {
-    "exam": "امتحان"
+    "exam": "امتحان",
+    "leave_message": "انت علي وشك مغادرة الامتحان.",
+    "leave_exam_title": "انهاء الامتحان",
+    "leave_exam_message": "هل انت متأكد انك تريد انهاء الامتحان.",
+    "time_finished_title": "انتهى الوقت",
+    "time_finished_message": "تم حفظ جميع اجاباتك"
 }
