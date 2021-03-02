@@ -147,6 +147,13 @@ export default {
                 is_correct: false
             })
         },
+        removeAnswer(index) {
+            if (this.question.answers.length < 3) {
+                return
+            }
+
+            this.question.answers.splice(index, 1)
+        },
         closeSidebar(saved) {
             this.$emit('close', saved)
         }

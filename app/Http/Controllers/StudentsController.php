@@ -173,7 +173,7 @@ class StudentsController extends Controller
     public function finishedExams(Request $request): LengthAwarePaginator
     {
         return Exam::where('level_id', Auth::user()->level_id)
-            ->where('ended_at', '<=', Carbon::now()->addDay())
+            ->whereDate('ended_at', '<', Carbon::now())
             ->whereHas('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })
@@ -272,7 +272,7 @@ class StudentsController extends Controller
 
     public function getFinishedExam(int $examId)
     {
-        return Exam::with([
+        $exam = Exam::with([
             'level',
             'questions' => function ($query) {
                 $query->with('answers');
@@ -280,7 +280,43 @@ class StudentsController extends Controller
             'responses' => function ($query) {
                 $query->where('student_id', Auth::user()->id);
             }
-        ])->findOrFail($examId);
+        ])
+            ->findOrFail($examId);
+
+        $exam->user_score = 0;
+
+        foreach($exam->questions as $question) {
+            foreach($question->answers as $answer) {
+                $isInUserAnswers = $exam->responses
+                    ->where('question_id', $question->id)
+                    ->where('answer_id', $answer->id)
+                    ->first();
+
+                if ($answer->is_correct) {
+                    $question->correctAnswer = $answer;
+                }
+
+                if ($answer->is_correct && $isInUserAnswers) {
+                    $answer->student_correct_answer = true;
+                    $question->correct = true;
+                    $exam->user_score = $exam->user_score + $question->score;
+                }
+
+                if (!$answer->is_correct && $isInUserAnswers) {
+                    $question->correct = false;
+                    $answer->student_wrong_answer = true;
+                }
+
+                if ($isInUserAnswers) {
+                    $answer->selected = true;
+                }
+            }
+        }
+
+        $exam = $exam->toArray();
+        unset($exam['responses']);
+
+        return $exam;
     }
 
     public function getCourse(int $courseId)

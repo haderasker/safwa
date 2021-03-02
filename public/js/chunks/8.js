@@ -209,6 +209,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         is_correct: false
       });
     },
+    removeAnswer: function removeAnswer(index) {
+      if (this.question.answers.length < 3) {
+        return;
+      }
+
+      this.question.answers.splice(index, 1);
+    },
     closeSidebar: function closeSidebar(saved) {
       this.$emit('close', saved);
     }

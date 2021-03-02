@@ -1,6 +1,7 @@
 {
     "title": "Login",
     "sub_title": "Welcome back, please login to your account.",
+    "failed_auth_message": "These credentials do not match our records.",
     "inputs": {
         "email": "Email",
         "password": "Password",

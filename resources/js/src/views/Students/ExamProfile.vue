@@ -22,8 +22,8 @@
                 <tab-content v-for="(question, questionIndex) in exam.questions" :key="`question-${question.id}`"
                              title="">
                     <h3 class="mt-8 mb-6 text-center" :class="{
-                        correctQuestion: question.correctAnswer.id === exam.responses[questionIndex].answer_id,
-                        wrongQuestion: question.correctAnswer.id !== exam.responses[questionIndex].answer_id
+                        correctQuestion: !!question.correct,
+                        wrongQuestion: !question.correct
                     }">
                         {{ question.label }}
                     </h3>
@@ -31,14 +31,13 @@
                         <li class="answer text-center" v-for="(answer, answerIndex) in question.answers">
                             <input
                                 :class="{
-                                    student_correct_answer: exam.responses[questionIndex].answer_id === answer.id && answer.is_correct,
-                                    student_wrong_answer: exam.responses[questionIndex].answer_id === answer.id && !answer.is_correct
+                                    student_correct_answer: !!answer.student_correct_answer,
+                                    student_wrong_answer: !!answer.student_wrong_answer
                                 }"
                                 type="radio"
                                 :id="`${questionIndex}-${answerIndex}-answer`"
                                 :name="`${questionIndex}-answer`"
-                                :value="answer.id"
-                                v-model="userAnswers[question.id]">
+                                :checked="answer.selected">
 
                             <label :for="`${questionIndex}-${answerIndex}-answer`">
                                 {{ answer.label }}
@@ -46,14 +45,15 @@
                         </li>
                     </ul>
 
-                    <div v-if="question.correctAnswer.id !== exam.responses[questionIndex].answer_id">
+                    <div v-if="!question.correct">
                         {{ question.correctAnswer.label }}
                     </div>
                 </tab-content>
 
-                <template slot="finish" slot-scope="props">
+                <template slot="finish" slot-scope="props" :class="{failed: exam.user_score > exam.score / 2}">
                     <!-- hide finish button just empty span -->
-                    <span></span>
+                    <span>{{ $t('lessons.final_result') }}</span>
+                    <span>{{exam.user_score}} / {{ exam.score }}</span>
                 </template>
             </form-wizard>
         </vx-card>
@@ -72,8 +72,7 @@ export default {
     },
     data() {
         return {
-            exam: {},
-            userAnswers: {}
+            exam: {}
         }
     },
     mounted() {
@@ -84,14 +83,6 @@ export default {
             const response = await safwaAxios.get(`students/exams/${this.$route.params.id}/results`)
 
             this.exam = response.data
-
-            this.exam.questions.forEach(question => {
-                this.userAnswers[question.id] = -1
-
-                question.correctAnswer = question.answers.filter(answer => answer.is_correct === 1)[0]
-            })
-
-            console.log(this.exam.questions)
         }
     }
 }
