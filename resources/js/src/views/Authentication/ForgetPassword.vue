@@ -45,12 +45,22 @@ export default {
     },
     methods: {
         async recover() {
-            await this.$store.dispatch('Authentication/forgetPassword', {
-                email: this.email
-            })
+            try {
+                await this.$store.dispatch('Authentication/forgetPassword', {
+                    email: this.email
+                })
 
-            this.$router.push({name: 'login'}).catch(() => {
-            })
+                this.$router.push({name: 'login'}).catch(() => {
+                })
+            } catch (error) {
+                this.$vs.notify({
+                    title: this.$t('general.error_title'),
+                    text: error.response.status === 422 ? this.$t('forget_password.failed_auth_message') : error.message,
+                    iconPack: 'feather',
+                    icon: 'icon-alert-circle',
+                    color: 'danger'
+                })
+            }
         }
     }
 }

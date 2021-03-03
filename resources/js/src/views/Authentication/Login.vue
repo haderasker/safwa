@@ -98,7 +98,7 @@ export default {
             } catch (error) {
                 this.$vs.loading.close()
                 this.$vs.notify({
-                    title: 'Error',
+                    title: this.$t('general.error_title'),
                     text: error.response.status === 422 ? this.$t('login.failed_auth_message') : error.message,
                     iconPack: 'feather',
                     icon: 'icon-alert-circle',

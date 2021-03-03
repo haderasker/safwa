@@ -7,6 +7,10 @@
         </div>
 
         <vx-card :title="null">
+            <div class="final-results" :class="{student_failed: exam.user_score < exam.score / 2}">
+                <span>{{ $t('lessons.final_result') }}</span>
+                <span>{{exam.user_score}} / {{ exam.score }}</span>
+            </div>
             <form-wizard
                 :startIndex="0"
                 class="questions"
@@ -50,10 +54,8 @@
                     </div>
                 </tab-content>
 
-                <template slot="finish" slot-scope="props" :class="{failed: exam.user_score > exam.score / 2}">
+                <template slot="finish" slot-scope="props">
                     <!-- hide finish button just empty span -->
-                    <span>{{ $t('lessons.final_result') }}</span>
-                    <span>{{exam.user_score}} / {{ exam.score }}</span>
                 </template>
             </form-wizard>
         </vx-card>
@@ -89,9 +91,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.final-results {
+    color: #ffffff;
+    padding: 15px 25px;
+    background: rgb(40,199,111);
+    display: inline-block;
+    font-size: 2rem;
+    margin: 0 0 0 calc(50% - 150px);
+    font-weight: bold;
+    width: 300px;
+    border-radius: 3px;
+
+    &.student_failed {
+        background: rgb(234,84,85);
+    }
+}
+
 .questions::v-deep {
     .wizard-nav {
         display: none !important;
+    }
+
+    .wizard-header {
+        display: none;
     }
 
     .wizard-tab-content {

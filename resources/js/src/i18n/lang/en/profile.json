@@ -44,5 +44,6 @@
         "password": "Password",
         "password_confirmation": "Confirm Password"
     },
-    "fill_content": "Please fill all your information before you can use the system"
+    "fill_content": "Please fill all your information before you can use the system",
+    "failed_auth_message": "there is an error in the provided data."
 }

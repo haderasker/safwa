@@ -464,17 +464,27 @@ export default {
                 return
             }
 
-            const profile = {
-                ...JSON.parse(JSON.stringify(this.profile)),
-                doctrine_id: window._.get(this, 'profile.doctrine.id', null),
-                country: window._.get(this, 'profile.country.code', null),
-                nationality: window._.get(this, 'profile.nationality.code', null),
-                quran_level: window._.get(this, 'profile.quran_level.part', null)
+            try {
+                const profile = {
+                    ...JSON.parse(JSON.stringify(this.profile)),
+                    doctrine_id: window._.get(this, 'profile.doctrine.id', null),
+                    country: window._.get(this, 'profile.country.code', null),
+                    nationality: window._.get(this, 'profile.nationality.code', null),
+                    quran_level: window._.get(this, 'profile.quran_level.part', null)
+                }
+
+                await safwaAxios.post('profile', profile)
+
+                window.location.href = '/'
+            } catch (error) {
+                this.$vs.notify({
+                    title: this.$t('general.error_title'),
+                    text: error.response.status === 422 ? this.$t('profile.failed_auth_message') : error.message,
+                    iconPack: 'feather',
+                    icon: 'icon-alert-circle',
+                    color: 'danger'
+                })
             }
-
-            await safwaAxios.post('profile', profile)
-
-            window.location.href = '/'
         }
     }
 }

@@ -67,7 +67,7 @@ export default {
     data() {
         return {
             leaveMessage: this.$t('student_exam.leave_message'),
-            totalSeconds: 0,
+            totalSeconds: Number.MAX_SAFE_INTEGER,
             timer: null,
             exam: {},
             userAnswers: {},

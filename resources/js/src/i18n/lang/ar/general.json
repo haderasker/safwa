@@ -11,5 +11,6 @@
     "course_type_default": "اساسي",
     "course_type_fail": "تخلفات",
     "exam_results": "مشاهدة النتيجة",
-    "quran_part" : "جزء"
+    "quran_part" : "جزء",
+    "error_title": "خطأ"
 }

@@ -56,15 +56,24 @@ export default {
     },
     methods: {
         async reset() {
-            await this.$store.dispatch('Authentication/resetPassword', {
-                token: this.$route.query.token || this.$route.query['amp;token'] || '',
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.confirmPassword
-            })
+            try {
+                await this.$store.dispatch('Authentication/resetPassword', {
+                    token: this.$route.query.token || this.$route.query['amp;token'] || '',
+                    email: this.email,
+                    password: this.password,
+                    password_confirmation: this.confirmPassword
+                })
 
-            this.$router.push({name: 'dashboard'}).catch(() => {
-            })
+                this.$router.push({name: 'dashboard'}).catch()
+            } catch(error) {
+                this.$vs.notify({
+                    title: this.$t('general.error_title'),
+                    text: error.response.status === 422 ? this.$t('reset_password.failed_auth_message') : error.message,
+                    iconPack: 'feather',
+                    icon: 'icon-alert-circle',
+                    color: 'danger'
+                })
+            }
         }
     }
 }

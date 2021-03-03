@@ -11,5 +11,6 @@
     "course_type_default": "Default",
     "course_type_fail": "Fail",
     "exam_results": "Exam Results",
-    "quran_part": "Part"
+    "quran_part": "Part",
+    "error_title": "Error"
 }
