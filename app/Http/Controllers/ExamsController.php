@@ -58,13 +58,21 @@ class ExamsController extends Controller
                 $exam->save();
 
                 foreach ($inputs['questions'] as $questionData) {
-                    $question = Question::findOrFail($questionData['id']);
-                    $question->fill($questionData);
+                    $question = Question::firstOrNew([
+                        'id' => $questionData['id']
+                    ]);
+                    $question->fill(array_merge($questionData, [
+                        'exam_id' => $exam->id
+                    ]));
                     $question->save();
 
                     foreach ($questionData['answers'] as $answerData) {
-                        $answer = Answer::findOrFail($answerData['id']);
-                        $answer->fill($answerData);
+                        $answer = Answer::firstOrNew([
+                            'id' => $answerData['id'] ?? ''
+                        ]);
+                        $answer->fill(array_merge($answerData, [
+                            'question_id' => $question->id
+                        ]));
                         $answer->save();
                     }
                 }
