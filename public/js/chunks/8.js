@@ -402,6 +402,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
 //
 //
 //
+//
+//
 
 
 
@@ -421,6 +423,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
   data: function data() {
     return {
       sidebarOpened: false,
+      deletedQuestions: [],
       question: {
         index: -1,
         label: '',
@@ -538,7 +541,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
                 }
 
                 _context.next = 8;
-                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].put("exams/".concat(this.$route.params.id), exam);
+                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].put("exams/".concat(this.$route.params.id), {
+                  exam: exam,
+                  deletedQuestions: this.deletedQuestions
+                });
 
               case 8:
                 _context.next = 13;
@@ -546,7 +552,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
 
               case 10:
                 _context.next = 12;
-                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].post('exams', exam);
+                return _axios__WEBPACK_IMPORTED_MODULE_11__["default"].post('exams', {
+                  exam: exam
+                });
 
               case 12:
                 this.$router.push({
@@ -577,7 +585,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
       });
       this.openSidebar();
     },
-    removeQuestion: function removeQuestion(index) {
+    removeQuestion: function removeQuestion(index, question) {
+      // if this is an old Question then grab it's id and delete it
+      if (question.id) {
+        this.deletedQuestions.push(question.id);
+      }
+
       this.exam.questions.splice(index, 1);
     }
   })
@@ -1325,7 +1338,10 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              return _vm.removeQuestion(index)
+                                              return _vm.removeQuestion(
+                                                index,
+                                                listItem
+                                              )
                                             }
                                           }
                                         },

@@ -57,7 +57,11 @@ class ExamsController extends Controller
                 $exam->fill($this->examAttributes($inputs));
                 $exam->save();
 
-                foreach ($inputs['questions'] as $questionData) {
+                // delete old questions
+                Question::whereIn('id', $inputs['deletedQuestions'])->delete();
+                Answer::whereIn('question_id', $inputs['deletedQuestions'])->delete();
+
+                foreach ($inputs['exam']['questions'] as $questionData) {
                     $question = Question::firstOrNew([
                         'id' => $questionData['id']
                     ]);
@@ -102,7 +106,7 @@ class ExamsController extends Controller
                 $exam = new Exam($this->examAttributes($inputs));
                 $exam->save();
 
-                foreach ($inputs['questions'] as $questionData) {
+                foreach ($inputs['exam']['questions'] as $questionData) {
 
                     $question = new Question(array_merge($questionData, ['exam_id' => $exam->id]));
                     $question->save();
@@ -128,21 +132,21 @@ class ExamsController extends Controller
     private function validateRequest(Request $request)
     {
         $this->validate($request, [
-            'label'                            => ['required', 'string', 'max:150'],
-            'testable_id'                      => ['required', 'integer'],
-            'testable_type'                    => ['required', 'string', 'in:lesson,course'],
-            'duration'                         => ['required', 'integer'],
-            'published_at'                     => ['required', 'date_format:Y-m-d'],
-            'ended_at'                         => ['required', 'date_format:Y-m-d'],
-            'level_id'                         => ['nullable', 'integer'],
-            'type'                             => ['required', 'string', 'in:default,fail'],
-            'questions'                        => ['required', 'array', 'min:1'],
-            'questions.*.label'                => ['required', 'string', 'max:150'],
-            'questions.*.score'                => ['required', 'integer', 'min:1'],
-            'questions.*.order'                => ['required', 'integer'],
-            'questions.*.answers'              => ['required', 'array', 'min:1'],
-            'questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
-            'questions.*.answers.*.is_correct' => ['required', 'boolean']
+            'exam.label'                            => ['required', 'string', 'max:150'],
+            'exam.testable_id'                      => ['required', 'integer'],
+            'exam.testable_type'                    => ['required', 'string', 'in:lesson,course'],
+            'exam.duration'                         => ['required', 'integer'],
+            'exam.published_at'                     => ['required', 'date_format:Y-m-d'],
+            'exam.ended_at'                         => ['required', 'date_format:Y-m-d'],
+            'exam.level_id'                         => ['nullable', 'integer'],
+            'exam.type'                             => ['required', 'string', 'in:default,fail'],
+            'exam.questions'                        => ['required', 'array', 'min:1'],
+            'exam.questions.*.label'                => ['required', 'string', 'max:150'],
+            'exam.questions.*.score'                => ['required', 'integer', 'min:1'],
+            'exam.questions.*.order'                => ['required', 'integer'],
+            'exam.questions.*.answers'              => ['required', 'array', 'min:1'],
+            'exam.questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
+            'exam.questions.*.answers.*.is_correct' => ['required', 'boolean']
         ]);
     }
 
@@ -155,15 +159,15 @@ class ExamsController extends Controller
     private function examAttributes(array $inputs): array
     {
         return [
-            'testable_id'   => $inputs['testable_id'],
-            'testable_type' => Convert::toModelName($inputs['testable_type']),
-            'label'         => $inputs['label'],
-            'duration'      => $inputs['duration'],
-            'published_at'  => $inputs['published_at'],
-            'ended_at'      => $inputs['ended_at'],
-            'level_id'      => $inputs['level_id'],
-            'type'          => $inputs['type'],
-            'score'         => array_reduce($inputs['questions'], function ($total, $current) {
+            'testable_id'   => $inputs['exam']['testable_id'],
+            'testable_type' => Convert::toModelName($inputs['exam']['testable_type']),
+            'label'         => $inputs['exam']['label'],
+            'duration'      => $inputs['exam']['duration'],
+            'published_at'  => $inputs['exam']['published_at'],
+            'ended_at'      => $inputs['exam']['ended_at'],
+            'level_id'      => $inputs['exam']['level_id'],
+            'type'          => $inputs['exam']['type'],
+            'score'         => array_reduce($inputs['exam']['questions'], function ($total, $current) {
                 return $total + $current['score'];
             }, 0)
         ];

@@ -4,7 +4,9 @@
 
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $route.params.id ? $t('exams.edit_exam_title') + exam.label : $t('exams.create_exam_title') }}</h2>
+                <h2 class="mb-1">{{
+                        $route.params.id ? $t('exams.edit_exam_title') + exam.label : $t('exams.create_exam_title')
+                    }}</h2>
             </div>
         </div>
 
@@ -117,7 +119,7 @@
                                         <vs-button color="primary" type="flat" @click="editQuestion(index, listItem)">
                                             {{ $t('exams.edit_q') }}
                                         </vs-button>
-                                        <vs-button color="primary" type="flat" @click="removeQuestion(index)">
+                                        <vs-button color="primary" type="flat" @click="removeQuestion(index, listItem)">
                                             {{ $t('exams.remove_q') }}
                                         </vs-button>
                                     </vs-list-item>
@@ -153,6 +155,7 @@ export default {
     data() {
         return {
             sidebarOpened: false,
+            deletedQuestions: [],
             question: {
                 index: -1,
                 label: '',
@@ -266,9 +269,12 @@ export default {
             }
 
             if (this.$route.params.id) {
-                await safwaAxios.put(`exams/${this.$route.params.id}`, exam);
+                await safwaAxios.put(`exams/${this.$route.params.id}`, {
+                    exam,
+                    deletedQuestions: this.deletedQuestions
+                });
             } else {
-                await safwaAxios.post('exams', exam)
+                await safwaAxios.post('exams', {exam})
                 this.$router.push({name: 'exams.list'}).catch();
             }
         },
@@ -286,7 +292,12 @@ export default {
 
             this.openSidebar()
         },
-        removeQuestion(index) {
+        removeQuestion(index, question) {
+            // if this is an old Question then grab it's id and delete it
+            if (question.id) {
+                this.deletedQuestions.push(question.id)
+            }
+
             this.exam.questions.splice(index, 1)
         }
     }
