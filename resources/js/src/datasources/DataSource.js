@@ -3,14 +3,12 @@ import safwaAxios from "../axios";
 export const Server = (uri) => {
 
     return async (page = 1, perPage = 10, sort = [], group = {}, filters = {}) => {
-        return await safwaAxios.get(uri, {
-            params: {
-                per_page: perPage,
-                page,
-                sort, // [ { colId: 'name', cort: 'asc' } ]
-                group, // [1, 3, 6, 8]
-                filters // { search: '', type: '', event: '' }
-            }
+        return await safwaAxios.post(uri, {
+            per_page: perPage,
+            page,
+            sort, // [ { colId: 'name', cort: 'asc' } ]
+            group, // [1, 3, 6, 8]
+            filters // { search: '', type: '', event: '' }
         })
     }
 }
@@ -31,7 +29,7 @@ export const DataSource = (server) => {
                 // get data from server
                 const response = await server(page, perPage, params.request.sortModel, params.request.groupKeys, filters)
 
-                if (response.status >= 200 && response.status <300) {
+                if (response.status >= 200 && response.status < 300) {
                     if (response.data.total) {
                         // supply rows for requested block to grid
                         // params.api.hideNoRowsOverlay()

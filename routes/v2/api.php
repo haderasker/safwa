@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/profile', 'ProfileController@profile');
 Route::post('/profile', 'ProfileController@updateProfile');
 
-Route::group(['prefix' => 'media'], function() {
+Route::group(['prefix' => 'media'], function () {
     Route::post('upload/{modelType}/{modelId}', 'ImageController@upload');
     Route::get('remove/{modelType}/{modelId}', 'ImageController@remove');
 });
@@ -21,37 +21,37 @@ Route::group(['prefix' => 'comments'], function () {
 });
 
 Route::group(['prefix' => 'lessons'], function () {
-    Route::get('/', 'LessonsController@index');
-    Route::get('/{lessonId}', 'LessonsController@edit');
     Route::post('/', 'LessonsController@store');
+    Route::post('/list', 'LessonsController@index');
+    Route::get('/{lessonId}', 'LessonsController@edit');
     Route::put('/{lessonId}', 'LessonsController@update');
     Route::delete('/{lessonId}', 'LessonsController@delete');
 });
 
 Route::group(['prefix' => 'courses'], function () {
-    Route::get('/', 'CoursesController@index');               // list all courses
-    Route::get('/{lessonId}', 'CoursesController@edit');      // get course by id
-    Route::post('/', 'CoursesController@store');              // create new course
-    Route::put('/{lessonId}', 'CoursesController@update');    // update course
-    Route::delete('/{lessonId}', 'CoursesController@delete'); // delete course
+    Route::post('/', 'CoursesController@store');                   // create new course
+    Route::post('/list', 'CoursesController@index');               // list all courses
+    Route::get('/{lessonId}', 'CoursesController@edit');           // get course by id
+    Route::put('/{lessonId}', 'CoursesController@update');         // update course
+    Route::delete('/{lessonId}', 'CoursesController@delete');      // delete course
 });
 
 Route::group(['prefix' => 'teachers'], function () {
-    Route::get('/', 'TeachersController@index');
     Route::post('/', 'TeachersController@store');
+    Route::post('/list', 'TeachersController@index');
     Route::get('/{teacherId}', 'TeachersController@edit');
     Route::put('/{teacherId}', 'TeachersController@update');
 });
 
 Route::group(['prefix' => 'students'], function () {
-    Route::get('/', 'StudentsController@index');
     Route::post('/', 'StudentsController@store');
-    Route::get('/courses', 'StudentsController@courses');
-    Route::get('/results', 'StudentsController@getResults');
+    Route::post('/list', 'StudentsController@index');
+    Route::post('/courses/list', 'StudentsController@courses');
+    Route::post('/results/list', 'StudentsController@getResults');
 
     Route::group(['prefix' => 'exams'], function () {
-        Route::get('/upcoming', 'StudentsController@upcomingExams');
-        Route::get('/finished', 'StudentsController@finishedExams');
+        Route::post('/upcoming/list', 'StudentsController@upcomingExams');
+        Route::post('/finished/list', 'StudentsController@finishedExams');
         Route::get('/{examId}', 'StudentsController@getExam');
         Route::post('/{examId}', 'StudentsController@submitExam');
         Route::get('/{examId}/start', 'StudentsController@startExam');
@@ -68,24 +68,26 @@ Route::group(['prefix' => 'students'], function () {
 
     Route::get('/{studentId}', 'StudentsController@edit');
     Route::put('/{studentId}', 'StudentsController@update');
+    Route::delete('/{studentId}', 'StudentsController@delete');
 });
 
 Route::group(['prefix' => 'academic-years'], function () {
-    Route::get('/', 'AcademicYearsController@index');
     Route::post('/', 'AcademicYearsController@store');
+    Route::post('/list', 'AcademicYearsController@index');
     Route::get('/{yearId}', 'AcademicYearsController@edit');
     Route::put('/{yearId}', 'AcademicYearsController@update');
 });
 
 Route::group(['prefix' => 'levels'], function () {
-    Route::get('/', 'LevelsController@index');
+    Route::post('/list', 'LevelsController@index');
 });
 
 Route::group(['prefix' => 'exams'], function () {
-    Route::get('/', 'ExamsController@index');
-    Route::get('/{examId}', 'ExamsController@edit');
     Route::post('/', 'ExamsController@store');
+    Route::post('/list', 'ExamsController@index');
+    Route::get('/{examId}', 'ExamsController@edit');
     Route::put('/{examId}', 'ExamsController@update');
+    Route::delete('/{examId}', 'ExamsController@delete');
 });
 
 Route::group(['prefix' => 'notifications'], function () {
@@ -95,7 +97,7 @@ Route::group(['prefix' => 'notifications'], function () {
 });
 
 Route::group(['prefix' => 'results'], function () {
-    Route::get('/', 'ResultsController@index');
+    Route::post('/list', 'ResultsController@index');
 });
 
 Route::group(['prefix' => 'statistics'], function () {
@@ -105,5 +107,5 @@ Route::group(['prefix' => 'statistics'], function () {
 });
 
 Route::group(['prefix' => 'doctrines'], function () {
-    Route::get('/', 'DoctrinesController@index');
+    Route::post('/list', 'DoctrinesController@index');
 });

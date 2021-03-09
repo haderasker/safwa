@@ -1,3 +1,3 @@
 import {Server, DataSource} from './DataSource'
 
-export default DataSource(Server('students'))
+export default DataSource(Server('students/list'))

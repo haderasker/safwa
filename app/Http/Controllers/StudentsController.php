@@ -33,7 +33,28 @@ class StudentsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::role('student')->paginate((int)$request->input('per_page', 10));
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
+        return User::role('student')
+            ->when(isset($filters['level']), function ($query) use ($filters) {
+                $query->where('level_id', $filters['level']);
+            })
+            ->when(isset($filters['search']), function ($query) use ($filters) {
+                $query->where(function ($query) use ($filters) {
+                    $query->where('name', 'like', '%' . $filters['search'] . '%')
+                        ->orWhere('email', 'like', '%' . $filters['search'] . '%');
+                });
+            })
+            ->when(isset($filters['status']), function ($query) use ($filters) {
+                $query->where('status', $filters['status']);
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -102,6 +123,7 @@ class StudentsController extends Controller
                 'required',
                 Rule::unique('users')->ignore($studentId),
             ],
+            'status'   => ['integer', 'in:1,2,3'],
             'password' => ['min:6', 'confirmed']
         ]);
     }
@@ -116,8 +138,9 @@ class StudentsController extends Controller
     {
         $attrs = array_merge(
             [
-                'name'  => $fields['name'],
-                'email' => $fields['email'],
+                'name'   => $fields['name'],
+                'email'  => $fields['email'],
+                'status' => $fields['status']
             ],
             $extra
         );
@@ -285,8 +308,8 @@ class StudentsController extends Controller
 
         $exam->user_score = 0;
 
-        foreach($exam->questions as $question) {
-            foreach($question->answers as $answer) {
+        foreach ($exam->questions as $question) {
+            foreach ($question->answers as $answer) {
                 $isInUserAnswers = $exam->responses
                     ->where('question_id', $question->id)
                     ->where('answer_id', $answer->id)
@@ -351,5 +374,12 @@ class StudentsController extends Controller
                 'academicYear:id,label'
             ])
             ->paginate((int)$request->input('per_page', 10));
+    }
+
+    public function delete(int $id)
+    {
+        User::findOrFail($id)->delete();
+
+        return response(null, 204);
     }
 }

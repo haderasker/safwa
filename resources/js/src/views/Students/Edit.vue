@@ -22,6 +22,11 @@ export default {
         async loadStudent() {
             const response = await safwaAxios.get(`students/${this.$route.params.id}`)
 
+            response.data.status = {
+                id: response.data.status,
+                name: this.$t(`status.${response.data.status}`)
+            }
+
             this.studentData = response.data
         }
     }

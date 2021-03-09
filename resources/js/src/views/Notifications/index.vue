@@ -93,7 +93,9 @@ export default {
         async getCategoryContent(category) {
             if (!category) return
 
-            const response = await safwaAxios.get(`${category.id}`)
+            const response = await safwaAxios.post(`${category.id}/list`, {
+                per_page: 9999999
+            })
 
             this.categoryContentOptions = [
                 {id: -1, name: this.$t('notifications.all')},

@@ -30,6 +30,18 @@
             </div>
             <div class="vx-row mb-6">
                 <div class="vx-col w-1/4">
+                    <span>{{ $t('students.status') }}</span>
+                </div>
+                <div class="vx-col w-3/4">
+                    <v-select
+                        class="w-full"
+                        label="name"
+                        :options="getStatus"
+                        v-model="student.status"></v-select>
+                </div>
+            </div>
+            <div class="vx-row mb-6">
+                <div class="vx-col w-1/4">
                     <span>{{ $t('students.password') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
@@ -65,10 +77,28 @@ export default {
     data() {
         return {}
     },
+    computed: {
+        getStatus() {
+            const allStatus = [1, 2, 3]
+
+            return allStatus.map(status => {
+                return {
+                    id: status,
+                    name: this.$t(`status.${status}`)
+                }
+            })
+        }
+    },
     methods: {
         async createStudent() {
+            const student = Object.assign({}, this.student)
+
+            if (student.status) {
+                student.status = student.status.id
+            }
+
             if (this.$route.params.id) {
-                await safwaAxios.put(`students/${this.$route.params.id}`, this.student);
+                await safwaAxios.put(`students/${this.$route.params.id}`, student);
             } else {
                 await safwaAxios.post('students', this.student);
                 this.$router.push({name: 'students.list'}).catch();

@@ -10,8 +10,12 @@
     "total_students": "عدد الممتحنين",
     "graduation_students": "عدد الناجحين",
     "actions": "خيارات",
-    "filter": "بحث",
-    "filter_tooltip": "اظهار/اخفاء مربع البحث",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "اظهار/اخفاء مربع البحث",
+        "name": "الاسم",
+        "level": "الفرقة"
+    },
     "create": "انشاء امتحان",
     "edit": "تعديل الامتحان",
     "step1": {
@@ -29,6 +33,7 @@
     "exam_start_date": "بداية الامتحان",
     "exam_end_date": "نهاية الامتحان",
     "exam_duration": "مدة الامتحان",
+    "exam_level": "الفرقة",
     "types": {
         "default": "اساسي",
         "fail": "تخلفات"

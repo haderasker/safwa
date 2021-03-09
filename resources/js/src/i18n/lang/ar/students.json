@@ -1,8 +1,6 @@
 {
     "title": "الطلاب",
     "all_students": "جميع الطلاب",
-    "filter_tooltip": "اظهار/اخفاء مربع البحث",
-    "filter": "بحث",
     "create_student_tooltip": "تسجيل طالب جديد",
     "list": {
         "column_name": "الطالب",
@@ -19,6 +17,14 @@
     "update": "تعديل",
     "name": "الاسم",
     "email": "الايميل",
+    "status": "الحالة",
     "password": "كلمة المرور",
-    "password_confirmation": "تأكيد كلمة المرور"
+    "password_confirmation": "تأكيد كلمة المرور",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "اظهار/اخفاء مربع البحث",
+        "name_email": "الاسم او البريد الالكتروني",
+        "level": "الفرقة",
+        "status": "الحالة"
+    }
 }

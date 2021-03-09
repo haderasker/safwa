@@ -14,6 +14,11 @@
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
+<!--                level-->
+<!--                name or email-->
+<!--                semester-->
+<!--                top students-->
+
                 <div class="vx-row">
                     <div class="vx-col w-1/2">
                         <vs-input class="w-full" :label-placeholder="`hema`" v-model="agFilters.name"/>
@@ -43,12 +48,16 @@ export default {
         return {
             filters: false,
             agFilters: {
-                name: ''
+                name: '',
+                exam_id: null
             },
             agOptions: {
                 dataSource: ResultsDataSource
             }
         }
+    },
+    mounted() {
+        this.agFilters.exam_id = this.$route.query.exam_id || null
     },
     computed: {
         agColumns() {

@@ -10,8 +10,12 @@
     "total_students": "Total Students",
     "graduation_students": "Graduation Students",
     "actions": "Actions",
-    "filter": "Filter",
-    "filter_tooltip": "Show/Hide Filter Form",
+    "filter": {
+        "title": "Filter",
+        "tooltip": "Show/Hide Filter Form",
+        "name": "Name",
+        "level": "Level"
+    },
     "create": "Create Exam",
     "edit": "Edit Exam",
     "step1": {
@@ -29,6 +33,7 @@
     "exam_start_date": "Start Date",
     "exam_end_date": "End Date",
     "exam_duration": "Duration",
+    "exam_level": "Level",
     "types": {
         "default": "Default",
         "fail": "Fail"

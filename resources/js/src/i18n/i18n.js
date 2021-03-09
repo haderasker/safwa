@@ -56,6 +56,8 @@ import en_forget_password from './lang/en/forget_password.json'
 import ar_forget_password from './lang/ar/forget_password.json'
 import en_register from './lang/en/register.json'
 import ar_register from './lang/ar/register.json'
+import en_status from './lang/en/status.json'
+import ar_status from './lang/ar/status.json'
 
 Vue.use(VueI18n)
 
@@ -91,6 +93,7 @@ export default new VueI18n({
             register: en_register,
             forget_password: en_forget_password,
             reset_password: en_reset_password,
+            status: en_status,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -121,6 +124,7 @@ export default new VueI18n({
             register: ar_register,
             forget_password: ar_forget_password,
             reset_password: ar_reset_password,
+            status: ar_status,
         }
     },
     silentTranslationWarn: true

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StudentResult extends Model
 {
+    use SoftDeletes;
+
     protected $connection = 'mysql';
 
     protected $table = 'students_results';

@@ -1,8 +1,6 @@
 {
     "title": "Students",
     "all_students": "All Students",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
     "create_student_tooltip": "Create New Student",
     "list": {
         "column_name": "Student",
@@ -19,6 +17,14 @@
     "update": "Update",
     "name": "Name",
     "email": "Email",
+    "status": "Status",
     "password": "Password",
-    "password_confirmation": "Confirm Password"
+    "password_confirmation": "Confirm Password",
+    "filter": {
+        "title": "Filter",
+        "tooltip": "Show/Hide Filter Form",
+        "name_email": "Name or Email",
+        "level": "Level",
+        "status": "Status"
+    }
 }

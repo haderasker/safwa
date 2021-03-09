@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserCourse extends Pivot
 {
+    use SoftDeletes;
+
     protected $connection = 'mysql';
 
     protected $table = 'users_courses';

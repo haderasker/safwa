@@ -31,6 +31,10 @@ class LevelsSeeder extends Seeder
                 'id' => 4,
                 'name' => 'level4'
             ],
+            [
+                'id' => 5,
+                'name' => 'level5'
+            ],
         ]);
     }
 }

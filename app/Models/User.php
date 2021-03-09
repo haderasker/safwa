@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, HasRoles, HasMediaTrait;
+    use Notifiable, HasRoles, HasMediaTrait, SoftDeletes;
 
     protected $connection = 'mysql';
 
@@ -46,7 +47,8 @@ class User extends Authenticatable implements HasMedia
         'job',
         'quran_level',
         'religion',
-        'upload_lessons'
+        'upload_lessons',
+        'status'
     ];
 
     /**

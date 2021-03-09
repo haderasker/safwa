@@ -21,10 +21,16 @@ class ResultsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
         return StudentExam::with([
             'exam:id,label,score',
             'student:id,name,email'
         ])
-        ->paginate((int)$request->input('per_page', 10));
+            ->when(isset($filters['exam_id']), function($query) use ($filters) {
+                $query->where('students_exams.exam_id', $filters['exam_id']);
+            })
+            ->paginate((int)$request->input('per_page', 10));
     }
 }

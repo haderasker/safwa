@@ -121,7 +121,6 @@ export default {
                 suppressHorizontalScroll: true,
                 suppressCellSelection: true,
                 rowBuffer: 100,
-
                 overlayNoRowsTemplate: this.overlayNoRowsTemplate(),
                 enableCellChangeFlash: true,
                 defaultColDef: {

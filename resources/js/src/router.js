@@ -140,6 +140,12 @@ const router = new Router({
                     beforeEnter: hasRole('admin')
                 },
                 {
+                    path: '/students/show/:id',
+                    name: 'students.show',
+                    component: () => import('./views/Students/Show'),
+                    beforeEnter: hasRole('admin')
+                },
+                {
                     path: '/notifications',
                     name: 'notifications.index',
                     component: () => import('./views/Notifications'),

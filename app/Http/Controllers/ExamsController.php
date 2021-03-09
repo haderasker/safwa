@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,28 @@ class ExamsController extends Controller
 {
     public function index(Request $request): LengthAwarePaginator
     {
-        return Exam::withCount('questions')->paginate((int)$request->input('per_page', 10));
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
+        return Exam::withCount([
+            'questions',
+            'studentExam',
+            'studentExam as graduation_students' => function (Builder $query) {
+                $query->where('passed', 1);
+            },
+        ])
+            ->when(isset($filters['level']), function ($query) use ($filters) {
+                $query->where('level_id', $filters['level']);
+            })
+            ->when(isset($filters['name']), function ($query) use ($filters) {
+                $query->where('label', 'like', '%' . $filters['name'] . '%');
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -171,5 +193,12 @@ class ExamsController extends Controller
                 return $total + $current['score'];
             }, 0)
         ];
+    }
+
+    public function delete(int $id)
+    {
+        Exam::findOrFail($id)->delete();
+
+        return response(null, 204);
     }
 }
