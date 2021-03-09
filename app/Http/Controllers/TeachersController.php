@@ -22,7 +22,20 @@ class TeachersController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
-        return User::withCount('teacherLessons')->role('teacher')->paginate((int)$request->input('per_page', 10));
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
+        return User::withCount('teacherCourses')
+            ->role('teacher')
+            ->when(isset($filters['name']), function ($query) use ($filters) {
+                $query->where('name', $filters['name']);
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     /**
@@ -105,5 +118,22 @@ class TeachersController extends Controller
         }
 
         return $attrs;
+    }
+
+    public function delete(int $id)
+    {
+        User::findOrFail($id)->delete();
+
+        return response(null, 204);
+    }
+
+    public function toggleBlock(int $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $user->status == '1' ? 3 : 1;
+
+        $user->save();
+
+        return response(null, 204);
     }
 }

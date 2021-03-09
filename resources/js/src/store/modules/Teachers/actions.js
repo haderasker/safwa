@@ -6,6 +6,6 @@ export default {
             per_page: 9999999
         });
 
-        commit('SET_TEACHERS', response.data)
+        commit('SET_TEACHERS', response.data.data)
     },
 }

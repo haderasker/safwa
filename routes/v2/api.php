@@ -39,8 +39,10 @@ Route::group(['prefix' => 'courses'], function () {
 Route::group(['prefix' => 'teachers'], function () {
     Route::post('/', 'TeachersController@store');
     Route::post('/list', 'TeachersController@index');
+    Route::get('/block/{teacherId}', 'TeachersController@toggleBlock');
     Route::get('/{teacherId}', 'TeachersController@edit');
     Route::put('/{teacherId}', 'TeachersController@update');
+    Route::delete('/{teacherId}', 'TeachersController@delete');
 });
 
 Route::group(['prefix' => 'students'], function () {

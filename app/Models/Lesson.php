@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -45,6 +46,18 @@ class Lesson extends Model
     public function quiz(): MorphOne
     {
         return $this->morphOne(Exam::class, 'testable', 'testable_type', 'testable_id', 'id');
+    }
+
+    public function studentQuiz(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            StudentExam::class,
+            Exam::class,
+            'testable_id',
+            'exam_id',
+            'id',
+            'id'
+        );
     }
 }
 

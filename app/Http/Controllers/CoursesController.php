@@ -29,6 +29,9 @@ class CoursesController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
         $currentYearCourses = DB::select("
             select levels.name,
                    semester_level_course.course_ids
@@ -43,7 +46,15 @@ class CoursesController extends Controller
 
         if (Auth::user()->hasRole('teacher')) {
             $courses->where('teacher_id', Auth::user()->id);
+        } else {
+            $courses->when(isset($filters['teacher']), function($query) use ($filters) {
+                $query->where('teacher_id', $filters['teacher']);
+            });
         }
+
+        $courses->when(isset($filters['name']), function($query) use ($filters) {
+            $query->where('name', $filters['name']);
+        });
 
         $courses = $courses->withCount('lessons')->paginate((int)$request->input('per_page', 10));
 

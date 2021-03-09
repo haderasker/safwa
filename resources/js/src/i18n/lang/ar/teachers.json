@@ -1,13 +1,16 @@
 {
     "title": "المعلمين",
     "all_teachers": "جميع المعلمين",
-    "filter_tooltip": "اظهار/اخفاء مربع البحث",
-    "filter": "بحث",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "اظهار/اخفاء مربع البحث",
+        "name": "الاسم"
+    },
     "create_teacher_tooltip": "تسجيل معلم جديد",
     "list": {
         "column_name": "المعلم",
         "column_add_lessons": "السماح بإضافة دروس",
-        "column_lessons_number": "عدد الدروس",
+        "column_courses_number": "عدد المواد",
         "column_created_at": "تاريخ الإضافة",
         "column_actions": "خيارات"
     },

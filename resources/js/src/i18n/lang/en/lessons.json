@@ -1,8 +1,12 @@
 {
     "title": "Lessons",
     "all_lessons": "All Lessons",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
+    "filter": {
+        "title": "Filter",
+        "tooltip": "Show/Hide Filter Form",
+        "name": "Name",
+        "course": "Course"
+    },
     "create_lesson_tooltip": "Create New Lesson",
     "list": {
         "column_name": "Lesson",

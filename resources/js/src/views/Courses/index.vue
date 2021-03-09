@@ -20,16 +20,47 @@
             </template>
             <div v-if="filters" class="mb-5">
                 <div class="vx-row">
-                    <div class="vx-col w-1/2">
-                        <vs-input class="w-full" :label-placeholder="`hema`" v-model="agFilters.name"/>
+                    <div class="vx-col w-full md:w-1/3 mb-5">
+                        <div class="vx-col w-full">
+                            <span>{{ $t('courses.filter.name') }}</span>
+                        </div>
+                        <div class="vx-col w-full">
+                            <vs-input class="w-full" v-model="agFilters.name"/>
+                        </div>
                     </div>
-                    <div class="vx-col w-1/2">
-                        <vs-button class="mr-3 mt-5">{{ $t('courses.filter') }}</vs-button>
+                    <div class="vx-col w-full md:w-1/3 mb-5">
+                        <div class="vx-col w-full">
+                            <span>{{ $t('courses.filter.teacher') }}</span>
+                        </div>
+                        <div class="vx-col w-full">
+                            <v-select
+                                class="w-full"
+                                label="name"
+                                :reduce="teacher => teacher.id"
+                                :options="getTeachers"
+                                v-model="agFilters.teacher"></v-select>
+                        </div>
+                    </div>
+                    <div class="vx-col w-full md:w-1/3 mb-5">
+                        <div class="vx-col w-full">
+                            <span>{{ $t('courses.filter.level') }}</span>
+                        </div>
+                        <div class="vx-col w-full">
+                            <v-select
+                                class="w-full"
+                                label="name"
+                                :reduce="level => level.id"
+                                :options="getLevels"
+                                v-model="agFilters.level"></v-select>
+                        </div>
+                    </div>
+                    <div class="vx-col w-1/3">
+                        <vs-button class="mr-3 mt-5" @click="applyFilters">{{ $t('courses.filter.title') }}</vs-button>
                     </div>
                 </div>
             </div>
             <ag-table
-                ref="agTable"
+                ref="allCoursesTable"
                 :filters="agFilters"
                 :columns="agColumns"
                 :options="agOptions"
@@ -41,7 +72,8 @@
 <script>
 import AgTable from "../../components/AgTable";
 import CoursesDataSource from "../../datasources/CoursesDataSource";
-import tableActionColumnCell from '../../components/TableActionColumnCell'
+import tableActionColumnCell from './components/TableActionColumnCell'
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     components: {
@@ -52,14 +84,33 @@ export default {
         return {
             filters: false,
             agFilters: {
-                name: null
+                name: null,
+                teacher: null,
+                level: null
             },
             agOptions: {
                 dataSource: CoursesDataSource
             }
         }
     },
+    mounted() {
+        this.loadTeachers()
+        this.loadLevels()
+    },
     computed: {
+        ...mapGetters({
+            'getTeachers': 'Teachers/getTeachers',
+        }),
+        getLevels() {
+            const levels = this.$store.getters['Levels/getLevels']
+
+            return levels.map(level => {
+                return {
+                    id: level.id,
+                    name: this.$t(`levels.${level.name}`)
+                }
+            })
+        },
         agColumns() {
             const self = this
             const columns = [
@@ -105,13 +156,13 @@ export default {
                 },
                 {
                     headerName: this.$t('courses.list.column_actions'),
-                    minWidth: 170,
+                    minWidth: 220,
                     sortable: true,
-                    cellRendererParams: {
-                        routeName: this.$hasRole('admin') ? 'courses.edit' : null,
-                        courseRouteName: this.$hasRole('teacher') ? 'teacher-course.profile' : null,
-                        lessonRouteName: this.$hasRole('teacher') ? 'lessons.list' : null,
-                    },
+                    // cellRendererParams: {
+                    //     routeName: this.$hasRole('admin') ? 'courses.edit' : null,
+                    //     courseRouteName: this.$hasRole('teacher') ? 'teacher-course.profile' : null,
+                    //     lessonRouteName: this.$hasRole('teacher') ? 'lessons.list' : null,
+                    // },
                     cellRendererFramework: 'tableActionColumnCell'
                 }
             ]
@@ -132,8 +183,15 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            'loadTeachers': 'Teachers/loadTeachers',
+            'loadLevels': 'Levels/loadLevels'
+        }),
         showFilters() {
             this.filters = !this.filters
+        },
+        applyFilters() {
+            this.$refs['allCoursesTable'].applyFilters()
         }
     }
 }

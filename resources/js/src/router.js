@@ -104,6 +104,12 @@ const router = new Router({
                     beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
+                    path: '/comments',
+                    name: 'comments.list',
+                    component: () => import('./views/Comments'),
+                    beforeEnter: hasAnyRole('admin')
+                },
+                {
                     path: '/teachers',
                     name: 'teachers.list',
                     component: () => import('./views/Teachers'),

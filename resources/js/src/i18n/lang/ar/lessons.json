@@ -1,8 +1,12 @@
 {
     "title": "الدروس",
     "all_lessons": "جميع الدروس",
-    "filter_tooltip": "اظهار/اخفاء مربع البحث",
-    "filter": "بحث",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "اظهار/اخفاء مربع البحث",
+        "name": "الاسم",
+        "course": "المادة"
+    },
     "create_lesson_tooltip": "انشاء درس جديد",
     "list": {
         "column_name": "الدرس",

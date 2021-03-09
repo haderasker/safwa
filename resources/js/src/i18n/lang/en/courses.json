@@ -1,8 +1,13 @@
 {
     "title": "Courses",
     "all_courses": "All Courses",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
+    "filter": {
+        "title": "Filter",
+        "tooltip": "Show/Hide Filter Form",
+        "teacher": "Teacher",
+        "level": "Level",
+        "name": "Name"
+    },
     "create_course_tooltip": "Create New Course",
     "list": {
         "column_name": "Course",

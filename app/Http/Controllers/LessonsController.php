@@ -27,15 +27,30 @@ class LessonsController extends Controller
      */
     public function index(Request $request): LengthAwarePaginator
     {
+        $filters = $request->input('filters', []);
+        $sort = $request->input('sort', []);
+
         $lessons = Lesson::with('course');
 
-        if(Auth::user()->hasRole('teacher')) {
-            $lessons->whereHas('course', function($query) {
+        if (Auth::user()->hasRole('teacher')) {
+            $lessons->whereHas('course', function ($query) {
                 $query->where('teacher_id', Auth::user()->id);
             });
         }
 
-        return $lessons->paginate((int)$request->input('per_page', 10));
+        return $lessons
+            ->when(isset($filters['name']), function ($query) use ($filters) {
+                $query->where('label', $filters['name']);
+            })
+            ->when(isset($filters['course']), function ($query) use ($filters) {
+                $query->where('course_id', $filters['course']);
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)$request->input('per_page', 10));
     }
 
     public function edit(int $lessonId)
@@ -111,20 +126,6 @@ class LessonsController extends Controller
     }
 
     /**
-     * @param int $lessonId
-     * @return Application|ResponseFactory|Response
-     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
-     */
-    public function delete(int $lessonId)
-    {
-        $lesson = Lesson::findOrFail($lessonId);
-
-        $lesson->delete();
-
-        return response([], 204);
-    }
-
-    /**
      * @param Request $request
      * @throws ValidationException
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
@@ -165,4 +166,10 @@ class LessonsController extends Controller
         ];
     }
 
+    public function delete(int $id)
+    {
+        Lesson::findOrFail($id)->delete();
+
+        return response(null, 204);
+    }
 }
