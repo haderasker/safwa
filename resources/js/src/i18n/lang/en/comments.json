@@ -4,5 +4,23 @@
     "previous": "Previous",
     "next": "Next",
     "load_replies": "Load Replies",
-    "no_replies": "No Replies"
+    "no_replies": "No Replies",
+    "title": "Comments",
+    "all_comments": "All Comments",
+    "edit_comment": "Edit Comment",
+    "replay_to_comment": "Replay to Comment",
+    "filter": {
+        "title": "search",
+        "tooltip": "search into comments",
+        "search": "Search"
+    },
+    "list": {
+        "columns": {
+            "author": "Author",
+            "comment": "Comment",
+            "actions": "Actions",
+            "added_at": "Added At",
+            "added_on": "Added On"
+        }
+    }
 }

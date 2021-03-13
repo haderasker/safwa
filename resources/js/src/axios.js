@@ -9,7 +9,8 @@ const routesToExcludeFromAPIParameter = [
     '/password/email',
     '/password/reset',
     '/email/resend',
-    '/logout'
+    '/logout',
+    '/settings/fetch'
 ]
 
 const safwaAxios = axios.create({

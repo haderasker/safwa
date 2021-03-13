@@ -10,6 +10,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
+Route::post('settings/fetch', 'SettingsController@fetch');
 
 // Vue Route
 Route::get('/{any}', 'ApplicationController@index')->where('any', '.*');

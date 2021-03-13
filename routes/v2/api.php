@@ -13,11 +13,14 @@ Route::group(['prefix' => 'media'], function () {
 });
 
 Route::group(['prefix' => 'comments'], function () {
+    Route::post('/list', 'CommentsController@list');
     Route::get('/{parentId}', 'CommentsController@replies');
     Route::get('/{commentableType}/{commentableId}', 'CommentsController@index');
     Route::post('/{commentId}', 'CommentsController@store');
     Route::delete('/{commentId}', 'CommentsController@destroy');
     Route::put('/{commentId}', 'CommentsController@update');
+    Route::patch('/{commentId}', 'CommentsController@toggleApprove');
+    Route::delete('/{commentId}', 'CommentsController@delete');
 });
 
 Route::group(['prefix' => 'lessons'], function () {
@@ -100,6 +103,7 @@ Route::group(['prefix' => 'notifications'], function () {
 
 Route::group(['prefix' => 'results'], function () {
     Route::post('/list', 'ResultsController@index');
+    Route::post('/extra/{resultId}', 'ResultsController@extra');
 });
 
 Route::group(['prefix' => 'statistics'], function () {
@@ -111,3 +115,9 @@ Route::group(['prefix' => 'statistics'], function () {
 Route::group(['prefix' => 'doctrines'], function () {
     Route::post('/list', 'DoctrinesController@index');
 });
+
+Route::group(['prefix' => 'semesters'], function() {
+    Route::post('/list', 'SemestersController@index');
+});
+
+Route::post('/settings/set', 'SettingsController@set');

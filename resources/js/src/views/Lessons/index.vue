@@ -106,18 +106,18 @@ export default {
                     minWidth: 170,
                 },
                 {
-                    headerName: this.$t('الممتحنين'),
-                    field: 'course.name',
+                    headerName: this.$t('lessons.list.column_total_students'),
+                    field: 'total_students',
                     minWidth: 170,
                 },
                 {
-                    headerName: this.$t('الناجحين'),
-                    field: 'course.name',
+                    headerName: this.$t('lessons.list.column_passed'),
+                    field: 'passed_students',
                     minWidth: 170,
                 },
                 {
                     headerName: this.$t('lessons.list.column_actions'),
-                    minWidth: 330,
+                    minWidth: 350,
                     cellRendererFramework: 'tableActionColumnCell'
                 },
             ]

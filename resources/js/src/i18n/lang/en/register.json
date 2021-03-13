@@ -3,6 +3,7 @@
     "sub_title": "Fill the below form to create a new account.",
     "student": {
         "title": "Student",
+        "no_registration": "the registration is closed at this moment",
         "inputs": {
             "name": "Full Name",
             "email": "Email",

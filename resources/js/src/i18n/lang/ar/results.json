@@ -1,8 +1,14 @@
 {
     "title": "النتائج",
     "all_results": "جميع النتائج",
-    "filter_tooltip": "اظهار/اخفاء مربع البحث",
-    "filter": "بحث",
+    "edit_result": "تعديل النتيجة",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "اظهار/اخفاء مربع البحث",
+        "name_email": "الاسم او البريد الالكتروني",
+        "level": "الفرقة",
+        "semester": "الفصل الدراسي"
+    },
     "list": {
         "column_student_name": "الاسم",
         "column_student_email": "الايميل",
@@ -13,6 +19,7 @@
         "column_status": "الحالة",
         "column_actions": "خيارات",
         "column_passed": "ناجح",
-        "column_failed": "راسب"
+        "column_failed": "راسب",
+        "column_student_extra_score": "درجة الرأفة"
     }
 }

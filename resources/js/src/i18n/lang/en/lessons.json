@@ -11,7 +11,9 @@
     "list": {
         "column_name": "Lesson",
         "column_actions": "Actions",
-        "column_course": "Course"
+        "column_course": "Course",
+        "column_passed": "No. Passed Students",
+        "column_total_students": "Total Students"
     },
     "edit_title": "Edit Lesson ",
     "create_title": "Create Lesson",
@@ -50,5 +52,8 @@
     "cancel": "Cancel",
     "edit_q": "Edit",
     "remove_q": "Remove",
-    "final_result": "Final Result"
+    "final_result": "Final Result",
+    "table_title": "Question",
+    "table_answers_number": "No. Answers",
+    "table_actions": "Actions"
 }

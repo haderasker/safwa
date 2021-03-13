@@ -30,7 +30,16 @@ class LessonsController extends Controller
         $filters = $request->input('filters', []);
         $sort = $request->input('sort', []);
 
-        $lessons = Lesson::with('course');
+        $lessons = Lesson::with('course')
+            ->withCount([
+                'studentQuiz as total_students'  => function ($query) {
+                    $query->where('exams.testable_type', Lesson::class);
+                },
+                'studentQuiz as passed_students' => function ($query) {
+                    $query->where('exams.testable_type', Lesson::class)
+                        ->where('students_exams.passed', 1);
+                }
+            ]);
 
         if (Auth::user()->hasRole('teacher')) {
             $lessons->whereHas('course', function ($query) {

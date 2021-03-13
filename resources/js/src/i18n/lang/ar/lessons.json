@@ -11,7 +11,9 @@
     "list": {
         "column_name": "الدرس",
         "column_actions": "خيارات",
-        "column_course": "المادة"
+        "column_course": "المادة",
+        "column_passed": "الناجحين",
+        "column_total_students": "الممتحنين"
     },
     "edit_title": "تعديل درس ",
     "create_title": "تسجيل درس",
@@ -50,6 +52,8 @@
     "new_q_score": "الدرجة",
     "add_answer": "اضافة اجابة",
     "answers": "الاجابات",
-    "final_result": "النتيجة النهائية"
-
+    "final_result": "النتيجة النهائية",
+    "table_title": "السؤال",
+    "table_answers_number": "عدد الاجابات",
+    "table_actions": "اختيارات"
 }

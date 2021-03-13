@@ -9,7 +9,7 @@
         <vx-card :title="null">
             <div class="final-results" :class="{student_failed: exam.user_score < exam.score / 2}">
                 <span>{{ $t('lessons.final_result') }}</span>
-                <span>{{exam.user_score}} / {{ exam.score }}</span>
+                <span>{{ studentScore }} / {{ exam.score }}</span>
             </div>
             <form-wizard
                 :startIndex="0"
@@ -18,7 +18,6 @@
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
                 :subtitle="null"
-                :finishButtonText="null"
                 :nextButtonText="$t('lessons.wizard.next')"
                 :backButtonText="$t('lessons.wizard.back')"
                 shape="tab">
@@ -56,6 +55,7 @@
 
                 <template slot="finish" slot-scope="props">
                     <!-- hide finish button just empty span -->
+                    <span></span>
                 </template>
             </form-wizard>
         </vx-card>
@@ -85,6 +85,11 @@ export default {
             const response = await safwaAxios.get(`students/exams/${this.$route.params.id}/results`)
 
             this.exam = response.data
+        }
+    },
+    computed: {
+        studentScore() {
+            return window._.get(this.exam, 'student_exam[0].score', 0) + window._.get(this.exam, 'student_exam[0].extra', 0)
         }
     }
 }

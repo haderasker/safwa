@@ -50,5 +50,9 @@
     "new_q_label": "Label",
     "new_q_score": "Score",
     "add_answer": "Add New Answer",
-    "answers": "Answers"
+    "answers": "Answers",
+    "table_title": "Question",
+    "table_answers_number": "No. Answers",
+    "table_score": "Score",
+    "table_actions": "Actions"
 }

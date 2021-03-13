@@ -158,6 +158,12 @@ const router = new Router({
                     beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
+                    path: '/settings',
+                    name: 'settings',
+                    component: () => import('./views/Settings'),
+                    beforeEnter: hasRole('admin')
+                },
+                {
                     path: 'teacher-courses/:id',
                     name: 'teacher-course.profile',
                     component: () => import('./views/Teachers/CourseProfile'),

@@ -297,16 +297,17 @@ class StudentsController extends Controller
     {
         $exam = Exam::with([
             'level',
-            'questions' => function ($query) {
+            'studentExam' => function ($query) {
+                $query->first();
+            },
+            'questions'   => function ($query) {
                 $query->with('answers');
             },
-            'responses' => function ($query) {
+            'responses'   => function ($query) {
                 $query->where('student_id', Auth::user()->id);
             }
         ])
             ->findOrFail($examId);
-
-        $exam->user_score = 0;
 
         foreach ($exam->questions as $question) {
             foreach ($question->answers as $answer) {
@@ -322,7 +323,6 @@ class StudentsController extends Controller
                 if ($answer->is_correct && $isInUserAnswers) {
                     $answer->student_correct_answer = true;
                     $question->correct = true;
-                    $exam->user_score = $exam->user_score + $question->score;
                 }
 
                 if (!$answer->is_correct && $isInUserAnswers) {

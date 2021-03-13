@@ -19,6 +19,7 @@ class StudentExam extends Model
         'exam_id',
         'retries',
         'score',
+        'extra',
         'passed',
         'is_submitted'
     ];

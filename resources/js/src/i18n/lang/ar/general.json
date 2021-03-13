@@ -16,5 +16,8 @@
     "course_type_fail": "تخلفات",
     "exam_results": "مشاهدة النتيجة",
     "quran_part" : "جزء",
-    "error_title": "خطأ"
+    "error_title": "خطأ",
+    "disapprove": "حظر",
+    "approve": "سماح",
+    "replay": "رد"
 }

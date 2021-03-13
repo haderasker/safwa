@@ -82,5 +82,20 @@ export default [
         slug: "student-results",
         icon: "HomeIcon",
         roles: ['student']
+    },
+    {
+        url: "/comments",
+        name: "sidebar.comments",
+        slug: "comments",
+        icon: "HomeIcon",
+        roles: ['admin']
+    },
+    {
+        url: "/settings",
+        name: "sidebar.settings",
+        slug: "settings",
+        icon: "HomeIcon",
+        roles: ['admin']
     }
+
 ]

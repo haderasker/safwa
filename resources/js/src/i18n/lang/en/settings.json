@@ -1,0 +1,9 @@
+{
+    "title": "Settings",
+    "save": "Save",
+    "register_period": {
+        "title": "Registration Period",
+        "from": "From",
+        "to": "To"
+    }
+}

@@ -124,12 +124,10 @@ export default {
                     headerName: this.$t('courses.list.column_lessons_number'),
                     field: 'lessons_count',
                     minWidth: 170,
-                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_level'),
                     minWidth: 170,
-                    sortable: true,
                     valueGetter(params) {
                         return window._.get(params, 'data.level_names', []).map(level_name => {
                             return self.$t('levels.' + level_name)
@@ -138,26 +136,22 @@ export default {
                 },
                 {
                     headerName: this.$t('courses.list.column_students_success_number'),
-                    // field: 'name',
+                    field: 'passed_students',
                     minWidth: 170,
-                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_students_failed_number'),
-                    // field: 'name',
+                    field: 'failed_students',
                     minWidth: 170,
-                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_students_number'),
-                    // field: 'name',
+                    field: 'students_count',
                     minWidth: 170,
-                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_actions'),
                     minWidth: 220,
-                    sortable: true,
                     // cellRendererParams: {
                     //     routeName: this.$hasRole('admin') ? 'courses.edit' : null,
                     //     courseRouteName: this.$hasRole('teacher') ? 'teacher-course.profile' : null,
@@ -172,7 +166,6 @@ export default {
                 columns.splice(1, 0, {
                     headerName: this.$t('courses.list.column_teacher'),
                     minWidth: 170,
-                    sortable: true,
                     valueGetter(params) {
                         return window._.get(params, 'data.teacher.name')
                     }

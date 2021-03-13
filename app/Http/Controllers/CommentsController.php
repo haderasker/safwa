@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Utils\Convert;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
@@ -18,10 +20,39 @@ use Illuminate\Validation\ValidationException;
 class CommentsController extends Controller
 {
     /**
+     * @param Request $request
+     * @return LengthAwarePaginator
+     * @throws \Exception
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    public function list(Request $request): LengthAwarePaginator
+    {
+        $filters = $request->input('filters', null);
+
+        return Comment::with([
+            'author' => function ($query) {
+                $query->with('roles:id,name');
+            },
+            'commentable'
+        ])
+            ->when(isset($filters['model_id']) && isset($filters['model_type']), function (Builder $query) use ($filters) {
+                $query->where('commentable_id', $filters['model_id'])
+                    ->where('commentable_type', Convert::toModelName($filters['model_type']));
+            })
+            ->when(isset($filters['search']), function (Builder $query) use ($filters) {
+                $query->where('body', 'like', '%' . $filters['search'] . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate((int)$request->input('per_page', 10));
+    }
+
+
+    /**
      * @param string $commentableType
      * @param int $commentableId
      * @param Request $request
      * @return Paginator
+     * @throws \Exception
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
     public function index(string $commentableType, int $commentableId, Request $request): Paginator
@@ -105,5 +136,21 @@ class CommentsController extends Controller
         return Comment::where('parent_id', $parentId)
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    public function toggleApprove(int $commentId): Response
+    {
+        $comment = Comment::findOrFail($commentId);
+        $comment->approved_at = $comment->approved_at ? null : now();
+        $comment->save();
+
+        return response([], 204);
+    }
+
+    public function delete(int $id)
+    {
+        Comment::findOrFail($id)->delete();
+
+        return response(null, 204);
     }
 }

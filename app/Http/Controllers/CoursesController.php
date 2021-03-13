@@ -42,45 +42,90 @@ class CoursesController extends Controller
             where academic_years.current = 1;
         ");
 
-        $courses = Course::with('teacher');
+        $currentYearCourses = $this->transformCourses($currentYearCourses);
 
-        if (Auth::user()->hasRole('teacher')) {
-            $courses->where('teacher_id', Auth::user()->id);
-        } else {
-            $courses->when(isset($filters['teacher']), function($query) use ($filters) {
-                $query->where('teacher_id', $filters['teacher']);
+        if (isset($filters['level']) && !is_null($filters['level'])) {
+            $currentYearCourses = array_filter($currentYearCourses, function ($item) use ($filters) {
+                return $item['level'] === 'level' . $filters['level'];
             });
         }
 
-        $courses->when(isset($filters['name']), function($query) use ($filters) {
-            $query->where('name', $filters['name']);
-        });
+        $course_ids = array_unique(
+            array_column($currentYearCourses, 'course')
+        );
 
-        $courses = $courses->withCount('lessons')->paginate((int)$request->input('per_page', 10));
+        $courses = Course::with('teacher')
+            ->withCount([
+                'lessons',
+                'students',
+                'studentExams as passed_students' => function ($query) {
+                    $query->where('exams.testable_type', Course::class)
+                        ->where('students_exams.passed', 1);
+                },
+                'studentExams as failed_students' => function ($query) {
+                    $query->where('exams.testable_type', Course::class)
+                        ->where('students_exams.passed', '<>', 1);
+                }
+            ])
+            ->whereIn('id', $course_ids)
+            ->when(Auth::user()->hasRole('teacher'), function ($query) {
+                $query->where('teacher_id', Auth::user()->id);
+            })
+            ->when(!Auth::user()->hasRole('teacher') && isset($filters['teacher']), function ($query) use ($filters) {
+                $query->where('teacher_id', $filters['teacher']);
+            })
+            ->when(isset($filters['name']), function ($query) use ($filters) {
+                $query->where('name', $filters['name']);
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)$request->input('per_page', 10));
 
         foreach ($courses->items() as $item) {
-            $levels = array_filter($currentYearCourses, function ($currentYearCourse) use ($item) {
-                if (in_array($item->id, json_decode($currentYearCourse->course_ids))) {
-                    return true;
-                }
-
-                return false;
-            });
-
-            $level_names = [];
-
-            foreach ($levels as $level) {
-                if (in_array($level->name, $level_names)) {
-                    continue;
-                }
-
-                $level_names[] = $level->name;
-            }
+            $level_names = array_unique(
+                array_column(
+                    array_filter($currentYearCourses, function ($course) use ($item) {
+                        return $course['course'] === $item->id;
+                    }),
+                    'level'
+                )
+            );
 
             $item->level_names = $level_names;
         }
 
         return $courses;
+    }
+
+    /**
+     * @param array $courses
+     * @return array
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
+    private function transformCourses(array $courses): array
+    {
+        $results = [];
+
+        foreach ($courses as $course) {
+            $course_ids = json_decode($course->course_ids);
+
+            foreach ($course_ids as $course_id) {
+                $element = [
+                    'level'  => $course->name,
+                    'course' => $course_id
+                ];
+                if (in_array($element, $results)) {
+                    continue;
+                }
+
+                $results[] = $element;
+            }
+        }
+
+        return $results;
     }
 
     /**

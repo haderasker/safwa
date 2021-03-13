@@ -4,7 +4,8 @@
 
         <div class="router-header flex flex-wrap items-center mb-6">
             <div class="content-area__heading">
-                <h2 class="mb-1">{{ $route.params.id ? $t('lessons.edit_title') + lesson.label : $t('lessons.create_title') }}</h2>
+                <h2 class="mb-1">
+                    {{ $route.params.id ? $t('lessons.edit_title') + lesson.label : $t('lessons.create_title') }}</h2>
             </div>
         </div>
 
@@ -104,40 +105,59 @@
                     <div class="vx-row mb-6">
                         <vs-list>
                             <vs-list-header :title="$t('lessons.q_list')" color="primary"></vs-list-header>
+                            <table class="question-table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        {{ $t('lessons.table_title') }}
+                                    </th>
+                                    <th>
+                                        {{ $t('lessons.table_answers_number') }}
+                                    </th>
+                                    <th class="table-actions">
+                                        {{ $t('lessons.table_actions') }}
+                                    </th>
+                                </tr>
+                                </thead>
 
-                            <draggable :list="lesson.quiz.questions">
-                                <transition-group>
-                                    <vs-list-item
-                                        class="list-item"
-                                        v-for="(listItem, index) in lesson.quiz.questions"
-                                        :key="`listItem-${index}`"
-                                        :title="listItem.label">
+                                <draggable v-model="lesson.quiz.questions" tag="tbody">
+                                    <tr class="table-row" v-for="(listItem, index) in lesson.quiz.questions"
+                                        :key="`listItem-${index}`">
 
-                                        <vs-button color="primary" type="flat" @click="editQuestion(index, listItem)">
-                                            {{ $t('lessons.edit_q') }}
-                                        </vs-button>
-                                        <vs-button color="primary" type="flat" @click="removeQuestion(index)">
-                                            {{ $t('lessons.remove_q') }}
-                                        </vs-button>
-                                    </vs-list-item>
-                                </transition-group>
-                            </draggable>
+                                        <td>
+                                            {{ listItem.label }}
+                                        </td>
+                                        <td>
+                                            {{ listItem.answers.length }}
+                                        </td>
+                                        <td class="table-actions">
+                                            <vs-button color="primary" type="filled"
+                                                       @click="editQuestion(index, listItem)">
+                                                {{ $t('lessons.edit_q') }}
+                                            </vs-button>
+                                            <vs-button color="danger" type="filled" @click="removeQuestion(index)">
+                                                {{ $t('lessons.remove_q') }}
+                                            </vs-button>
+                                        </td>
+                                    </tr>
+                                </draggable>
+                            </table>
                         </vs-list>
                     </div>
                 </tab-content>
 
-                <tab-content
-                    v-if="$route.params.id"
-                    :lazy="true"
-                    :title="$t('lessons.step3.title')"
-                    class="mb-5">
+<!--                <tab-content-->
+<!--                    v-if="$route.params.id"-->
+<!--                    :lazy="true"-->
+<!--                    :title="$t('lessons.step3.title')"-->
+<!--                    class="mb-5">-->
 
-                    <vs-divider/>
+<!--                    <vs-divider/>-->
 
-                    <comments-section :commentableId="$route.params.id"
-                                      :commentableType="commentableType"></comments-section>
+<!--                    <comments-section :commentableId="$route.params.id"-->
+<!--                                      :commentableType="commentableType"></comments-section>-->
 
-                </tab-content>
+<!--                </tab-content>-->
             </form-wizard>
         </vx-card>
     </div>
@@ -167,7 +187,7 @@ export default {
     },
     data() {
         return {
-            commentableType: 'lesson',
+            // commentableType: 'lesson',
             question: {
                 index: -1,
                 label: '',
@@ -188,14 +208,6 @@ export default {
                 enableTime: true,
                 dateFormat: 'Y-m-d H:i'
             }
-        }
-    },
-    watch: {
-        question(val) {
-            // console.log({question: val})
-        },
-        'lesson.quiz.questions'(val) {
-            // console.log({list: val})
         }
     },
     mounted() {
@@ -284,4 +296,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.question-table {
+    width: 100%;
+
+    th {
+        text-align: left !important;
+        font-size: 1.1em;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+
+    .table-actions {
+        width: 200px;
+    }
+}
+
+</style>

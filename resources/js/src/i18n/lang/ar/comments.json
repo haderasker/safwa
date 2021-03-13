@@ -4,5 +4,23 @@
     "next": "التالي",
     "reply": "رد",
     "load_replies": "اظهر الردود",
-    "no_replies": "لا يوجد ردود"
+    "no_replies": "لا يوجد ردود",
+    "title": "التعليقات",
+    "all_comments": "جميع التعليقات",
+    "edit_comment": "تعديل التعليق",
+    "replay_to_comment": "اضافة رد الي التعليق",
+    "filter": {
+        "title": "بحث",
+        "tooltip": "ابحث داخل التعليقات",
+        "search": "بحث"
+    },
+    "list": {
+        "columns": {
+            "author": "الكاتب",
+            "comment": "التعليق",
+            "actions": "خيارات",
+            "added_at": "تاريخ الاضافة",
+            "added_on": "اضيف علي"
+        }
+    }
 }

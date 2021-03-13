@@ -138,7 +138,7 @@ export default {
         },
 
         addAnswer() {
-            if (this.question.answers.length === 5) {
+            if (this.question.answers.length >= 6) {
                 return
             }
 

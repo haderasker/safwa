@@ -1,8 +1,14 @@
 {
     "title": "Results",
     "all_results": "All Results",
-    "filter_tooltip": "Show/Hide Filter Form",
-    "filter": "Filter",
+    "edit_result": "Edit Results",
+    "filter": {
+        "title": "Filter",
+        "tooltip": "Show/Hide Filter Form",
+        "name_email": "Name or Email",
+        "level": "Level",
+        "semester": "Semester"
+    },
     "list": {
         "column_student_name": "Name",
         "column_student_email": "Email",
@@ -13,6 +19,7 @@
         "column_status": "Status",
         "column_actions": "Actions",
         "column_passed": "Passed",
-        "column_failed": "Failed"
+        "column_failed": "Failed",
+        "column_student_extra_score": "Extra Score"
     }
 }

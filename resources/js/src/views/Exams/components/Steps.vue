@@ -107,25 +107,48 @@
                         <vs-list>
                             <vs-list-header :title="$t('exams.q_list')" color="primary"></vs-list-header>
 
-                            <draggable :list="exam.questions">
-                                <transition-group>
-                                    <vs-list-item
-                                        class="list-item"
-                                        v-for="(listItem, index) in exam.questions"
-                                        :key="`listItem-${index}`"
-                                        :title="listItem.label"
-                                        :subtitle="listItem.score.toString()">
-
-                                        <vs-button color="primary" type="flat" @click="editQuestion(index, listItem)">
-                                            {{ $t('exams.edit_q') }}
-                                        </vs-button>
-                                        <vs-button color="primary" type="flat" @click="removeQuestion(index, listItem)">
-                                            {{ $t('exams.remove_q') }}
-                                        </vs-button>
-                                    </vs-list-item>
-                                </transition-group>
-                            </draggable>
-
+                            <table class="question-table">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        {{ $t('exams.table_title') }}
+                                    </th>
+                                    <th>
+                                        {{ $t('exams.table_answers_number') }}
+                                    </th>
+                                    <th>
+                                        {{ $t('exams.table_score') }}
+                                    </th>
+                                    <th class="table-actions">
+                                        {{ $t('exams.table_actions') }}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <draggable v-model="exam.questions" tag="tbody">
+                                    <tr v-for="(listItem, index) in exam.questions"
+                                        :key="`listItem-${index}`">
+                                        <td>
+                                            {{ listItem.label }}
+                                        </td>
+                                        <td>
+                                            {{ listItem.answers.length }}
+                                        </td>
+                                        <td>
+                                            {{ listItem.score.toString() }}
+                                        </td>
+                                        <td class="table-actions">
+                                            <vs-button color="primary" type="filled"
+                                                       @click="editQuestion(index, listItem)">
+                                                {{ $t('exams.edit_q') }}
+                                            </vs-button>
+                                            <vs-button color="danger" type="filled"
+                                                       @click="removeQuestion(index, listItem)">
+                                                {{ $t('exams.remove_q') }}
+                                            </vs-button>
+                                        </td>
+                                    </tr>
+                                </draggable>
+                            </table>
                         </vs-list>
                     </div>
                 </tab-content>
@@ -304,4 +327,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.question-table {
+    width: 100%;
+
+    th {
+        text-align: left !important;
+        font-size: 1.1em;
+    }
+
+    th, td {
+        padding: 15px;
+    }
+
+    .table-actions {
+        width: 200px;
+    }
+}
+
+</style>
