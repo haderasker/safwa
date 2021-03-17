@@ -5,6 +5,7 @@ import {beforeEnterPublicRoutes} from './middlewares/enterPublicRoutes'
 import {checkStudentProfile} from './middlewares/checkStudentProfile'
 import {hasRole, hasAnyRole} from "./middlewares/hasRole";
 import multiguard from 'vue-router-multiguard';
+import {isExamTakenBefore} from './middlewares/isExamTakenBefore'
 
 Vue.use(Router)
 
@@ -197,7 +198,7 @@ const router = new Router({
                     path: '/student-exams/:id',
                     name: 'student-exam',
                     component: () => import('./views/Students/Exam'),
-                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile])
+                    beforeEnter: multiguard([hasRole('student'), checkStudentProfile, isExamTakenBefore])
                 },
                 {
                     path: '/student-exam-profile/:id',

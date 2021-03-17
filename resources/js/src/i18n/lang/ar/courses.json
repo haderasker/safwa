@@ -29,5 +29,8 @@
     "doctrine": "المذهب",
     "update": "تعديل",
     "save": "حفظ",
-    "lessons_list": "جميع الدروس"
+    "lessons_list": "جميع الدروس",
+    "avatar": "الصورة",
+    "change_avatar": "تغيير الصورة",
+    "remove_avatar": "حذف الصورة"
 }

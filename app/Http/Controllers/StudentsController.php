@@ -12,6 +12,7 @@ use App\Models\StudentResponse;
 use App\Models\StudentResult;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -340,6 +341,30 @@ class StudentsController extends Controller
         unset($exam['responses']);
 
         return $exam;
+    }
+
+    public function isTaken(int $examId)
+    {
+        $exam = Exam::withCount([
+            'studentExam' => function (Builder $query) {
+                $query->where('student_id', Auth::user()->id);
+            }
+        ])
+            ->find($examId);
+
+        if (
+            $exam->student_exam_count > 0
+            || Carbon::parse($exam->published_at)->toDateString() >= now()->toDateString()
+            || Carbon::parse($exam->ended_at)->toDateString() <= now()->toDateString()
+        ) {
+            return [
+                'is_taken' => true
+            ];
+        }
+
+        return [
+            'is_taken' => false
+        ];
     }
 
     public function getCourse(int $courseId)

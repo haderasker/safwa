@@ -29,5 +29,8 @@
     "doctrine": "Doctrine",
     "update": "Update",
     "save": "Save",
-    "lessons_list": "List of Lessons"
+    "lessons_list": "List of Lessons",
+    "avatar": "Avatar",
+    "change_avatar": "Change Avatar",
+    "remove_avatar": "Remove Avatar"
 }

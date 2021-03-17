@@ -7,6 +7,33 @@
         </div>
 
         <vx-card>
+            <!-- Avatar Row -->
+            <div class="vx-row mb-6">
+                <div class="vx-col w-full">
+                    <div class="flex items-start flex-col sm:flex-row">
+                        <img v-if="course.avatar" :src="course.avatar" class="mr-8 rounded h-24 w-24"
+                             alt="avatar"/>
+                        <div>
+                            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
+                                {{ $t('courses.avatar') }}
+                            </p>
+
+                            <input type="file" class="hidden" ref="update_avatar_input" @change="updateAvatar"
+                                   accept="image/*">
+
+                            <vs-button type="border" class="mr-4 mb-4" @click="$refs.update_avatar_input.click()">
+                                {{ $t('courses.change_avatar') }}
+                            </vs-button>
+
+                            <vs-button type="border" color="danger" @click="removeAvatar()">
+                                {{ $t('courses.remove_avatar') }}
+                            </vs-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <vs-divider></vs-divider>
 
             <div class="vx-row mb-6">
                 <div class="vx-col w-1/4">
@@ -34,26 +61,6 @@
                     <vs-textarea class="w-full" v-model="course.description"/>
                 </div>
             </div>
-
-<!--            <div class="vx-row mb-6">-->
-<!--                <div class="vx-col w-1/4">-->
-<!--                    <span>{{ $t('courses.highest_score') }}</span>-->
-<!--                </div>-->
-<!--                <div class="vx-col w-3/4">-->
-<!--                    <vs-input type="number" class="w-full" :placeholder="$t('courses.highest_score')"-->
-<!--                              v-model="course.max_score"/>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="vx-row mb-6">-->
-<!--                <div class="vx-col w-1/4">-->
-<!--                    <span>{{ $t('courses.lowest_score') }}</span>-->
-<!--                </div>-->
-<!--                <div class="vx-col w-3/4">-->
-<!--                    <vs-input type="number" class="w-full" :placeholder="$t('courses.lowest_score')"-->
-<!--                              v-model="course.min_score"/>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="vx-row mb-6">
                 <div class="vx-col w-1/4">
@@ -143,6 +150,33 @@ export default {
                     course_id: this.$route.params.id
                 }
             }).catch()
+        },
+        async updateAvatar(event) {
+            // show loader
+            this.$vs.loading()
+
+            // upload image
+            const data = new FormData();
+            data.append('image', event.target.files[0]);
+
+            const response = await safwaAxios.post(`media/upload/course/${this.course.id}`, data, {
+                headers: {
+                    'Content-Type': 'image/png'
+                }
+            })
+
+            // set it into avatar block
+            this.course.avatar = response.data
+
+            // hide loader
+            this.$vs.loading.close()
+
+            console.log(this.course)
+        },
+        async removeAvatar() {
+            await safwaAxios.get(`media/remove/course/${this.course.id}`)
+
+            this.course.avatar = ''
         }
     },
 }

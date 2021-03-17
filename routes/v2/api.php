@@ -61,6 +61,7 @@ Route::group(['prefix' => 'students'], function () {
         Route::post('/{examId}', 'StudentsController@submitExam');
         Route::get('/{examId}/start', 'StudentsController@startExam');
         Route::get('/{examId}/results', 'StudentsController@getFinishedExam');
+        Route::get('/{examId}/is-taken', 'StudentsController@isTaken');
     });
 
     Route::group(['prefix' => 'courses'], function () {

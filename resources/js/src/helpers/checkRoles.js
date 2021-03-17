@@ -24,6 +24,9 @@ Vue.mixin({
             }
 
             return false;
+        },
+        $getUrl(media) {
+            return media.collection_name + '/' + media.id + '/' + media.file_name
         }
     }
 })

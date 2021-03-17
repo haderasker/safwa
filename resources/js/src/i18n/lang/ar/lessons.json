@@ -55,5 +55,8 @@
     "final_result": "النتيجة النهائية",
     "table_title": "السؤال",
     "table_answers_number": "عدد الاجابات",
-    "table_actions": "اختيارات"
+    "table_actions": "اختيارات",
+    "avatar": "الصورة",
+    "change_avatar": "تغيير الصورة",
+    "remove_avatar": "حذف الصورة"
 }

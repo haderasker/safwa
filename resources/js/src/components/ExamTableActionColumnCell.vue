@@ -25,8 +25,6 @@ export default {
                     duration: this.params.data.duration
                 }),
                 accept: async () => {
-                    await safwaAxios.get(`students/exams/${this.params.data.id}/start`)
-
                     this.$router.push({
                         name: 'student-exam',
                         params: {

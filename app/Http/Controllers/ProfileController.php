@@ -21,7 +21,9 @@ class ProfileController extends Controller
         $user = $request->user();
         $user = $user->load('roles', 'doctrine');
         $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
-        $user->avatar = $user->getMedia('images')->first() ? $user->getMedia('images')->first()->getUrl() : '';
+        $avatar = $user->getMedia('images')->first();
+        $user->avatar = $avatar ? $avatar->getUrl() : '';
+
         return $user;
     }
 

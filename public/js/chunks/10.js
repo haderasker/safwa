@@ -429,6 +429,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -579,7 +608,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
     },
     removeQuestion: function removeQuestion(index) {
       this.lesson.quiz.questions.splice(index, 1);
-    }
+    },
+    updateAvatar: function () {
+      var _updateAvatar = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee2(event) {
+        var data, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // show loader
+                this.$vs.loading(); // upload image
+
+                data = new FormData();
+                data.append('image', event.target.files[0]);
+                _context2.next = 5;
+                return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].post("media/upload/lesson/".concat(this.lesson.id), data, {
+                  headers: {
+                    'Content-Type': 'image/png'
+                  }
+                });
+
+              case 5:
+                response = _context2.sent;
+                // set it into avatar block
+                this.lesson.avatar = response.data; // hide loader
+
+                this.$vs.loading.close();
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function updateAvatar(_x) {
+        return _updateAvatar.apply(this, arguments);
+      };
+    }(),
+    removeAvatar: function () {
+      var _removeAvatar = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("media/remove/lesson/".concat(this.lesson.id));
+
+              case 2:
+                this.lesson.avatar = '';
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      return function removeAvatar() {
+        return _removeAvatar.apply(this, arguments);
+      };
+    }()
   })
 });
 
@@ -1037,6 +1132,94 @@ var render = function() {
                   attrs: { lazy: true, title: _vm.$t("lessons.step1.title") }
                 },
                 [
+                  _c("vs-divider"),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "vx-row mb-6" }, [
+                    _c("div", { staticClass: "vx-col w-full" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "flex items-start flex-col sm:flex-row"
+                        },
+                        [
+                          _vm.lesson.avatar
+                            ? _c("img", {
+                                staticClass: "mr-8 rounded h-24 w-24",
+                                attrs: { src: _vm.lesson.avatar, alt: "avatar" }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            [
+                              _c(
+                                "p",
+                                {
+                                  staticClass:
+                                    "text-lg font-medium mb-2 mt-4 sm:mt-0"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.$t("lessons.avatar")) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                ref: "update_avatar_input",
+                                staticClass: "hidden",
+                                attrs: { type: "file", accept: "image/*" },
+                                on: { change: _vm.updateAvatar }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "vs-button",
+                                {
+                                  staticClass: "mr-4 mb-4",
+                                  attrs: { type: "border" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$refs.update_avatar_input.click()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.$t("lessons.change_avatar")) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "vs-button",
+                                {
+                                  attrs: { type: "border", color: "danger" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeAvatar()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.$t("lessons.remove_avatar")) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("vs-divider"),
                   _vm._v(" "),
                   _c("div", { staticClass: "vx-row mb-6" }, [

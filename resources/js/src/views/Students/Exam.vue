@@ -77,8 +77,9 @@ export default {
     beforeMount() {
         window.addEventListener("beforeunload", this.preventNav)
     },
-    mounted() {
-        this.loadExam()
+    async created() {
+        await this.startExam()
+        this.loadExam().catch()
     },
     beforeDestroy() {
         window.removeEventListener("beforeunload", this.preventNav);
@@ -99,9 +100,15 @@ export default {
             // Chrome requires returnValue to be set.
             event.returnValue = this.leaveMessage
         },
+
         setTime() {
             this.totalSeconds = this.exam.duration * 60 * 60
         },
+
+        async startExam() {
+            await safwaAxios.get(`students/exams/${this.$route.params.id}/start`)
+        },
+
         async loadExam() {
             const response = await safwaAxios.get(`exams/${this.$route.params.id}`)
 
@@ -113,6 +120,7 @@ export default {
 
             this.setTime()
         },
+
         validateQuestion() {
 
         },

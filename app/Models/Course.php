@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 
-class Course extends Model
+class Course extends Model implements HasMedia
 {
-    use SoftDeletes;
+    use SoftDeletes, HasMediaTrait;
 
     protected $connection = 'mysql';
 
@@ -93,5 +95,10 @@ class Course extends Model
             'id',
             'id'
         );
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')->useDisk('custom')->singleFile();
     }
 }

@@ -64,7 +64,12 @@ class LessonsController extends Controller
 
     public function edit(int $lessonId)
     {
-        return Lesson::with('course', 'quiz.questions.answers')->findOrFail($lessonId);
+        $lesson = Lesson::with('course', 'quiz.questions.answers')->findOrFail($lessonId);
+
+        $avatar = $lesson->getMedia('images')->first();
+        $lesson->avatar = $avatar ? $avatar->getUrl() : '';
+
+        return $lesson;
     }
 
     /**

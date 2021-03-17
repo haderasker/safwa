@@ -56,7 +56,7 @@ class ExamsController extends Controller
      */
     public function edit(int $examId): Exam
     {
-        return Exam::with('questions.answers', 'level', 'testable')->findOrFail($examId);
+        return Exam::with('questions.answers', 'level', 'testable', 'studentExam')->findOrFail($examId);
     }
 
     /**

@@ -28,6 +28,35 @@
                     class="mb-5">
 
                     <vs-divider/>
+
+                    <!-- Avatar Row -->
+                    <div class="vx-row mb-6">
+                        <div class="vx-col w-full">
+                            <div class="flex items-start flex-col sm:flex-row">
+                                <img v-if="lesson.avatar" :src="lesson.avatar" class="mr-8 rounded h-24 w-24"
+                                     alt="avatar"/>
+                                <div>
+                                    <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
+                                        {{ $t('lessons.avatar') }}
+                                    </p>
+
+                                    <input type="file" class="hidden" ref="update_avatar_input" @change="updateAvatar"
+                                           accept="image/*">
+
+                                    <vs-button type="border" class="mr-4 mb-4" @click="$refs.update_avatar_input.click()">
+                                        {{ $t('lessons.change_avatar') }}
+                                    </vs-button>
+
+                                    <vs-button type="border" color="danger" @click="removeAvatar()">
+                                        {{ $t('lessons.remove_avatar') }}
+                                    </vs-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <vs-divider></vs-divider>
+
                     <div class="vx-row mb-6">
                         <div class="vx-col w-1/4">
                             <span>{{ $t('lessons.step1.courses') }}</span>
@@ -291,6 +320,31 @@ export default {
         },
         removeQuestion(index) {
             this.lesson.quiz.questions.splice(index, 1)
+        },
+        async updateAvatar(event) {
+            // show loader
+            this.$vs.loading()
+
+            // upload image
+            const data = new FormData();
+            data.append('image', event.target.files[0]);
+
+            const response = await safwaAxios.post(`media/upload/lesson/${this.lesson.id}`, data, {
+                headers: {
+                    'Content-Type': 'image/png'
+                }
+            })
+
+            // set it into avatar block
+            this.lesson.avatar = response.data
+
+            // hide loader
+            this.$vs.loading.close()
+        },
+        async removeAvatar() {
+            await safwaAxios.get(`media/remove/lesson/${this.lesson.id}`)
+
+            this.lesson.avatar = ''
         }
     }
 }
