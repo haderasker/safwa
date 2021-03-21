@@ -57,7 +57,7 @@ return [
 
         'custom' => [
             'driver' => 'local',
-            'root' => public_path('images'),
+            'root' => public_path('images/avatars'),
             'url' => '/images',
             'visibility' => 'public',
         ],

@@ -7,7 +7,7 @@
 
         <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
             <div class="con-img ml-3">
-                <img :src="activeUserInfo.avatar || require('@assets/images/logo/main-logo-white.jpg')" alt="user-img"
+                <img :src="(activeUserInfo.media && activeUserInfo.media.length) ? $getUrl(activeUserInfo.media[0]) : require('@assets/images/logo/main-logo-white.jpg')" alt="user-img"
                      width="40" height="40" class="rounded-full shadow-md cursor-pointer block"/>
             </div>
 

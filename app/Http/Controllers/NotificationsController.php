@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserNotification;
 use App\Models\Notification;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -146,11 +148,11 @@ class NotificationsController extends Controller
 
         foreach ($ids as $id) {
             $notifications[] = [
-                'user_id' => $id,
-                'title'   => $title,
-                'body'    => $content,
-                'sent_at' => $now,
-                'seen_at' => null,
+                'user_id'    => $id,
+                'title'      => $title,
+                'body'       => $content,
+                'sent_at'    => $now,
+                'seen_at'    => null,
                 'created_at' => $now,
                 'updated_at' => $now
             ];
@@ -161,8 +163,11 @@ class NotificationsController extends Controller
 
     private function sendEmails(array $ids, string $content, string $title)
     {
-        $emails = User::whereIn('id', $ids)->pluck('email')->toArray();
+        $emails = User::whereIn('id', $ids);
 
         // send Emails
+        foreach ($emails as $email) {
+            Mail::to($email)->send(new UserNotification($title, $content));
+        }
     }
 }

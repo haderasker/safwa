@@ -8,10 +8,10 @@
 
         <vx-card>
             <!-- Avatar Row -->
-            <div class="vx-row mb-6">
+            <div v-if="$route.params.id" class="vx-row mb-6">
                 <div class="vx-col w-full">
                     <div class="flex items-start flex-col sm:flex-row">
-                        <img v-if="course.avatar" :src="course.avatar" class="mr-8 rounded h-24 w-24"
+                        <img v-if="course.media.length" :src="$getUrl(course.media[0])" class="mr-8 rounded h-24 w-24"
                              alt="avatar"/>
                         <div>
                             <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <vs-divider></vs-divider>
+            <vs-divider v-if="$route.params.id"></vs-divider>
 
             <div class="vx-row mb-6">
                 <div class="vx-col w-1/4">
@@ -166,17 +166,15 @@ export default {
             })
 
             // set it into avatar block
-            this.course.avatar = response.data
+            this.course.media = [response.data]
 
             // hide loader
             this.$vs.loading.close()
-
-            console.log(this.course)
         },
         async removeAvatar() {
             await safwaAxios.get(`media/remove/course/${this.course.id}`)
 
-            this.course.avatar = ''
+            this.course.media = []
         }
     },
 }

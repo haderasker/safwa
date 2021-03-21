@@ -23,7 +23,7 @@ Vue.prototype.$http = axios
 // Filters
 import './filters/filters.js'
 
-import './helpers/checkRoles'
+import './utils/checkRoles'
 
 // Theme Configurations
 import '../themeConfig.js'

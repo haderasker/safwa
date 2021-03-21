@@ -13,6 +13,7 @@ export default {
     data() {
         return {
             lesson: {
+                media: [],
                 quiz: {
                     questions: []
                 }

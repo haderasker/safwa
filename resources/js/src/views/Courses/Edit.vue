@@ -12,7 +12,9 @@ export default {
     },
     data() {
         return {
-            course: {}
+            course: {
+                media:[]
+            }
         }
     },
     mounted() {

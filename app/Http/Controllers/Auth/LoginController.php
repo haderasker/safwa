@@ -51,10 +51,8 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        $user->load('roles', 'doctrine');
+        $user->load('roles', 'doctrine', 'media');
         $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
-        $avatar = $user->getMedia('images')->first();
-        $user->avatar = $avatar ? $avatar->getUrl() : '';
 
         return $user;
     }

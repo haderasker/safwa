@@ -53,9 +53,11 @@ export default {
                 this.$router.push({name: 'login'}).catch(() => {
                 })
             } catch (error) {
+                const key = error.response.data.errors.email[0].replace(/[^a-zA-Z ]/g, "").replaceAll(' ', '_').toLowerCase()
+
                 this.$vs.notify({
                     title: this.$t('general.error_title'),
-                    text: error.response.status === 422 ? this.$t('forget_password.failed_auth_message') : error.message,
+                    text: error.response.status === 422 ? this.$t(`forget_password.${key}`) : error.message,
                     iconPack: 'feather',
                     icon: 'icon-alert-circle',
                     color: 'danger'

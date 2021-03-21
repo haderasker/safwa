@@ -11,7 +11,12 @@ export default {
     },
     data() {
         return {
-            studentData: {}
+            studentData: {
+                name: null,
+                email: null,
+                password: null,
+                password_confirmation: null
+            }
         }
     }
 }

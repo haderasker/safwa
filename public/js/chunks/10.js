@@ -633,7 +633,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
               case 5:
                 response = _context2.sent;
                 // set it into avatar block
-                this.lesson.avatar = response.data; // hide loader
+                this.lesson.media = [response.data]; // hide loader
 
                 this.$vs.loading.close();
 
@@ -661,7 +661,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
                 return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("media/remove/lesson/".concat(this.lesson.id));
 
               case 2:
-                this.lesson.avatar = '';
+                this.lesson.media = [];
 
               case 3:
               case "end":
@@ -1134,93 +1134,106 @@ var render = function() {
                 [
                   _c("vs-divider"),
                   _vm._v(" "),
-                  _c("div", { staticClass: "vx-row mb-6" }, [
-                    _c("div", { staticClass: "vx-col w-full" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "flex items-start flex-col sm:flex-row"
-                        },
-                        [
-                          _vm.lesson.avatar
-                            ? _c("img", {
-                                staticClass: "mr-8 rounded h-24 w-24",
-                                attrs: { src: _vm.lesson.avatar, alt: "avatar" }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
+                  _vm.$route.params.id
+                    ? _c("div", { staticClass: "vx-row mb-6" }, [
+                        _c("div", { staticClass: "vx-col w-full" }, [
                           _c(
                             "div",
+                            {
+                              staticClass:
+                                "flex items-start flex-col sm:flex-row"
+                            },
                             [
-                              _c(
-                                "p",
-                                {
-                                  staticClass:
-                                    "text-lg font-medium mb-2 mt-4 sm:mt-0"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(_vm.$t("lessons.avatar")) +
-                                      "\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                ref: "update_avatar_input",
-                                staticClass: "hidden",
-                                attrs: { type: "file", accept: "image/*" },
-                                on: { change: _vm.updateAvatar }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "vs-button",
-                                {
-                                  staticClass: "mr-4 mb-4",
-                                  attrs: { type: "border" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$refs.update_avatar_input.click()
+                              _vm.lesson.media.length
+                                ? _c("img", {
+                                    staticClass: "mr-8 rounded h-24 w-24",
+                                    attrs: {
+                                      src: _vm.$getUrl(_vm.lesson.media[0]),
+                                      alt: "avatar"
                                     }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(_vm.$t("lessons.change_avatar")) +
-                                      "\n                                    "
-                                  )
-                                ]
-                              ),
+                                  })
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
-                                "vs-button",
-                                {
-                                  attrs: { type: "border", color: "danger" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.removeAvatar()
-                                    }
-                                  }
-                                },
+                                "div",
                                 [
-                                  _vm._v(
-                                    "\n                                        " +
-                                      _vm._s(_vm.$t("lessons.remove_avatar")) +
-                                      "\n                                    "
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "text-lg font-medium mb-2 mt-4 sm:mt-0"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(_vm.$t("lessons.avatar")) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "update_avatar_input",
+                                    staticClass: "hidden",
+                                    attrs: { type: "file", accept: "image/*" },
+                                    on: { change: _vm.updateAvatar }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-button",
+                                    {
+                                      staticClass: "mr-4 mb-4",
+                                      attrs: { type: "border" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$refs.update_avatar_input.click()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(
+                                            _vm.$t("lessons.change_avatar")
+                                          ) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "vs-button",
+                                    {
+                                      attrs: {
+                                        type: "border",
+                                        color: "danger"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.removeAvatar()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(
+                                            _vm.$t("lessons.remove_avatar")
+                                          ) +
+                                          "\n                                    "
+                                      )
+                                    ]
                                   )
-                                ]
+                                ],
+                                1
                               )
-                            ],
-                            1
+                            ]
                           )
-                        ]
-                      )
-                    ])
-                  ]),
+                        ])
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("vs-divider"),
+                  _vm.$route.params.id ? _c("vs-divider") : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "vx-row mb-6" }, [
                     _c("div", { staticClass: "vx-col w-1/4" }, [

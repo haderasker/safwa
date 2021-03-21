@@ -54,10 +54,7 @@ class CoursesController extends Controller
             array_column($currentYearCourses, 'course')
         );
 
-        $courses = Course::with([
-            'teacher',
-            'media'
-        ])
+        $courses = Course::with('teacher')
             ->withCount([
                 'lessons',
                 'students',
@@ -138,11 +135,7 @@ class CoursesController extends Controller
      */
     public function edit(int $courseId): Course
     {
-        $course = Course::with(['teacher', 'doctrine'])->findOrFail($courseId);
-        $avatar = $course->getMedia('images')->first();
-        $course->avatar = $avatar ? $avatar->getUrl() : '';
-
-        return $course;
+        return Course::with(['teacher', 'doctrine', 'media'])->findOrFail($courseId);
     }
 
     /**

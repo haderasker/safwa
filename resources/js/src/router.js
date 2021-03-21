@@ -21,6 +21,11 @@ const router = new Router({
             component: () => import('./layouts/main/Main.vue'),
             children: [
                 {
+                    path: '/icons',
+                    name: 'icons',
+                    component: () => import('./views/Icons')
+                },
+                {
                     path: '/',
                     name: 'dashboard',
                     component: () => import('./views/Dashboard'),

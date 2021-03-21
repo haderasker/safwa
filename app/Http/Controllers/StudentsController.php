@@ -407,4 +407,9 @@ class StudentsController extends Controller
 
         return response(null, 204);
     }
+
+    public function show(int $id): User
+    {
+        return User::with('roles', 'doctrine', 'media')->findOrFail($id);
+    }
 }

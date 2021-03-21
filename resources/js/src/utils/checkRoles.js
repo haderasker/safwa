@@ -26,7 +26,7 @@ Vue.mixin({
             return false;
         },
         $getUrl(media) {
-            return media.collection_name + '/' + media.id + '/' + media.file_name
+            return '/' + media.collection_name + '/avatars/' + media.id + '/' + media.file_name
         }
     }
 })

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Utils\Convert;
-use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
     /**
-     * @param Request $request
-     * @param int $modelId
      * @param string $modelType
+     * @param int $modelId
+     * @return mixed
      * @throws \Exception
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
@@ -20,9 +19,16 @@ class ImageController extends Controller
 
         $model->addMediaFromRequest('image')->toMediaCollection('images');
 
-        return $model->getMedia('images')->first()->getUrl();
+        return $model->getMedia('images')->first()->toArray();
     }
 
+    /**
+     * @param string $modelType
+     * @param int $modelId
+     * @return mixed
+     * @throws \Exception
+     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
+     */
     public function remove(string $modelType, int $modelId)
     {
         $model = Convert::toModelName($modelType)::find($modelId);

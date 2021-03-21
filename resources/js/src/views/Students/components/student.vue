@@ -45,7 +45,14 @@
                     <span>{{ $t('students.password') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" v-model="student.password"/>
+                    <vx-input-group class="w-full">
+                        <vs-input v-model="student.password"/>
+                        <template slot="append">
+                            <div class="append-text bg-primary">
+                                <vs-button @click="generatePassword()">Generate</vs-button>
+                            </div>
+                        </template>
+                    </vx-input-group>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -72,10 +79,12 @@
 import safwaAxios from "../../../axios";
 
 export default {
-    name: 'student',
     props: ['student'],
     data() {
-        return {}
+        return {
+            characters: 'a-z,A-Z,0-9,#',
+            size: 16
+        }
     },
     computed: {
         getStatus() {
@@ -90,6 +99,31 @@ export default {
         }
     },
     methods: {
+        generatePassword() {
+            let charactersArray = this.characters.split(',');
+            let CharacterSet = '';
+            let password = '';
+
+            if (charactersArray.indexOf('a-z') >= 0) {
+                CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
+            }
+            if (charactersArray.indexOf('A-Z') >= 0) {
+                CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            }
+            if (charactersArray.indexOf('0-9') >= 0) {
+                CharacterSet += '0123456789';
+            }
+            if (charactersArray.indexOf('#') >= 0) {
+                CharacterSet += '![]{}()%&*$#^<>~@|';
+            }
+
+            for (let i = 0; i < this.size; i++) {
+                password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
+            }
+
+            this.student.password = password;
+            this.student.password_confirmation = password;
+        },
         async createStudent() {
             const student = Object.assign({}, this.student)
 

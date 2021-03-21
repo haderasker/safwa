@@ -30,10 +30,10 @@
                     <vs-divider/>
 
                     <!-- Avatar Row -->
-                    <div class="vx-row mb-6">
+                    <div class="vx-row mb-6" v-if="$route.params.id">
                         <div class="vx-col w-full">
                             <div class="flex items-start flex-col sm:flex-row">
-                                <img v-if="lesson.avatar" :src="lesson.avatar" class="mr-8 rounded h-24 w-24"
+                                <img v-if="lesson.media.length" :src="$getUrl(lesson.media[0])" class="mr-8 rounded h-24 w-24"
                                      alt="avatar"/>
                                 <div>
                                     <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
 
-                    <vs-divider></vs-divider>
+                    <vs-divider v-if="$route.params.id"></vs-divider>
 
                     <div class="vx-row mb-6">
                         <div class="vx-col w-1/4">
@@ -336,7 +336,7 @@ export default {
             })
 
             // set it into avatar block
-            this.lesson.avatar = response.data
+            this.lesson.media = [response.data]
 
             // hide loader
             this.$vs.loading.close()
@@ -344,7 +344,7 @@ export default {
         async removeAvatar() {
             await safwaAxios.get(`media/remove/lesson/${this.lesson.id}`)
 
-            this.lesson.avatar = ''
+            this.lesson.media = []
         }
     }
 }

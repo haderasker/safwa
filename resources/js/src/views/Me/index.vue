@@ -17,7 +17,7 @@
                 <div class="vx-row">
                     <div class="vx-col w-full">
                         <div class="flex items-start flex-col sm:flex-row">
-                            <img v-if="profile.avatar" :src="profile.avatar" class="mr-8 rounded h-24 w-24"
+                            <img v-if="profile.media && profile.media.length" :src="$getUrl(profile.media[0])" class="mr-8 rounded h-24 w-24"
                                  alt="avatar"/>
                             <div>
                                 <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <vs-divider></vs-divider>
+                <vs-divider v-if="profile.media && profile.media.length"></vs-divider>
 
                 <!-- Content Row -->
                 <div class="vx-row">
@@ -348,7 +348,9 @@ export default {
     },
     data() {
         return {
-            profile: {}
+            profile: {
+                media: []
+            }
         }
     },
     mounted() {
@@ -446,7 +448,13 @@ export default {
             })
 
             // set it into avatar block
-            this.profile.avatar = response.data
+            this.profile.media = [response.data]
+
+            // update user avatar
+            const myProfile = Object.assign({}, this.$store.getters['Authentication/getProfile'])
+            myProfile.media = [response.data]
+
+            this.$store.commit('Authentication/SET_PROFILE', myProfile)
 
             // hide loader
             this.$vs.loading.close()
@@ -454,7 +462,7 @@ export default {
         async removeAvatar() {
             await safwaAxios.get(`media/remove/user/${this.profile.id}`)
 
-            this.profile.avatar = ''
+            this.profile.media = []
         },
         async save() {
             // validate
