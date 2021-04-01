@@ -83,14 +83,17 @@ class LessonsController extends Controller
 
         // update request to support exam inputs
         $request->request->add([
-            'label'         => $request->input('label'),
-            'testable_id'   => $lesson->id,
-            'testable_type' => 'lesson',
-            'duration'      => 0,
-            'published_at'  => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-            'ended_at'      => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-            'level_id'      => null,
-            'type'          => 'default',
+            'exam' => [
+                'label'         => $request->input('label'),
+                'testable_id'   => $lesson->id,
+                'testable_type' => 'lesson',
+                'duration'      => 0,
+                'published_at'  => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'ended_at'      => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'level_id'      => null,
+                'type'          => 'default',
+                'questions'     => $request->input('questions')
+            ]
         ]);
 
         // save quiz
@@ -109,6 +112,8 @@ class LessonsController extends Controller
      */
     public function update(int $lessonId, Request $request)
     {
+        error_log(print_r($request->all(), true));
+
         $this->validateRequest($request);
 
         $lesson = Lesson::findOrFail($lessonId);
@@ -117,14 +122,18 @@ class LessonsController extends Controller
 
         // update request to support exam inputs
         $request->request->add([
-            'label'         => $request->input('label'),
-            'testable_id'   => $lesson->id,
-            'testable_type' => 'lesson',
-            'duration'      => 0,
-            'published_at'  => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-            'ended_at'      => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-            'level_id'      => null,
-            'type'          => 'default',
+            'exam' => [
+                'label'            => $request->input('lesson')['label'] ?? null,
+                'testable_id'      => $lesson->id,
+                'testable_type'    => 'lesson',
+                'duration'         => 0,
+                'published_at'     => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'ended_at'         => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'level_id'         => null,
+                'type'             => 'default',
+                'questions'        => $request->input('lesson')['questions'] ?? null,
+                'deletedQuestions' => $request->input('deletedQuestions')
+            ]
         ]);
 
         // save quiz
@@ -142,19 +151,19 @@ class LessonsController extends Controller
     private function validateRequest(Request $request)
     {
         $this->validate($request, [
-            'course_id'                        => ['required', 'integer'],
-            'label'                            => ['required', 'max:150'],
-            'published_at'                     => ['required', 'date_format:Y-m-d H:i'],
-            'youtube'                          => ['nullable', 'regex:/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/'],
-            'soundcloud'                       => ['nullable', 'regex:/^https?:\/\/(soundcloud.com|snd.sc)\/(.*)$/'],
-            'pdf'                              => ['nullable', 'string'],
-            'questions'                        => ['required', 'array', 'min:1'],
-            'questions.*.label'                => ['required', 'string', 'max:150'],
-            'questions.*.score'                => ['required', 'integer', 'min:1'],
-            'questions.*.order'                => ['required', 'integer'],
-            'questions.*.answers'              => ['required', 'array', 'min:1'],
-            'questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
-            'questions.*.answers.*.is_correct' => ['required', 'boolean']
+            'lesson.course_id'                        => ['required', 'integer'],
+            'lesson.label'                            => ['required', 'max:150'],
+            'lesson.published_at'                     => ['required', 'date_format:Y-m-d H:i'],
+            'lesson.youtube'                          => ['nullable', 'regex:/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/'],
+            'lesson.soundcloud'                       => ['nullable', 'string'],
+            'lesson.pdf'                              => ['nullable', 'string'],
+            'lesson.questions'                        => ['required', 'array', 'min:1'],
+            'lesson.questions.*.label'                => ['required', 'string', 'max:150'],
+            'lesson.questions.*.score'                => ['required', 'integer', 'min:1'],
+            'lesson.questions.*.order'                => ['required', 'integer'],
+            'lesson.questions.*.answers'              => ['required', 'array', 'min:1'],
+            'lesson.questions.*.answers.*.label'      => ['required', 'string', 'max:150'],
+            'lesson.questions.*.answers.*.is_correct' => ['required', 'boolean']
         ]);
     }
 
@@ -166,12 +175,12 @@ class LessonsController extends Controller
     private function attributes(array $request): array
     {
         return [
-            'course_id'    => $request['course_id'],
-            'label'        => $request['label'],
-            'youtube'      => $request['youtube'] ?? null,
-            'soundcloud'   => $request['soundcloud'] ?? null,
-            'pdf'          => $request['pdf'] ?? null,
-            'published_at' => $request['published_at']
+            'course_id'    => $request['lesson']['course_id'],
+            'label'        => $request['lesson']['label'],
+            'youtube'      => $request['lesson']['youtube'] ?? null,
+            'soundcloud'   => $request['lesson']['soundcloud'] ?? null,
+            'pdf'          => $request['lesson']['pdf'] ?? null,
+            'published_at' => $request['lesson']['published_at']
         ];
     }
 

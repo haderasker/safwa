@@ -164,7 +164,7 @@
                                                        @click="editQuestion(index, listItem)">
                                                 {{ $t('lessons.edit_q') }}
                                             </vs-button>
-                                            <vs-button color="danger" type="filled" @click="removeQuestion(index)">
+                                            <vs-button color="danger" type="filled" @click="removeQuestion(index, listItem)">
                                                 {{ $t('lessons.remove_q') }}
                                             </vs-button>
                                         </td>
@@ -232,6 +232,7 @@ export default {
                     }
                 ]
             },
+            deletedQuestions: [],
             sidebarOpened: false,
             configDateTimePicker: {
                 enableTime: true,
@@ -267,7 +268,10 @@ export default {
             delete lesson.course
 
             if (this.$route.params.id) {
-                await safwaAxios.put(`lessons/${this.$route.params.id}`, lesson);
+                await safwaAxios.put(`lessons/${this.$route.params.id}`, {
+                    lesson,
+                    deletedQuestions: this.deletedQuestions
+                });
             } else {
                 await safwaAxios.post('lessons', lesson);
                 this.$router.push({name: 'lessons.list'}).catch();
@@ -318,7 +322,11 @@ export default {
 
             this.openSidebar()
         },
-        removeQuestion(index) {
+        removeQuestion(index, question) {
+            // if this is an old Question then grab it's id and delete it
+            if (question.id) {
+                this.deletedQuestions.push(question.id)
+            }
             this.lesson.quiz.questions.splice(index, 1)
         },
         async updateAvatar(event) {

@@ -1,23 +1,30 @@
 <template>
     <div>
+        <h1>{{ $t('general.lessons') }}</h1>
+        <vs-divider></vs-divider>
         <div class="vx-row">
             <div class="vx-col w-1/3" v-for="lesson in lessons">
-                <statistics-card-line
-                    hideChart
-                    class="mb-base"
-                    icon="remove-red-eye"
-                    :statistic="lesson.label"
-                    :statisticTitle="lesson.course_name"/>
+                <vx-card class="mb-base">
+                    <div slot="no-body">
+                        <img :src="$getUrl(lesson.avatar) || require('@assets/images/logo/main-logo-white.jpg')" alt="content-img" class="responsive card-img-top dashboard-image">
+                    </div>
+                    <h4 class="mb-2 text-center font-bold">{{ lesson.label }}</h4>
+                    <p class="text-grey text-center">{{ lesson.course_name }}</p>
+                </vx-card>
             </div>
         </div>
+
+        <h1>{{ $t('general.courses') }}</h1>
+        <vs-divider></vs-divider>
         <div class="vx-row">
             <div class="vx-col w-1/3" v-for="subject in subjects">
-                <statistics-card-line
-                    hideChart
-                    class="mb-base"
-                    icon="EyeIcon"
-                    :statistic="subject.name"
-                    :statisticTitle="subject.lessons_count.toString()"/>
+                <vx-card class="mb-base">
+                    <div slot="no-body">
+                        <img :src="$getUrl(subject.avatar) || require('@assets/images/logo/main-logo-white.jpg')" alt="content-img" class="responsive card-img-top dashboard-image">
+                    </div>
+                    <h4 class="mb-2 text-center font-bold">{{ subject.name }}</h4>
+                    <p class="text-grey text-center">{{ subject.lessons_count }}</p>
+                </vx-card>
             </div>
         </div>
     </div>
@@ -51,4 +58,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dashboard-image {
+    max-height: 200px;
+}
+</style>

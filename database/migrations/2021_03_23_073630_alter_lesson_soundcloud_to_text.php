@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterLessonLabelToText extends Migration
+class AlterLessonSoundcloudToText extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AlterLessonLabelToText extends Migration
     public function up()
     {
         Schema::table('lessons', function (Blueprint $table) {
-            $table->text('label')->change();
+            $table->text('soundcloud')->change();
         });
     }
 

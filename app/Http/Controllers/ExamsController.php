@@ -80,8 +80,8 @@ class ExamsController extends Controller
                 $exam->save();
 
                 // delete old questions
-                Question::whereIn('id', $inputs['deletedQuestions'])->delete();
                 Answer::whereIn('question_id', $inputs['deletedQuestions'])->delete();
+                Question::whereIn('id', $inputs['deletedQuestions'])->delete();
 
                 foreach ($inputs['exam']['questions'] as $questionData) {
                     $question = Question::firstOrNew([

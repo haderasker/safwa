@@ -492,6 +492,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
           is_correct: false
         }]
       },
+      deletedQuestions: [],
       sidebarOpened: false,
       configDateTimePicker: {
         enableTime: true,
@@ -537,7 +538,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
                 }
 
                 _context.next = 5;
-                return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].put("lessons/".concat(this.$route.params.id), lesson);
+                return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].put("lessons/".concat(this.$route.params.id), {
+                  lesson: lesson,
+                  deletedQuestions: this.deletedQuestions
+                });
 
               case 5:
                 _context.next = 10;
@@ -606,7 +610,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
       });
       this.openSidebar();
     },
-    removeQuestion: function removeQuestion(index) {
+    removeQuestion: function removeQuestion(index, question) {
+      // if this is an old Question then grab it's id and delete it
+      if (question.id) {
+        this.deletedQuestions.push(question.id);
+      }
+
       this.lesson.quiz.questions.splice(index, 1);
     },
     updateAvatar: function () {
@@ -1591,7 +1600,8 @@ var render = function() {
                                               on: {
                                                 click: function($event) {
                                                   return _vm.removeQuestion(
-                                                    index
+                                                    index,
+                                                    listItem
                                                   )
                                                 }
                                               }

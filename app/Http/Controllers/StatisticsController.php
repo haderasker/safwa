@@ -47,10 +47,11 @@ class StatisticsController extends Controller
             $courses[] = [
                 'id'            => $course->course->id,
                 'name'          => $course->course->name,
-                'lessons_count' => $course->course->lessons_count
+                'lessons_count' => $course->course->lessons_count,
+                'avatar'        => $course->course->media()->first()
             ];
 
-            if(!$course->course->lessons) {
+            if (!$course->course->lessons) {
                 return [];
             }
 
@@ -58,7 +59,8 @@ class StatisticsController extends Controller
                 $lessons[] = [
                     'id'          => $lesson->id,
                     'label'       => $lesson->label,
-                    'course_name' => $course->course->name
+                    'course_name' => $course->course->name,
+                    'avatar'      => $lesson->media()->first()
                 ];
             });
 

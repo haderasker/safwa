@@ -35,8 +35,9 @@
 
                     <div class="vx-row">
                         <div v-if="lesson.youtube" class="vx-col w-1/3">
-                            <a :href="lesson.youtube" target="_blank">
+                            <a href="#" @click.prevent="content = 'youtube'">
                                 <statistics-card-line
+                                    @click=""
                                     hideChart
                                     class="mb-base"
                                     icon="YoutubeIcon"
@@ -44,7 +45,7 @@
                             </a>
                         </div>
                         <div v-if="lesson.soundcloud" class="vx-col w-1/3">
-                            <a :href="lesson.soundcloud" target="_blank">
+                            <a href="#" @click.prevent="content = 'soundcloud'">
                                 <statistics-card-line
                                     hideChart
                                     class="mb-base"
@@ -53,31 +54,44 @@
                             </a>
                         </div>
                         <div v-if="lesson.pdf" class="vx-col w-1/3">
-                            <a :href="lesson.pdf" target="_blank">
+                            <router-link :to="lesson.pdf" target="_blank">
                                 <statistics-card-line
                                     hideChart
                                     class="mb-base"
                                     icon="FileTextIcon"
                                     :statistic="$t('student_lesson_profile.pdf')"/>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                     <div class="vx-row">
-                        <div class="vx-col w-1/3">
-
-                            <vs-button
-                                v-if="lesson.quiz.id && lesson.quiz.student_exam && !lesson.quiz.student_exam[0].passed"
-                                color="primary"
-                                type="filled"
-                                @click.prevent="startQuiz">
-                                {{ $t('student_lesson_profile.start_quiz') }}
-                            </vs-button>
+                        <div class="vx-col w-full text-center" style="display: none;" v-show="content === 'youtube'">
+                            <youtube ref="youtubePlayer" :video-id="videoId"></youtube>
                         </div>
 
-                        <div class="vx-col w-1/3">
-                            {{ $t('student_lesson_profile.last_score') }}: {{ lesson.quiz.student_exam ? lesson.quiz.student_exam[0].score : 0 }} / {{ lesson.quiz.totalScore }}
-                        </div>
+                        <div
+                            class="vx-col w-full"
+                            style="display: none;"
+                            v-show="content === 'soundcloud'"
+                            v-html="lesson.soundcloud"></div>
                     </div>
+
+
+                    <!--                    <div class="vx-row">-->
+                    <!--                        <div class="vx-col w-1/3">-->
+
+                    <!--                            <vs-button-->
+                    <!--                                v-if="lesson.quiz.id && lesson.quiz.student_exam && !lesson.quiz.student_exam[0].passed"-->
+                    <!--                                color="primary"-->
+                    <!--                                type="filled"-->
+                    <!--                                @click.prevent="startQuiz">-->
+                    <!--                                {{ $t('student_lesson_profile.start_quiz') }}-->
+                    <!--                            </vs-button>-->
+                    <!--                        </div>-->
+
+                    <!--                        <div class="vx-col w-1/3">-->
+                    <!--                            {{ $t('student_lesson_profile.last_score') }}: {{ lesson.quiz.student_exam ? lesson.quiz.student_exam[0].score : 0 }} / {{ lesson.quiz.totalScore }}-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
                 </vs-tab>
 
                 <vs-tab :label="$t('student_lesson_profile.discussion')">
@@ -93,15 +107,18 @@
 import safwaAxios from "../../axios";
 import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
 import CommentsSection from '../../components/CommentsSection'
+import {Youtube, getIdFromUrl} from 'vue-youtube'
 
 export default {
     components: {
         StatisticsCardLine,
-        CommentsSection
+        CommentsSection,
+        Youtube
     },
     data() {
         return {
             commentableType: 'lesson',
+            content: null,
             lesson: {
                 course: {},
                 quiz: {}
@@ -110,6 +127,18 @@ export default {
     },
     mounted() {
         this.loadLesson()
+    },
+    watch: {
+        content(val) {
+            if (val !== 'youtube') {
+                this.$refs.youtubePlayer.player.stopVideo()
+            }
+        }
+    },
+    computed: {
+        videoId() {
+            return getIdFromUrl(this.lesson.youtube)
+        }
     },
     methods: {
         async loadLesson() {
