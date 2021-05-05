@@ -458,6 +458,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -504,7 +510,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
     this.loadCourses();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_12__["mapGetters"])({
-    getCourses: 'Courses/getCourses'
+    getCourses: 'Courses/getCourses',
+    profile: 'Authentication/getProfile'
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_12__["mapActions"])({
     loadCourses: 'Courses/loadCourses'
@@ -518,6 +525,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!(this.$hasRole('teacher') && !this.profile.upload_lessons)) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
                 lesson = _objectSpread({}, this.lesson, {
                   course_id: window._.get(this, 'lesson.course.id', null),
                   questions: this.lesson.quiz.questions.map(function (q, index) {
@@ -533,30 +548,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { _babel_runtime_cor
                 delete lesson.course;
 
                 if (!this.$route.params.id) {
-                  _context.next = 7;
+                  _context.next = 9;
                   break;
                 }
 
-                _context.next = 5;
+                _context.next = 7;
                 return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].put("lessons/".concat(this.$route.params.id), {
                   lesson: lesson,
                   deletedQuestions: this.deletedQuestions
                 });
 
-              case 5:
-                _context.next = 10;
+              case 7:
+                _context.next = 12;
                 break;
 
-              case 7:
-                _context.next = 9;
+              case 9:
+                _context.next = 11;
                 return _axios__WEBPACK_IMPORTED_MODULE_13__["default"].post('lessons', lesson);
 
-              case 9:
+              case 11:
                 this.$router.push({
                   name: 'lessons.list'
                 }).catch();
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -1163,79 +1178,86 @@ var render = function() {
                                   })
                                 : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "div",
-                                [
-                                  _c(
-                                    "p",
-                                    {
-                                      staticClass:
-                                        "text-lg font-medium mb-2 mt-4 sm:mt-0"
-                                    },
+                              _vm.$hasRole("admin") ||
+                              (_vm.$hasRole("teacher") &&
+                                _vm.profile.upload_lessons)
+                                ? _c(
+                                    "div",
                                     [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(_vm.$t("lessons.avatar")) +
-                                          "\n                                    "
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "text-lg font-medium mb-2 mt-4 sm:mt-0"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(_vm.$t("lessons.avatar")) +
+                                              "\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        ref: "update_avatar_input",
+                                        staticClass: "hidden",
+                                        attrs: {
+                                          type: "file",
+                                          accept: "image/*"
+                                        },
+                                        on: { change: _vm.updateAvatar }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "vs-button",
+                                        {
+                                          staticClass: "mr-4 mb-4",
+                                          attrs: { type: "border" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.$refs.update_avatar_input.click()
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(
+                                                _vm.$t("lessons.change_avatar")
+                                              ) +
+                                              "\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "vs-button",
+                                        {
+                                          attrs: {
+                                            type: "border",
+                                            color: "danger"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.removeAvatar()
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(
+                                                _vm.$t("lessons.remove_avatar")
+                                              ) +
+                                              "\n                                    "
+                                          )
+                                        ]
                                       )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    ref: "update_avatar_input",
-                                    staticClass: "hidden",
-                                    attrs: { type: "file", accept: "image/*" },
-                                    on: { change: _vm.updateAvatar }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-button",
-                                    {
-                                      staticClass: "mr-4 mb-4",
-                                      attrs: { type: "border" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$refs.update_avatar_input.click()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(
-                                            _vm.$t("lessons.change_avatar")
-                                          ) +
-                                          "\n                                    "
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "vs-button",
-                                    {
-                                      attrs: {
-                                        type: "border",
-                                        color: "danger"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.removeAvatar()
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(
-                                            _vm.$t("lessons.remove_avatar")
-                                          ) +
-                                          "\n                                    "
-                                      )
-                                    ]
+                                    ],
+                                    1
                                   )
-                                ],
-                                1
-                              )
+                                : _vm._e()
                             ]
                           )
                         ])
@@ -1256,7 +1278,13 @@ var render = function() {
                       { staticClass: "vx-col w-3/4" },
                       [
                         _c("v-select", {
-                          attrs: { label: "name", options: _vm.getCourses },
+                          attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
+                            label: "name",
+                            options: _vm.getCourses
+                          },
                           model: {
                             value: _vm.lesson.course,
                             callback: function($$v) {
@@ -1284,6 +1312,9 @@ var render = function() {
                         _c("vs-input", {
                           staticClass: "w-full",
                           attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
                             placeholder: _vm.$t(
                               "lessons.step1.lesson_name_placeholder"
                             )
@@ -1317,6 +1348,9 @@ var render = function() {
                         _c("flat-picker", {
                           staticClass: "w-full",
                           attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
                             config: _vm.configDateTimePicker,
                             placeholder: _vm.$t(
                               "lessons.step1.publish_date_time"
@@ -1357,6 +1391,9 @@ var render = function() {
                         _c("vs-input", {
                           staticClass: "w-full",
                           attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
                             placeholder: _vm.$t("lessons.step1.youtube")
                           },
                           model: {
@@ -1386,6 +1423,9 @@ var render = function() {
                         _c("vs-input", {
                           staticClass: "w-full",
                           attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
                             placeholder: _vm.$t("lessons.step1.soundcloud")
                           },
                           model: {
@@ -1412,7 +1452,12 @@ var render = function() {
                       [
                         _c("vs-input", {
                           staticClass: "w-full",
-                          attrs: { placeholder: _vm.$t("lessons.step1.pdf") },
+                          attrs: {
+                            disabled:
+                              _vm.$hasRole("teacher") &&
+                              !_vm.profile.upload_lessons,
+                            placeholder: _vm.$t("lessons.step1.pdf")
+                          },
                           model: {
                             value: _vm.lesson.pdf,
                             callback: function($$v) {
@@ -1443,24 +1488,27 @@ var render = function() {
                       "div",
                       { staticClass: "vx-col w-full" },
                       [
-                        _c(
-                          "vs-button",
-                          {
-                            attrs: {
-                              color: "primary",
-                              type: "filled",
-                              size: "small"
-                            },
-                            on: { click: _vm.openSidebar }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(_vm.$t("lessons.add_q")) +
-                                "\n                            "
+                        _vm.$hasRole("admin") ||
+                        (_vm.$hasRole("teacher") && _vm.profile.upload_lessons)
+                          ? _c(
+                              "vs-button",
+                              {
+                                attrs: {
+                                  color: "primary",
+                                  type: "filled",
+                                  size: "small"
+                                },
+                                on: { click: _vm.openSidebar }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.$t("lessons.add_q")) +
+                                    "\n                            "
+                                )
+                              ]
                             )
-                          ]
-                        )
+                          : _vm._e()
                       ],
                       1
                     )
@@ -1504,15 +1552,23 @@ var render = function() {
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("th", { staticClass: "table-actions" }, [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(
-                                          _vm.$t("lessons.table_actions")
-                                        ) +
-                                        "\n                                    "
-                                    )
-                                  ])
+                                  _vm.$hasRole("admin") ||
+                                  (_vm.$hasRole("teacher") &&
+                                    _vm.profile.upload_lessons)
+                                    ? _c(
+                                        "th",
+                                        { staticClass: "table-actions" },
+                                        [
+                                          _vm._v(
+                                            "\n                                        " +
+                                              _vm._s(
+                                                _vm.$t("lessons.table_actions")
+                                              ) +
+                                              "\n                                    "
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e()
                                 ])
                               ]),
                               _vm._v(" "),
@@ -1559,66 +1615,72 @@ var render = function() {
                                         )
                                       ]),
                                       _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        { staticClass: "table-actions" },
-                                        [
-                                          _c(
-                                            "vs-button",
-                                            {
-                                              attrs: {
-                                                color: "primary",
-                                                type: "filled"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.editQuestion(
-                                                    index,
-                                                    listItem
-                                                  )
-                                                }
-                                              }
-                                            },
+                                      _vm.$hasRole("admin") ||
+                                      (_vm.$hasRole("teacher") &&
+                                        _vm.profile.upload_lessons)
+                                        ? _c(
+                                            "td",
+                                            { staticClass: "table-actions" },
                                             [
-                                              _vm._v(
-                                                "\n                                                " +
-                                                  _vm._s(
-                                                    _vm.$t("lessons.edit_q")
-                                                  ) +
-                                                  "\n                                            "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "vs-button",
-                                            {
-                                              attrs: {
-                                                color: "danger",
-                                                type: "filled"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.removeQuestion(
-                                                    index,
-                                                    listItem
+                                              _c(
+                                                "vs-button",
+                                                {
+                                                  attrs: {
+                                                    color: "primary",
+                                                    type: "filled"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.editQuestion(
+                                                        index,
+                                                        listItem
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                " +
+                                                      _vm._s(
+                                                        _vm.$t("lessons.edit_q")
+                                                      ) +
+                                                      "\n                                            "
                                                   )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                " +
-                                                  _vm._s(
-                                                    _vm.$t("lessons.remove_q")
-                                                  ) +
-                                                  "\n                                            "
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "vs-button",
+                                                {
+                                                  attrs: {
+                                                    color: "danger",
+                                                    type: "filled"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.removeQuestion(
+                                                        index,
+                                                        listItem
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                " +
+                                                      _vm._s(
+                                                        _vm.$t(
+                                                          "lessons.remove_q"
+                                                        )
+                                                      ) +
+                                                      "\n                                            "
+                                                  )
+                                                ]
                                               )
-                                            ]
+                                            ],
+                                            1
                                           )
-                                        ],
-                                        1
-                                      )
+                                        : _vm._e()
                                     ]
                                   )
                                 }),

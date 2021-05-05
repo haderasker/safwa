@@ -28,7 +28,7 @@
                             <vs-input class="w-full" v-model="agFilters.name"/>
                         </div>
                     </div>
-                    <div class="vx-col w-full md:w-1/3 mb-5">
+                    <div class="vx-col w-full md:w-1/3 mb-5" v-if="$hasRole('admin')">
                         <div class="vx-col w-full">
                             <span>{{ $t('courses.filter.teacher') }}</span>
                         </div>

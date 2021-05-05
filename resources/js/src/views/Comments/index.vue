@@ -154,6 +154,7 @@ export default {
                     headerName: this.$t('comments.list.columns.comment'),
                     field: 'body',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('comments.list.columns.added_on'),
@@ -163,6 +164,7 @@ export default {
                 {
                     headerName: this.$t('comments.list.columns.added_at'),
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if(!params.data) return
                         return self.$moment(params.data.created_at).format('D-M-YYYY')

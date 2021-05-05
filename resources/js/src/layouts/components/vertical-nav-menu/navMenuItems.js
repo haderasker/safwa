@@ -88,7 +88,7 @@ export default [
         name: "sidebar.comments",
         slug: "comments",
         icon: "HomeIcon",
-        roles: ['admin']
+        roles: ['admin', 'teacher']
     },
     {
         url: "/settings",

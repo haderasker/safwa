@@ -113,7 +113,7 @@ const router = new Router({
                     path: '/comments',
                     name: 'comments.list',
                     component: () => import('./views/Comments'),
-                    beforeEnter: hasAnyRole('admin')
+                    beforeEnter: hasAnyRole('admin', 'teacher')
                 },
                 {
                     path: '/teachers',

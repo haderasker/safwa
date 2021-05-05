@@ -10,6 +10,7 @@
     "create_lesson_tooltip": "انشاء درس جديد",
     "list": {
         "column_name": "الدرس",
+        "column_published_at": "تاريخ النشر",
         "column_actions": "خيارات",
         "column_course": "المادة",
         "column_passed": "الناجحين",

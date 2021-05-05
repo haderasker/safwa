@@ -29,7 +29,7 @@
 
             <div class="w-full mt-6">
                 <h6>{{ $t('notifications.content') }}</h6>
-                <vs-textarea v-model="content"/>
+                <quill-editor v-model="content" :options="editorOption"></quill-editor>
             </div>
 
             <vs-button class="mr-4" @click="sendNotification">{{ $t('notifications.send') }}</vs-button>
@@ -38,11 +38,19 @@
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 import safwaAxios from "../../axios";
 import popups from "../../mixins/popups";
+import { quillEditor } from 'vue-quill-editor';
 
 export default {
     mixins: [popups],
+    components: {
+        quillEditor,
+    },
     data() {
         return {
             activePopup: false,
@@ -51,7 +59,8 @@ export default {
             categoryOption: null,
             categoryContentOption: null,
             categoryContentOptions: [],
-            type: 'notification'
+            type: 'notification',
+            editorOption: {}
         }
     },
     computed: {

@@ -28,7 +28,7 @@ class StatisticsController extends Controller
 
     public function teacher(): array
     {
-        return Course::select('id', 'name')->withCount('lessons')->where('teacher_id', Auth::user()->id)->get()->toArray();
+        return Course::select('id', 'name')->with('media')->withCount('lessons')->where('teacher_id', Auth::user()->id)->get()->toArray();
     }
 
     public function student(): array

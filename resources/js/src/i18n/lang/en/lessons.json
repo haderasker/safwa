@@ -10,6 +10,7 @@
     "create_lesson_tooltip": "Create New Lesson",
     "list": {
         "column_name": "Lesson",
+        "column_published_at": "Published At",
         "column_actions": "Actions",
         "column_course": "Course",
         "column_passed": "No. Passed Students",

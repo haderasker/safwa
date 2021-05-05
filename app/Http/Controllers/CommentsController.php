@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Lesson;
 use App\Utils\Convert;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -28,12 +29,13 @@ class CommentsController extends Controller
     public function list(Request $request): LengthAwarePaginator
     {
         $filters = $request->input('filters', null);
+        $sort = $request->input('sort');
 
         return Comment::with([
+            'commentable',
             'author' => function ($query) {
                 $query->with('roles:id,name');
-            },
-            'commentable'
+            }
         ])
             ->when(isset($filters['model_id']) && isset($filters['model_type']), function (Builder $query) use ($filters) {
                 $query->where('commentable_id', $filters['model_id'])
@@ -42,7 +44,15 @@ class CommentsController extends Controller
             ->when(isset($filters['search']), function (Builder $query) use ($filters) {
                 $query->where('body', 'like', '%' . $filters['search'] . '%');
             })
-            ->orderBy('created_at', 'desc')
+            ->when(Auth::user()->hasRole('teacher'), function ($query) {
+                $teacherLessons = Auth::user()->teacherLessons()->pluck('lessons.id')->toArray();
+
+                $query->where('commentable_type', Lesson::class);
+                $query->whereIn('commentable_id', $teacherLessons);
+            })
+            ->when(count($sort), function($query) use ($sort) {
+                $query->orderBy($sort[0]['colId'], $sort[0]['sort']);
+            })
             ->paginate((int)$request->input('per_page', 10));
     }
 

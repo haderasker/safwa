@@ -35,7 +35,7 @@
                             <div class="flex items-start flex-col sm:flex-row">
                                 <img v-if="lesson.media.length" :src="$getUrl(lesson.media[0])" class="mr-8 rounded h-24 w-24"
                                      alt="avatar"/>
-                                <div>
+                                <div v-if="$hasRole('admin') || ($hasRole('teacher') && profile.upload_lessons)">
                                     <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">
                                         {{ $t('lessons.avatar') }}
                                     </p>
@@ -62,7 +62,7 @@
                             <span>{{ $t('lessons.step1.courses') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="getCourses" v-model="lesson.course"></v-select>
+                            <v-select :disabled="$hasRole('teacher') && !profile.upload_lessons" label="name" :options="getCourses" v-model="lesson.course"></v-select>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -70,7 +70,8 @@
                             <span>{{ $t('lessons.step1.lesson_name') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input class="w-full" :placeholder="$t('lessons.step1.lesson_name_placeholder')"
+                            <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
+                                class="w-full" :placeholder="$t('lessons.step1.lesson_name_placeholder')"
                                       v-model="lesson.label"/>
                         </div>
                     </div>
@@ -79,7 +80,8 @@
                             <span>{{ $t('lessons.step1.publish_date_time') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <flat-picker class="w-full" :config="configDateTimePicker" v-model="lesson.published_at"
+                            <flat-picker :disabled="$hasRole('teacher') && !profile.upload_lessons"
+                                class="w-full" :config="configDateTimePicker" v-model="lesson.published_at"
                                          :placeholder="$t('lessons.step1.publish_date_time')"/>
                         </div>
                     </div>
@@ -93,7 +95,8 @@
                             <span>{{ $t('lessons.step1.youtube') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input class="w-full" :placeholder="$t('lessons.step1.youtube')"
+                            <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
+                                class="w-full" :placeholder="$t('lessons.step1.youtube')"
                                       v-model="lesson.youtube"/>
                         </div>
                     </div>
@@ -102,7 +105,8 @@
                             <span>{{ $t('lessons.step1.soundcloud') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input class="w-full" :placeholder="$t('lessons.step1.soundcloud')"
+                            <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
+                                class="w-full" :placeholder="$t('lessons.step1.soundcloud')"
                                       v-model="lesson.soundcloud"/>
                         </div>
                     </div>
@@ -111,7 +115,8 @@
                             <span>{{ $t('lessons.step1.pdf') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input class="w-full" :placeholder="$t('lessons.step1.pdf')"
+                            <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
+                                class="w-full" :placeholder="$t('lessons.step1.pdf')"
                                       v-model="lesson.pdf"/>
                         </div>
                     </div>
@@ -125,7 +130,8 @@
                     <vs-divider/>
                     <div class="vx-row mb-6">
                         <div class="vx-col w-full">
-                            <vs-button @click="openSidebar" color="primary" type="filled" size="small">
+                            <vs-button v-if="$hasRole('admin') || ($hasRole('teacher') && profile.upload_lessons)"
+                                @click="openSidebar" color="primary" type="filled" size="small">
                                 {{ $t('lessons.add_q') }}
                             </vs-button>
                         </div>
@@ -143,7 +149,7 @@
                                     <th>
                                         {{ $t('lessons.table_answers_number') }}
                                     </th>
-                                    <th class="table-actions">
+                                    <th class="table-actions" v-if="$hasRole('admin') || ($hasRole('teacher') && profile.upload_lessons)">
                                         {{ $t('lessons.table_actions') }}
                                     </th>
                                 </tr>
@@ -159,7 +165,7 @@
                                         <td>
                                             {{ listItem.answers.length }}
                                         </td>
-                                        <td class="table-actions">
+                                        <td class="table-actions" v-if="$hasRole('admin') || ($hasRole('teacher') && profile.upload_lessons)">
                                             <vs-button color="primary" type="filled"
                                                        @click="editQuestion(index, listItem)">
                                                 {{ $t('lessons.edit_q') }}
@@ -245,7 +251,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            getCourses: 'Courses/getCourses'
+            getCourses: 'Courses/getCourses',
+            profile: 'Authentication/getProfile'
         })
     },
     methods: {
@@ -253,6 +260,10 @@ export default {
             loadCourses: 'Courses/loadCourses'
         }),
         async createLesson() {
+            if(this.$hasRole('teacher') && !this.profile.upload_lessons) {
+                return
+            }
+
             const lesson = {
                 ...this.lesson,
                 course_id: window._.get(this, 'lesson.course.id', null),

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vs-button :to="{ name: 'courses.edit', params: { id: params.data.id } }" color="primary" type="filled" class="mr-4">
+        <vs-button v-if="$hasRole('admin')" :to="{ name: 'courses.edit', params: { id: params.data.id } }" color="primary" type="filled" class="mr-4">
             {{ $t('general.edit') }}
         </vs-button>
 

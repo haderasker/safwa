@@ -1,12 +1,13 @@
 <template>
     <div class="vx-row">
         <div class="vx-col w-1/3" v-for="subject in subjects">
-            <statistics-card-line
-                hideChart
-                class="mb-base"
-                icon="EyeIcon"
-                :statistic="subject.lessons_count"
-                :statisticTitle="subject.name"/>
+            <vx-card class="mb-base">
+                <div slot="no-body">
+                    <img :src="$getUrl(subject.media[0]) || require('@assets/images/logo/main-logo-white.jpg')" alt="content-img" class="responsive card-img-top dashboard-image">
+                </div>
+                <h4 class="mb-2 text-center font-bold">{{ subject.name }}</h4>
+                <p class="text-grey text-center">{{ subject.lessons_count }}</p>
+            </vx-card>
         </div>
     </div>
 </template>
@@ -37,4 +38,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dashboard-image {
+    max-height: 200px;
+}
+</style>

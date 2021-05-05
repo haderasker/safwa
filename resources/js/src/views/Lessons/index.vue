@@ -93,7 +93,10 @@ export default {
             return this.$store.getters['Authentication/getProfile']
         },
         agColumns() {
-            return [
+            const self = this
+            const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
+            const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
+            const columns = [
                 {
                     headerName: this.$t('lessons.list.column_name'),
                     field: 'label',
@@ -121,6 +124,18 @@ export default {
                     cellRendererFramework: 'tableActionColumnCell'
                 },
             ]
+
+            if(this.$hasRole('teacher')) {
+                columns.splice(1, 0, {
+                    headerName: this.$t('lessons.list.column_published_at'),
+                    minWidth: 200,
+                    valueGetter(params) {
+                        return `${self.$moment(params.data.published_at).format(dateFormat)} / ${self.$moment(params.data.published_at).format(hijriDataFormat)}`
+                    }
+                })
+            }
+
+            return columns;
         },
     },
     methods: {

@@ -55,6 +55,7 @@
 
                 <template slot="finish" slot-scope="props">
                     <!-- hide finish button just empty span -->
+                    <!-- add button to redirect to all lessons table-->
                     <span></span>
                 </template>
             </form-wizard>
