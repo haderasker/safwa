@@ -3,7 +3,6 @@
     "edit": "تعديل",
     "lessons": "الدروس",
     "courses": "المواد",
-    "delete": "حذف",
     "results": "النتائج",
     "block": "حظر",
     "active": "تنشيط",
@@ -18,7 +17,15 @@
     "exam_results": "مشاهدة النتيجة",
     "quran_part" : "جزء",
     "error_title": "خطأ",
+    "success_title": "تم",
     "disapprove": "حظر",
     "approve": "سماح",
-    "replay": "رد"
+    "replay": "رد",
+    "delete": {
+        "button": "حذف",
+        "title": "حذف",
+        "message": "هل انت متأكد! لا يمكن التراجع عن هذه الخطوه"
+    },
+    "score_details": "تفاصيل الدرجات"
+
 }

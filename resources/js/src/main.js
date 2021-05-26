@@ -62,6 +62,9 @@ Vue.component('v-select', vSelect)
 
 Vue.config.productionTip = false
 
+import popups from './mixins/popups'
+Vue.mixin(popups)
+
 new Vue({
   router,
   store,

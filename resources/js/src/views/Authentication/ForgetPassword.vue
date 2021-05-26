@@ -50,8 +50,15 @@ export default {
                     email: this.email
                 })
 
-                this.$router.push({name: 'login'}).catch(() => {
+                this.$vs.notify({
+                    title: this.$t('general.success_title'),
+                    text: this.$t('forget_password.reset_success'),
+                    iconPack: 'feather',
+                    icon: 'icon-thumbs-up',
+                    color: 'success'
                 })
+
+                this.$router.push({name: 'login'}).catch()
             } catch (error) {
                 const key = error.response.data.errors.email[0].replace(/[^a-zA-Z ]/g, "").replaceAll(' ', '_').toLowerCase()
 

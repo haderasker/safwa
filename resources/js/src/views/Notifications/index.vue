@@ -43,11 +43,9 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import safwaAxios from "../../axios";
-import popups from "../../mixins/popups";
 import { quillEditor } from 'vue-quill-editor';
 
 export default {
-    mixins: [popups],
     components: {
         quillEditor,
     },

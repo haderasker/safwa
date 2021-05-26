@@ -7,7 +7,7 @@
 
             <vx-tooltip position="right" :text="$t('exams.create_exam_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'exams.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'exams.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -15,7 +15,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('exams.filter_tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -99,6 +99,7 @@ export default {
                     headerName: this.$t('exams.exam_level'),
                     field: 'level_id',
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if (!params.data) return
                         return self.$t(`levels.level${params.data.level_id || 1}`)
@@ -107,12 +108,14 @@ export default {
                 {
                     headerName: this.$t('exams.q_number'),
                     field: 'questions_count',
-                    minWidth: 170
+                    minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('exams.success_score'),
                     field: 'score',
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if (!params.data) return
                         return params.data.score / 2
@@ -121,12 +124,14 @@ export default {
                 {
                     headerName: this.$t('exams.total_students'),
                     field: 'student_exam_count',
-                    minWidth: 170
+                    minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('exams.graduation_students'),
                     field: 'graduation_students',
-                    minWidth: 170
+                    minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('exams.actions'),

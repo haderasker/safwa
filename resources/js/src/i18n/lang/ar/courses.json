@@ -32,5 +32,8 @@
     "lessons_list": "جميع الدروس",
     "avatar": "الصورة",
     "change_avatar": "تغيير الصورة",
-    "remove_avatar": "حذف الصورة"
+    "remove_avatar": "حذف الصورة",
+    "extra_score": "درجة الرأفة",
+    "extra_success_title": "درجة الرأفة",
+    "extra_success_message": "تم حفظ درجة الرأفة"
 }

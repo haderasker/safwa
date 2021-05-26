@@ -5,10 +5,12 @@
     "upcoming_exams": "الامتحانات القادمة",
     "upcoming_list": {
         "column_name": "الاسم",
-        "column_actions": "خيارات"
+        "column_actions": "خيارات",
+        "column_published_at": "تاريخ النشر"
     },
     "finished_list": {
         "column_name": "الاسم",
-        "column_actions": "خيارات"
+        "column_actions": "خيارات",
+        "column_published_at": "تاريخ النشر"
     }
 }

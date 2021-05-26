@@ -1,5 +1,6 @@
 {
     "lesson": "Lesson",
+    "lesson_name": "Lesson Name",
     "info": "Basic Information",
     "discussion": "Discussion",
     "course": "Course",
@@ -8,6 +9,13 @@
     "soundcloud": "Soundcloud",
     "pdf": "PDF",
     "published_at": "Published At",
+    "quiz": "Quiz",
+    "finished_lesson": "Finished Lesson",
     "start_quiz": "Start Quiz",
-    "last_score": "Last Score"
+    "last_score": "Last Score",
+    "lesson_finish": {
+        "title": "Finished Lesson",
+        "message": "are you sure you want to finish this lesson!"
+    },
+    "done": "Done"
 }

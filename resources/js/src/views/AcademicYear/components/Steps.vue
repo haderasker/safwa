@@ -90,7 +90,7 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-1-${index}`" :label="$t(`levels.${level.name}`)">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-1-${index}`" :label="$t(`levels.${level.name}`)" v-if="index !== 4">
                             <h4 class="mb-5 mt-5">
                                 {{
                                     $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`levels.${level.name}`)
@@ -117,7 +117,7 @@
                     class="mb-5">
 
                     <vs-tabs alignment="fixed">
-                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-2-${index}`" :label="$t(`levels.${level.name}`)">
+                        <vs-tab v-for="(level, index) in getLevels" :key="`semester-2-${index}`" :label="$t(`levels.${level.name}`)" v-if="index !== 4">
                             <h4 class="mb-5 mt-5">
                                 {{
                                     $t('academic_years.create.select_courses') + ' ' + $t('academic_years.create.for') + ' ' + $t(`levels.${level.name}`)

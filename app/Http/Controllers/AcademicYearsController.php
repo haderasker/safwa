@@ -25,9 +25,17 @@ class AcademicYearsController extends Controller
      * @return LengthAwarePaginator
      * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
      */
-    public function index(): LengthAwarePaginator
+    public function index(Request $request): LengthAwarePaginator
     {
-        return AcademicYear::with('semesters')->paginate((int)request()->input('per_page', 10));
+        $sort = $request->input('sort', []);
+
+        return AcademicYear::with('semesters')
+            ->when(count($sort), function ($query) use ($sort) {
+                foreach ($sort as $item) {
+                    $query->orderBy($item['colId'], $item['sort']);
+                }
+            })
+            ->paginate((int)request()->input('per_page', 10));
     }
 
     /**

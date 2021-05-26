@@ -10,7 +10,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('student_result_profile.filter_tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">

@@ -1,13 +1,18 @@
 {
-    "info": "المعلومات الاساسية",
+    "info": "المعلومات",
     "lessons": "الدروس",
+    "activity": "انشطة",
     "course": "مادة",
     "progress": "نسبة التقدم",
     "type": "النوع",
     "description": "الوصف",
+    "teacher_name": "اسم المدرس",
+    "teacher_about_me": "وصف المدرس",
     "view": "مشاهدة",
     "list": {
         "column_label": "الدرس",
-        "column_actions": "الاختيارات"
-    }
+        "column_actions": "الاختيارات",
+        "column_published_at": "تاريخ النشر"
+    },
+    "lesson_disabled": "اكمل الدرس السابق لمشاهدة المزيد"
 }

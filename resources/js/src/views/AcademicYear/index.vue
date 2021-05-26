@@ -7,7 +7,7 @@
 
             <vx-tooltip position="right" :text="$t('academic_years.create_year_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'academic-year.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'academic-year.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -54,6 +54,7 @@ export default {
                     headerName: this.$t('academic_years.list.column_name'),
                     field: 'label',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('academic_years.list.column_first_semester_start'),

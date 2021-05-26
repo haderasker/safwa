@@ -45,8 +45,27 @@ class NotificationsController extends Controller
      */
     public function sendNotification(Request $request)
     {
+        $type = $request->input('type');
+
         $this->validate($request, [
-            'content' => ['required', 'min:3'],
+            'content' => [
+                'required',
+                'min:3',
+                function ($attribute, $value, $fail) use ($type) {
+                    if ($type !== 'notification') {
+                        return;
+                    }
+
+                    // remove all html tage
+                    // check length
+                    // fail if more than 100
+                    $length = strlen(strip_tags($value));
+
+                    if ($length > 100) {
+                        $fail('The ' . $attribute . ' should be max 100 chars.');
+                    }
+                },
+            ],
             'group'   => ['required', 'string', 'in:teachers,levels,students'],
             'member'  => ['required', 'integer'],
             'type'    => ['required', 'in:notification,email'],
@@ -56,7 +75,6 @@ class NotificationsController extends Controller
         $content = $request->input('content');
         $group = $request->input('group');
         $member = $request->input('member');
-        $type = $request->input('type');
         $title = $request->input('title');
 
         switch ($group) {
@@ -150,7 +168,7 @@ class NotificationsController extends Controller
             $notifications[] = [
                 'user_id'    => $id,
                 'title'      => $title,
-                'body'       => $content,
+                'body'       => strip_tags($content),
                 'sent_at'    => $now,
                 'seen_at'    => null,
                 'created_at' => $now,

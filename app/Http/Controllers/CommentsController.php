@@ -51,7 +51,14 @@ class CommentsController extends Controller
                 $query->whereIn('commentable_id', $teacherLessons);
             })
             ->when(count($sort), function($query) use ($sort) {
-                $query->orderBy($sort[0]['colId'], $sort[0]['sort']);
+                $item = $sort[0];
+
+                if ($item['colId'] === 'author.name') {
+                    $query->join('users', 'users.id', 'comments.user_id');
+                    return $query->orderBy('users.name', $item['sort']);
+                }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
     }

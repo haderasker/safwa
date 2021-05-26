@@ -7,7 +7,7 @@
 
             <vx-tooltip v-if="$hasRole('admin')" position="right" :text="$t('courses.create_course_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'courses.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'courses.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -15,7 +15,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('courses.filter_tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -124,6 +124,7 @@ export default {
                     headerName: this.$t('courses.list.column_lessons_number'),
                     field: 'lessons_count',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_level'),
@@ -148,6 +149,7 @@ export default {
                     headerName: this.$t('courses.list.column_students_number'),
                     field: 'students_count',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('courses.list.column_actions'),
@@ -166,6 +168,8 @@ export default {
                 columns.splice(1, 0, {
                     headerName: this.$t('courses.list.column_teacher'),
                     minWidth: 170,
+                    field: 'teacher.name',
+                    sortable: true,
                     valueGetter(params) {
                         return window._.get(params, 'data.teacher.name')
                     }

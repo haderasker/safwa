@@ -17,7 +17,8 @@
                     <span>{{ $t('teachers.name') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" v-model="teacher.name"/>
+                    <vs-input class="w-full" v-model="teacher.name" name="name" v-validate="'required|min:3'"/>
+                    <span class="text-danger text-sm">{{ errors.first('name') }}</span>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -25,7 +26,8 @@
                     <span>{{ $t('teachers.email') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" v-model="teacher.email"/>
+                    <vs-input class="w-full" v-model="teacher.email" name="email" v-validate="'required|email'"/>
+                    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -64,7 +66,7 @@
 
             <div class="vx-row">
                 <div class="vx-col w-full">
-                    <vs-button color="primary" type="filled" @click="addTeacher">
+                    <vs-button color="primary" type="filled" @click="addTeacher" :disabled="!validateForm">
                         {{ $route.params.id ? $t('teachers.update') : $t('teachers.save') }}
                     </vs-button>
                 </div>
@@ -82,8 +84,18 @@ export default {
     data() {
         return {}
     },
+    computed: {
+        validateForm() {
+            return !this.errors.any()
+        }
+    },
     methods: {
         async addTeacher() {
+            await this.$validator.validate()
+
+            if (this.errors.any()) {
+                return
+            }
 
             if (this.$route.params.id) {
                 await safwaAxios.put(`teachers/${this.$route.params.id}`, this.teacher);

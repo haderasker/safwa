@@ -9,5 +9,7 @@
         "column_lesson_num": "No. Lessons",
         "column_type": "Type",
         "column_actions": "Actions"
-    }
+    },
+    "default": "Default",
+    "failed": "Failed"
 }

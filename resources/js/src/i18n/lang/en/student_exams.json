@@ -5,10 +5,12 @@
     "upcoming_exams": "Upcoming Exams",
     "upcoming_list": {
         "column_name": "Name",
-        "column_actions": "Actions"
+        "column_actions": "Actions",
+        "column_published_at": "Published At"
     },
     "finished_list": {
         "column_name": "Name",
-        "column_actions": "Actions"
+        "column_actions": "Actions",
+        "column_published_at": "Published At"
     }
 }

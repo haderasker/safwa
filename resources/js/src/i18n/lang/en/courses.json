@@ -32,5 +32,8 @@
     "lessons_list": "List of Lessons",
     "avatar": "Avatar",
     "change_avatar": "Change Avatar",
-    "remove_avatar": "Remove Avatar"
+    "remove_avatar": "Remove Avatar",
+    "extra_score": "Extra Score",
+    "extra_success_title": "Extra Score Saved",
+    "extra_success_message": "you have saved extra score, you will find it in results page"
 }

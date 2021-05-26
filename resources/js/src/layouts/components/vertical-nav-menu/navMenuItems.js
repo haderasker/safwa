@@ -10,91 +10,91 @@ export default [
         url: "/academic-year",
         name: "sidebar.academic-year",
         slug: "academic-year",
-        icon: "HomeIcon",
+        icon: "PackageIcon",
         roles: ['admin']
     },
     {
         url: "/exams",
         name: "sidebar.exams",
         slug: "exams",
-        icon: "HomeIcon",
+        icon: "BookOpenIcon",
         roles: ['admin']
     },
     {
         url: "/results",
         name: "sidebar.results",
         slug: "results",
-        icon: "HomeIcon",
+        icon: "BarChartIcon",
         roles: ['admin']
     },
     {
         url: "/courses",
         name: "sidebar.courses",
         slug: "courses",
-        icon: "HomeIcon",
+        icon: "ServerIcon",
         roles: ['admin', 'teacher']
     },
     {
         url: "/lessons",
         name: "sidebar.lessons",
         slug: "lessons",
-        icon: "HomeIcon",
+        icon: "FileTextIcon",
         roles: ['admin', 'teacher']
     },
     {
         url: "/teachers",
         name: "sidebar.teachers",
         slug: "teachers",
-        icon: "HomeIcon",
+        icon: "UsersIcon",
         roles: ['admin']
     },
     {
         url: "/students",
         name: "sidebar.students",
         slug: "students",
-        icon: "HomeIcon",
+        icon: "UsersIcon",
         roles: ['admin']
     },
     {
         url: "/notifications",
         name: "sidebar.notifications",
         slug: "notifications",
-        icon: "HomeIcon",
+        icon: "BellIcon",
         roles: ['admin', 'teacher']
     },
     {
         url: "/student-courses",
         name: "sidebar.student-courses",
         slug: "student-courses",
-        icon: "HomeIcon",
+        icon: "ServerIcon",
         roles: ['student']
     },
     {
         url: "/student-exams",
         name: "sidebar.student-exams",
         slug: "student-exams",
-        icon: "HomeIcon",
+        icon: "FileTextIcon",
         roles: ['student']
     },
     {
         url: "/student-results",
         name: "sidebar.student-results",
         slug: "student-results",
-        icon: "HomeIcon",
+        icon: "BarChartIcon",
         roles: ['student']
     },
     {
         url: "/comments",
         name: "sidebar.comments",
         slug: "comments",
-        icon: "HomeIcon",
+        icon: "MessageCircleIcon",
         roles: ['admin', 'teacher']
     },
     {
         url: "/settings",
         name: "sidebar.settings",
         slug: "settings",
-        icon: "HomeIcon",
+        icon: "SettingsIcon",
         roles: ['admin']
     }
 

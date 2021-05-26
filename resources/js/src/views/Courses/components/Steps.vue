@@ -6,7 +6,7 @@
             </div>
         </div>
 
-        <vx-card>
+        <vx-card class="mb-6">
             <!-- Avatar Row -->
             <div v-if="$route.params.id" class="vx-row mb-6">
                 <div class="vx-col w-full">
@@ -40,7 +40,8 @@
                     <span>{{ $t('courses.course_name') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" :placeholder="$t('courses.course_name')" v-model="course.name"/>
+                    <vs-input class="w-full" :placeholder="$t('courses.course_name')" v-model="course.name" name="name" v-validate="'required|min:3'"/>
+                    <span class="text-danger text-sm">{{ errors.first('name') }}</span>
                 </div>
             </div>
 
@@ -49,7 +50,8 @@
                     <span>{{ $t('courses.teacher_name') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <v-select label="name" :options="listOfTeachers.data" v-model="course.teacher"></v-select>
+                    <v-select label="name" :options="listOfTeachers" v-model="course.teacher" name="teacher" v-validate="'required'"></v-select>
+                    <span class="text-danger text-sm">{{ errors.first('teacher') }}</span>
                 </div>
             </div>
 
@@ -67,13 +69,14 @@
                     <span>{{ $t('courses.doctrine') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <v-select :options="listOfDoctrines" v-model="course.doctrine"></v-select>
+                    <v-select :options="listOfDoctrines" v-model="course.doctrine" name="doctrine" v-validate="'required'"></v-select>
+                    <span class="text-danger text-sm">{{ errors.first('doctrine') }}</span>
                 </div>
             </div>
 
             <div class="vx-row">
                 <div class="vx-col w-full">
-                    <vs-button color="primary" type="filled" @click="saveCourse">
+                    <vs-button color="primary" type="filled" @click="saveCourse" :disabled="!validateForm">
                         {{ $route.params.id ? $t('courses.update') : $t('courses.save') }}
                     </vs-button>
                     <vs-button v-if="$route.params.id" color="success" type="filled" @click="lessonsList">
@@ -81,7 +84,22 @@
                     </vs-button>
                 </div>
             </div>
+        </vx-card>
 
+        <vx-card v-if="$route.params.id">
+            <div class="vx-row w-full">
+                <div class="vx-col w-1/4">
+                    <span>{{ $t('courses.extra_score') }}</span>
+                </div>
+                <div class="vx-col w-1/2">
+                    <vs-input class="w-full" type="number" v-model="extra_score"/>
+                </div>
+                <div class="vx-col w-1/4">
+                    <vs-button color="primary" type="filled" @click="addExtraScore">
+                        {{ $t('courses.save') }}
+                    </vs-button>
+                </div>
+            </div>
         </vx-card>
     </div>
 </template>
@@ -94,6 +112,7 @@ export default {
     props: ['course'],
     data() {
         return {
+            extra_score: 0
         }
     },
     mounted() {
@@ -104,6 +123,9 @@ export default {
         ...mapGetters({
             listOfTeachers: 'Teachers/getTeachers'
         }),
+        validateForm() {
+            return !this.errors.any()
+        },
         listOfDoctrines() {
             const doctrines = [
                     {
@@ -127,6 +149,12 @@ export default {
             loadDoctrines: 'Doctrines/loadDoctrines'
         }),
         async saveCourse() {
+            await this.$validator.validate()
+
+            if (this.errors.any()) {
+                return
+            }
+
             const course = {
                 ... this.course,
                 teacher_id:  window._.get(this, 'course.teacher.id', null),
@@ -175,6 +203,16 @@ export default {
             await safwaAxios.get(`media/remove/course/${this.course.id}`)
 
             this.course.media = []
+        },
+        async addExtraScore() {
+            await safwaAxios.post(`courses/${this.$route.params.id}/extra_score`, {
+                score: this.extra_score
+            });
+
+            this.successMessage({
+                title: this.$t('courses.extra_success_title'),
+                message: this.$t('courses.extra_success_message')
+            })
         }
     },
 }

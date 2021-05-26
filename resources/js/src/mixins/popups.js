@@ -2,20 +2,30 @@ export default {
     methods: {
         successMessage({title, message}) {
             this.$vs.dialog({
+                type: 'alert',
                 color: 'success',
                 title: title,
                 text: message,
-                type: 'alert'
             })
         },
 
         failMessage({title, message}) {
             this.$vs.dialog({
+                type: 'alert',
                 color: 'danger',
                 title: title,
                 text: message,
-                type: 'alert'
             })
-        }
+        },
+
+        confirm(title, message, acceptFunc) {
+            this.$vs.dialog({
+                type: 'confirm',
+                color: 'danger',
+                title: title,
+                text: message,
+                accept: acceptFunc
+            })
+        },
     }
 }

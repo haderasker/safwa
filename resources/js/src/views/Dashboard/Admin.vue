@@ -5,7 +5,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UsersIcon"
                     :statistic="statistic.totalStudents"
                     :statisticTitle="$t('dashboard.total_students')"/>
             </div>
@@ -13,7 +13,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UsersIcon"
                     :statistic="statistic.totalGraduates"
                     :statisticTitle="$t('dashboard.total_graduates')"/>
             </div>
@@ -23,7 +23,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserCheckIcon"
                     :statistic="statistic.levelOneStudents"
                     :statisticTitle="$t('dashboard.level_one_students')"/>
             </div>
@@ -31,7 +31,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserCheckIcon"
                     :statistic="statistic.levelTwoStudents"
                     :statisticTitle="$t('dashboard.level_two_students')"/>
             </div>
@@ -39,7 +39,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserCheckIcon"
                     :statistic="statistic.levelThreeStudents"
                     :statisticTitle="$t('dashboard.level_three_students')"/>
             </div>
@@ -47,7 +47,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserCheckIcon"
                     :statistic="statistic.levelFourStudents"
                     :statisticTitle="$t('dashboard.level_four_students')"/>
             </div>
@@ -57,7 +57,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserIcon"
                     :statistic="statistic.doctrineShafi"
                     :statisticTitle="$t('dashboard.doctrine_shafi')"/>
             </div>
@@ -65,7 +65,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserIcon"
                     :statistic="statistic.doctrineMaliki"
                     :statisticTitle="$t('dashboard.doctrine_maliki')"/>
             </div>
@@ -73,7 +73,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserIcon"
                     :statistic="statistic.doctrineHanafi"
                     :statisticTitle="$t('dashboard.doctrine_hanafi')"/>
             </div>
@@ -81,7 +81,7 @@
                 <statistics-card-line
                     hideChart
                     class="mb-base"
-                    icon="EyeIcon"
+                    icon="UserIcon"
                     :statistic="statistic.doctrineHanbali"
                     :statisticTitle="$t('dashboard.doctrine_hanbali')"/>
             </div>

@@ -59,5 +59,6 @@
     "table_actions": "اختيارات",
     "avatar": "الصورة",
     "change_avatar": "تغيير الصورة",
-    "remove_avatar": "حذف الصورة"
+    "remove_avatar": "حذف الصورة",
+    "questions_error": "يجب عليك ان تضيف علي الاقل سؤال واحد"
 }

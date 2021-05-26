@@ -54,5 +54,6 @@
     "table_title": "Question",
     "table_answers_number": "No. Answers",
     "table_score": "Score",
-    "table_actions": "Actions"
+    "table_actions": "Actions",
+    "questions_error": "you should add at least one question"
 }

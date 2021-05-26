@@ -60,6 +60,8 @@ import en_status from './lang/en/status.json'
 import ar_status from './lang/ar/status.json'
 import en_settings from './lang/en/settings.json'
 import ar_settings from './lang/ar/settings.json'
+import en_roles from './lang/en/roles.json'
+import ar_roles from './lang/ar/roles.json'
 
 Vue.use(VueI18n)
 
@@ -97,6 +99,7 @@ export default new VueI18n({
             reset_password: en_reset_password,
             status: en_status,
             settings: en_settings,
+            roles: en_roles,
         },
         ar: {
             sidebar: ar_sidebar,
@@ -129,6 +132,7 @@ export default new VueI18n({
             reset_password: ar_reset_password,
             status: ar_status,
             settings: ar_settings,
+            roles: ar_roles,
         }
     },
     silentTranslationWarn: true

@@ -7,7 +7,7 @@
 
             <vx-tooltip position="right" :text="$t('students.create_student_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'students.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'students.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -15,7 +15,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('students.filter.tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -71,13 +71,15 @@ import AgTable from "../../components/AgTable";
 import StudentsDataSource from "../../datasources/StudentsDataSource";
 import tableActionColumnCell from './components/TableActionColumnCell'
 import tableNameColumnCell from './components/TableNameColumnCell'
+import tableNationalityColumnCell from './components/TableNationalityColumnCell'
 import {mapActions} from "vuex";
 
 export default {
     components: {
         AgTable,
         tableActionColumnCell,
-        tableNameColumnCell
+        tableNameColumnCell,
+        tableNationalityColumnCell
     },
     data() {
         return {
@@ -116,7 +118,8 @@ export default {
                     headerName: this.$t('students.list.column_nationality'),
                     field: 'nationality',
                     minWidth: 170,
-                    sortable: true
+                    sortable: true,
+                    cellRendererFramework: 'tableNationalityColumnCell'
                 },
                 {
                     headerName: this.$t('students.list.column_level'),
@@ -130,7 +133,9 @@ export default {
                 },
                 {
                     headerName: this.$t('students.list.column_status'),
+                    field: 'status',
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if (!params.data) return
                         return self.$t(`status.${params.data.status || 1}`)

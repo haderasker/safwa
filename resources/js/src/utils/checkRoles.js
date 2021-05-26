@@ -26,7 +26,7 @@ Vue.mixin({
             return false;
         },
         $getUrl(media) {
-            if(!media) {
+            if (!media) {
                 return false
             }
 

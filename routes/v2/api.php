@@ -37,6 +37,7 @@ Route::group(['prefix' => 'courses'], function () {
     Route::get('/{lessonId}', 'CoursesController@edit');           // get course by id
     Route::put('/{lessonId}', 'CoursesController@update');         // update course
     Route::delete('/{lessonId}', 'CoursesController@delete');      // delete course
+    Route::post('/{lessonId}/extra_score', 'CoursesController@extraScore');      // delete course
 });
 
 Route::group(['prefix' => 'teachers'], function () {
@@ -51,7 +52,6 @@ Route::group(['prefix' => 'teachers'], function () {
 Route::group(['prefix' => 'students'], function () {
     Route::post('/', 'StudentsController@store');
     Route::post('/list', 'StudentsController@index');
-    Route::post('/courses/list', 'StudentsController@courses');
     Route::post('/results/list', 'StudentsController@getResults');
 
     Route::group(['prefix' => 'exams'], function () {
@@ -65,11 +65,13 @@ Route::group(['prefix' => 'students'], function () {
     });
 
     Route::group(['prefix' => 'courses'], function () {
+        Route::post('/list', 'StudentsController@courses');
         Route::get('/{courseId}', 'StudentsController@getCourse');
     });
 
     Route::group(['prefix' => 'lessons'], function () {
         Route::get('/{lessonId}', 'StudentsController@getLesson');
+        Route::get('/{lessonId}/finish', 'StudentsController@finishLesson');
     });
 
     Route::get('/{studentId}', 'StudentsController@edit');

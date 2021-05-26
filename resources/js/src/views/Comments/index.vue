@@ -10,7 +10,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('comments.filter.tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -148,7 +148,8 @@ export default {
                     headerName: this.$t('comments.list.columns.author'),
                     field: 'author.name',
                     minWidth: 170,
-                    cellRendererFramework: 'tableAuthorColumnCell'
+                    cellRendererFramework: 'tableAuthorColumnCell',
+                    sortable: true
                 },
                 {
                     headerName: this.$t('comments.list.columns.comment'),
@@ -159,7 +160,8 @@ export default {
                 {
                     headerName: this.$t('comments.list.columns.added_on'),
                     minWidth: 170,
-                    cellRendererFramework: 'tableAddedOnColumnCell'
+                    cellRendererFramework: 'tableAddedOnColumnCell',
+                    field: 'commentable.label'
                 },
                 {
                     headerName: this.$t('comments.list.columns.added_at'),

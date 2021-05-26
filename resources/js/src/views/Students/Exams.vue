@@ -60,12 +60,24 @@ export default {
     },
     computed: {
         agUpcomingColumns() {
+            const self = this
+            const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
+            const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
+
             return [
                 {
                     headerName: this.$t('student_exams.upcoming_list.column_name'),
                     field: 'label',
                     minWidth: 170,
                     sortable: true
+                },
+                {
+                    headerName: this.$t('student_exams.upcoming_list.column_published_at'),
+                    minWidth: 170,
+                    valueGetter(params) {
+                        if(!params.data) return ''
+                        return `${self.$moment(params.data.published_at).format(dateFormat)} / ${self.$moment(params.data.published_at).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('student_exams.upcoming_list.column_actions'),
@@ -78,12 +90,24 @@ export default {
             ]
         },
         agFinishedColumns() {
+            const self = this
+            const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
+            const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
+
             return [
                 {
                     headerName: this.$t('student_exams.finished_list.column_name'),
                     field: 'label',
                     minWidth: 170,
                     sortable: true
+                },
+                {
+                    headerName: this.$t('student_exams.upcoming_list.column_published_at'),
+                    minWidth: 170,
+                    valueGetter(params) {
+                        if(!params.data) return ''
+                        return `${self.$moment(params.data.published_at).format(dateFormat)} / ${self.$moment(params.data.published_at).format(hijriDataFormat)}`
+                    }
                 },
                 {
                     headerName: this.$t('student_exams.finished_list.column_actions'),

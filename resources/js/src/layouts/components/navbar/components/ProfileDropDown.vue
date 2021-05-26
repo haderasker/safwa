@@ -1,8 +1,19 @@
 <template>
     <div class="the-navbar__user-meta flex items-center">
         <div class="text-right leading-tight hidden sm:block">
-            <p class="font-semibold">{{ activeUserInfo.name | title }}</p>
-            <small v-if="roles.length">{{ roles[0] | title }}</small>
+            <p class="font-semibold">
+                {{ activeUserInfo.name | title }}
+
+                <span class="font-light float-left custom" v-if="$hasRole('student')">
+                    ({{ $t(`roles.${roles[0]}`) }})
+                </span>
+            </p>
+            <small v-if="roles.length && $hasAnyRole('admin', 'teacher')">
+                {{ $t(`roles.${roles[0]}`) }}
+            </small>
+            <small v-if="$hasRole('student')">
+                {{ $t(`levels.${activeUserInfo.level.name}`) }}
+            </small>
         </div>
 
         <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
@@ -53,3 +64,10 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.custom {
+    margin-right: 5px;
+}
+</style>

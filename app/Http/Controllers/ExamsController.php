@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\Exam;
 use App\Models\Question;
+use App\Models\StudentExam;
 use App\Utils\Convert;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -35,6 +37,7 @@ class ExamsController extends Controller
                 $query->where('passed', 1);
             },
         ])
+            ->where('testable_type', Course::class)
             ->when(isset($filters['level']), function ($query) use ($filters) {
                 $query->where('level_id', $filters['level']);
             })
@@ -42,9 +45,32 @@ class ExamsController extends Controller
                 $query->where('label', 'like', '%' . $filters['name'] . '%');
             })
             ->when(count($sort), function ($query) use ($sort) {
-                foreach ($sort as $item) {
-                    $query->orderBy($item['colId'], $item['sort']);
+                $item = $sort[0];
+
+                if ($item['colId'] === 'questions_count') {
+                    return $query->orderBy(
+                        Question::selectRaw('SUM(id)')->whereColumn('questions.exam_id', 'exams.id'),
+                        $item['sort']
+                    );
                 }
+
+                if ($item['colId'] === 'student_exam_count') {
+                    return $query->orderBy(
+                        StudentExam::selectRaw('SUM(id)')->whereColumn('students_exams.exam_id', 'exams.id'),
+                        $item['sort']
+                    );
+                }
+
+                if ($item['colId'] === 'graduation_students') {
+                    return $query->orderBy(
+                        StudentExam::selectRaw('SUM(id)')
+                            ->whereColumn('students_exams.exam_id', 'exams.id')
+                            ->where('passed', 1),
+                        $item['sort']
+                    );
+                }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
     }
@@ -158,8 +184,8 @@ class ExamsController extends Controller
             'exam.testable_id'                      => ['required', 'integer'],
             'exam.testable_type'                    => ['required', 'string', 'in:lesson,course'],
             'exam.duration'                         => ['required', 'integer'],
-            'exam.published_at'                     => ['required', 'date_format:Y-m-d'],
-            'exam.ended_at'                         => ['required', 'date_format:Y-m-d'],
+            'exam.published_at'                     => ['required', 'date_format:Y-m-d H:i'],
+            'exam.ended_at'                         => ['required', 'date_format:Y-m-d H:i'],
             'exam.level_id'                         => ['nullable', 'integer'],
             'exam.type'                             => ['required', 'string', 'in:default,fail'],
             'exam.questions'                        => ['required', 'array', 'min:1'],

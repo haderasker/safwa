@@ -1,13 +1,18 @@
 {
-    "info": "Basic Information",
+    "info": "Information",
     "lessons": "Lessons",
+    "activity": "Activity",
     "course": "Course",
     "progress": "Progress",
     "type": "Type",
     "description": "Description",
+    "teacher_name": "Teacher Name",
+    "teacher_about_me": "Teacher Description",
     "view": "View",
     "list": {
         "column_label": "Lesson",
-        "column_actions": "Actions"
-    }
+        "column_actions": "Actions",
+        "column_published_at": "Published At"
+    },
+    "lesson_disabled": "Lesson Disabled until above lessons complete"
 }

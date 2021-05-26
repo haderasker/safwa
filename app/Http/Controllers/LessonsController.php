@@ -55,9 +55,15 @@ class LessonsController extends Controller
                 $query->where('course_id', $filters['course']);
             })
             ->when(count($sort), function ($query) use ($sort) {
-                foreach ($sort as $item) {
-                    $query->orderBy($item['colId'], $item['sort']);
+                $item = $sort[0];
+
+                if($item['colId'] === 'course.name') {
+                    $query->join('courses', 'courses.id', 'lessons.course_id');
+
+                    return $query->orderBy('courses.name', $item['sort']);
                 }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
     }
@@ -84,15 +90,15 @@ class LessonsController extends Controller
         // update request to support exam inputs
         $request->request->add([
             'exam' => [
-                'label'         => $request->input('label'),
+                'label'         => $request->input('lesson.label'),
                 'testable_id'   => $lesson->id,
                 'testable_type' => 'lesson',
                 'duration'      => 0,
-                'published_at'  => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-                'ended_at'      => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'published_at'  => Carbon::parse($lesson->created_at)->format('Y-m-d H:i'),
+                'ended_at'      => Carbon::parse($lesson->created_at)->format('Y-m-d H:i'),
                 'level_id'      => null,
                 'type'          => 'default',
-                'questions'     => $request->input('questions')
+                'questions'     => $request->input('lesson.questions')
             ]
         ]);
 
@@ -112,8 +118,6 @@ class LessonsController extends Controller
      */
     public function update(int $lessonId, Request $request)
     {
-        error_log(print_r($request->all(), true));
-
         $this->validateRequest($request);
 
         $lesson = Lesson::findOrFail($lessonId);
@@ -123,22 +127,22 @@ class LessonsController extends Controller
         // update request to support exam inputs
         $request->request->add([
             'exam' => [
-                'label'            => $request->input('lesson')['label'] ?? null,
+                'label'            => $request->input('lesson.label', null),
                 'testable_id'      => $lesson->id,
                 'testable_type'    => 'lesson',
                 'duration'         => 0,
-                'published_at'     => Carbon::parse($lesson->created_at)->format('Y-m-d'),
-                'ended_at'         => Carbon::parse($lesson->created_at)->format('Y-m-d'),
+                'published_at'     => Carbon::parse($lesson->created_at)->format('Y-m-d H:i'),
+                'ended_at'         => Carbon::parse($lesson->created_at)->format('Y-m-d H:i'),
                 'level_id'         => null,
                 'type'             => 'default',
-                'questions'        => $request->input('lesson')['questions'] ?? null,
+                'questions'        => $request->input('lesson.questions', null),
                 'deletedQuestions' => $request->input('deletedQuestions')
             ]
         ]);
 
         // save quiz
         $examsController = resolve(ExamsController::class);
-        $examsController->update($request, (int)$request->input('quiz.id'));
+        $examsController->update($request, (int)$request->input('lesson.quiz.id'));
 
         return response([], 204);
     }

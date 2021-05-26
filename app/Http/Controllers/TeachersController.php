@@ -31,9 +31,16 @@ class TeachersController extends Controller
                 $query->where('name', $filters['name']);
             })
             ->when(count($sort), function ($query) use ($sort) {
-                foreach ($sort as $item) {
-                    $query->orderBy($item['colId'], $item['sort']);
-                }
+                $item = $sort[0];
+
+//                if ($item['colId'] === 'teacher_courses_count') {
+//                    return $query->orderBy(
+//                        '',
+//                        $item['sort']
+//                    );
+//                }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
     }

@@ -11,6 +11,7 @@ use App\Models\StudentExam;
 use App\Models\StudentResponse;
 use App\Models\StudentResult;
 use App\Models\User;
+use App\Models\UserLesson;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -164,7 +165,7 @@ class StudentsController extends Controller
 
         return User::find($userId)
             ->courses()
-            ->with('teacher')
+            ->with('teacher', 'media')
             ->withCount('lessons')
             ->paginate((int)$request->input('per_page', 10));
     }
@@ -369,7 +370,41 @@ class StudentsController extends Controller
 
     public function getCourse(int $courseId)
     {
-        return Course::with('lessons:id,label,course_id')->findOrFail($courseId);
+        $course = Course::with([
+            'teacher:id,name,about_me',
+            'students' => function($query) {
+                $query->select('users.id');
+                $query->withPivot('type')->find(Auth::user()->id);
+            }
+        ])->withCount('lessons')->findOrFail($courseId);
+
+        $finishedLessons = Lesson::select('id', 'label', 'course_id', 'published_at')
+            ->where('course_id', $courseId)
+            ->whereHas('studentQuiz', function ($query) {
+                $query->where('students_exams.student_id', Auth::user()->id);
+                $query->where('students_exams.passed', 1);
+            });
+
+        $firstLessonUnfinished = Lesson::select('id', 'label', 'course_id', 'published_at')
+            ->where('course_id', $courseId)
+            ->whereDoesntHave('studentQuiz', function($query) {
+                $query->where('students_exams.student_id', Auth::user()->id);
+                $query->where('students_exams.passed', 1);
+            })
+            ->get();
+
+        $course->lessons = array_merge($finishedLessons->get()->toArray(), $firstLessonUnfinished->map(function($lesson, $key) {
+            if($key === 0) {
+                return $lesson;
+            }
+
+            $lesson->disabled = true;
+            return $lesson;
+        })->toArray());
+
+        $course->progress = round($finishedLessons->count() / $course->lessons_count * 100);
+
+        return $course;
     }
 
     public function getLesson(int $lessonId)
@@ -383,7 +418,12 @@ class StudentsController extends Controller
 //                });
             },
             'quiz.questions.answers'
-        ])->findOrFail($lessonId);
+        ])
+            ->select('lessons.*')
+            ->selectRaw("IF(COUNT(users_lessons.id) > 0, 'true', 'false') as viewed")
+            ->leftJoin('users_lessons', 'users_lessons.lesson_id', 'lessons.id')
+            ->groupBy('lessons.id')
+            ->findOrFail($lessonId);
     }
 
     /**
@@ -411,5 +451,20 @@ class StudentsController extends Controller
     public function show(int $id): User
     {
         return User::with('roles', 'doctrine', 'media')->findOrFail($id);
+    }
+
+    public function finishLesson(int $id)
+    {
+        UserLesson::where([
+            ['user_id', '=', Auth::user()->id],
+            ['lesson_id', '=', $id]
+        ])->delete();
+
+        UserLesson::insert([
+            'user_id'    => Auth::user()->id,
+            'lesson_id'  => $id,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

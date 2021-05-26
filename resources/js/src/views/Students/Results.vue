@@ -10,7 +10,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('student_results.filter_tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -36,7 +36,7 @@
 <script>
 import AgTable from "../../components/AgTable";
 import StudentResultsDataSource from "../../datasources/StudentResultsDataSource";
-import tableActionColumnCell from '../../components/TableActionColumnCell'
+import tableActionColumnCell from './components/TableResultsActionColumnCell'
 
 export default {
     components: {
@@ -95,13 +95,7 @@ export default {
                 {
                     headerName: this.$t('student_results.list.column_actions'),
                     minWidth: 170,
-                    valueGetter(params) {
-                        return 'result details'
-                    }
-                    // cellRendererParams: {
-                    //     routeName: 'student-result.profile'
-                    // },
-                    // cellRendererFramework: 'tableActionColumnCell'
+                    cellRendererFramework: 'tableActionColumnCell'
                 },
             ]
         }

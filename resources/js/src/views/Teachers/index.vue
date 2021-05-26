@@ -7,7 +7,7 @@
 
             <vx-tooltip position="right" :text="$t('teachers.create_teacher_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'teachers.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'teachers.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -15,7 +15,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('teachers.filter.tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -89,7 +89,8 @@ export default {
                     headerName: this.$t('teachers.list.column_courses_number'),
                     field: 'teacher_courses_count',
                     minWidth: 170,
-                    cellRendererFramework: 'tableCoursesCountColumnCell'
+                    cellRendererFramework: 'tableCoursesCountColumnCell',
+                    sortable: true
                 },
                 {
                     headerName: this.$t('teachers.list.column_created_at'),

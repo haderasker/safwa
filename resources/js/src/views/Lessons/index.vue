@@ -8,7 +8,7 @@
             <vx-tooltip v-if="activeUserInfo.upload_lessons || $hasRole('admin')" position="right"
                         :text="$t('lessons.create_lesson_tooltip')"
                         class="ml-auto md:block hidden cursor-pointer">
-                <vs-button size="large" icon="icon-settings" icon-pack="feather" :to="{ name: 'lessons.create' }"/>
+                <vs-button size="large" icon="icon-edit" icon-pack="feather" :to="{ name: 'lessons.create' }"/>
             </vx-tooltip>
         </div>
 
@@ -16,7 +16,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('lessons.filter.tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -96,6 +96,7 @@ export default {
             const self = this
             const dateFormat = 'D-M-YYYY' // 'YYYY-M-D'
             const hijriDataFormat = 'iD-iM-iYYYY' // 'iYYYY-iM-iD'
+
             const columns = [
                 {
                     headerName: this.$t('lessons.list.column_name'),
@@ -107,6 +108,7 @@ export default {
                     headerName: this.$t('lessons.list.column_course'),
                     field: 'course.name',
                     minWidth: 170,
+                    sortable: true,
                 },
                 {
                     headerName: this.$t('lessons.list.column_total_students'),

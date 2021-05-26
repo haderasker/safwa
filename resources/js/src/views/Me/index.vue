@@ -483,7 +483,7 @@ export default {
 
                 await safwaAxios.post('profile', profile)
 
-                window.location.href = '/'
+                window.location.href = '/?profile_updated=1'
             } catch (error) {
                 this.$vs.notify({
                     title: this.$t('general.error_title'),

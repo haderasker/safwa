@@ -17,7 +17,8 @@
                     <span>{{ $t('students.name') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" v-model="student.name"/>
+                    <vs-input class="w-full" v-model="student.name" name="name" v-validate="'required|min:3'"/>
+                    <span class="text-danger text-sm">{{ errors.first('name') }}</span>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -25,7 +26,8 @@
                     <span>{{ $t('students.email') }}</span>
                 </div>
                 <div class="vx-col w-3/4">
-                    <vs-input class="w-full" v-model="student.email"/>
+                    <vs-input class="w-full" v-model="student.email" name="email" v-validate="'required|email'"/>
+                    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -34,10 +36,12 @@
                 </div>
                 <div class="vx-col w-3/4">
                     <v-select
+                        name="status" v-validate="'required'"
                         class="w-full"
                         label="name"
                         :options="getStatus"
                         v-model="student.status"></v-select>
+                    <span class="text-danger text-sm">{{ errors.first('status') }}</span>
                 </div>
             </div>
             <div class="vx-row mb-6">
@@ -66,7 +70,7 @@
 
             <div class="vx-row">
                 <div class="vx-col w-full">
-                    <vs-button color="primary" type="filled" @click="createStudent">
+                    <vs-button color="primary" type="filled" @click="createStudent" :disabled="!validateForm">
                         {{ $route.params.id ? $t('students.update') : $t('students.save') }}
                     </vs-button>
                 </div>
@@ -96,6 +100,9 @@ export default {
                     name: this.$t(`status.${status}`)
                 }
             })
+        },
+        validateForm() {
+            return !this.errors.any()
         }
     },
     methods: {
@@ -125,6 +132,12 @@ export default {
             this.student.password_confirmation = password;
         },
         async createStudent() {
+            await this.$validator.validate()
+
+            if (this.errors.any()) {
+                return
+            }
+
             const student = Object.assign({}, this.student)
 
             if (student.status) {

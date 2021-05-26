@@ -37,9 +37,9 @@ class StatisticsController extends Controller
         $lessons = [];
         $rowCourses = UserCourse::with([
             'course' => function ($query) {
-                $query->select('id', 'name');
-                $query->withCount('lessons');
-                $query->with('lessons');
+                $query->with('lessons')
+                    ->withCount('lessons')
+                    ->select('id', 'name');
             }
         ])->where('user_id', Auth::user()->id)->get();
 

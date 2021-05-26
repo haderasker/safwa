@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\AcademicYear;
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Semester;
 use App\Models\SemesterLevelCourse;
+use App\Models\StudentExam;
+use App\Models\UserCourse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -67,7 +70,7 @@ class CoursesController extends Controller
                         ->where('students_exams.passed', '<>', 1);
                 }
             ])
-            ->whereIn('id', $course_ids)
+            ->whereIn('courses.id', $course_ids)
             ->when(Auth::user()->hasRole('teacher'), function ($query) {
                 $query->where('teacher_id', Auth::user()->id);
             })
@@ -78,9 +81,35 @@ class CoursesController extends Controller
                 $query->where('name', $filters['name']);
             })
             ->when(count($sort), function ($query) use ($sort) {
-                foreach ($sort as $item) {
-                    $query->orderBy($item['colId'], $item['sort']);
+                $item = $sort[0];
+
+                if ($item['colId'] === 'teacher.name') {
+                    $query->join('users', 'users.id', 'courses.teacher_id');
+                    return $query->orderBy('users.name', $item['sort']);
                 }
+
+                if ($item['colId'] === 'lessons_count') {
+                    return $query->orderBy(
+                        Lesson::selectRaw('SUM(id)')->whereColumn('courses.id', 'lessons.course_id'),
+                        $item['sort']
+                    );
+                }
+
+                if ($item['colId'] === 'students_count') {
+                    return $query->orderBy(
+                        UserCourse::selectRaw('SUM(user_id)')->whereColumn('users_courses.course_id', 'courses.id'),
+                        $item['sort']
+                    );
+                }
+
+//                if ($item['colId'] === 'passed_students') {
+//                    return $query->orderBy(
+//                        UserCourse::selectRaw('SUM(user_id)')->whereColumn('users_courses.course_id', 'courses.id'),
+//                        $item['sort']
+//                    );
+//                }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
 
@@ -217,5 +246,19 @@ class CoursesController extends Controller
             'teacher_id'  => $request['teacher_id'],
             'doctrine_id' => $request['doctrine_id'] > 0 ? $request['doctrine_id'] : null
         ];
+    }
+
+    public function extraScore(Request $request, int $id)
+    {
+        // get all students that have this course
+        // get all StudentExam related to those students
+        // update StudentExam and increase extra column by $score
+        $score = $request->input('score', 0);
+
+        StudentExam::query()
+            ->join('users', 'users.id', 'students_exams.student_id')
+            ->join('users_courses', 'users_courses.user_id', 'students_exams.student_id')
+            ->where('users_courses.course_id', $id)
+            ->increment('students_exams.extra', $score);
     }
 }

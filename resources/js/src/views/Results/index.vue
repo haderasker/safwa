@@ -10,7 +10,7 @@
             <template slot="actions">
                 <vx-tooltip position="right" :text="$t('results.filter.tooltip')"
                             class="ml-auto md:block hidden cursor-pointer">
-                    <vs-button icon="icon-settings" icon-pack="feather" @click="showFilters"/>
+                    <vs-button icon="icon-filter" icon-pack="feather" @click="showFilters"/>
                 </vx-tooltip>
             </template>
             <div v-if="filters" class="mb-5">
@@ -133,26 +133,31 @@ export default {
                     headerName: this.$t('results.list.column_student_name'),
                     field: 'student.name',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_student_email'),
                     field: 'student.email',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_exam_name'),
                     field: 'exam.label',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_total_score'),
                     field: 'exam.score',
                     minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_student_score'),
                     field: 'score',
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if (!params.data) return
                         return params.data.score + params.data.extra
@@ -161,11 +166,14 @@ export default {
                 {
                     headerName: this.$t('results.list.column_student_extra_score'),
                     field: 'extra',
-                    minWidth: 170
+                    minWidth: 170,
+                    sortable: true
                 },
                 {
                     headerName: this.$t('results.list.column_status'),
+                    field: 'passed',
                     minWidth: 170,
+                    sortable: true,
                     valueGetter(params) {
                         if (!params.data) return
                         return params.data.passed ? self.$t('results.list.column_passed') : self.$t('results.list.column_failed')

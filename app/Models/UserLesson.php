@@ -3,30 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AcademicYear extends Model
+class UserLesson extends Model
 {
-    use SoftDeletes;
-
     protected $connection = 'mysql';
 
-    protected $table = 'academic_years';
+    protected $table = 'users_lessons';
 
     protected $fillable = [
-        'label',
-        'current'
+        'user_id',
+        'lesson_id'
     ];
-
-    /**
-     * @return HasMany
-     * @author Ibrahim Sakr <ebrahim.sakr@speakol.com>
-     */
-    public function semesters(): HasMany
-    {
-        return $this->hasMany(Semester::class, 'academic_year_id', 'id');
-    }
-
 }
 

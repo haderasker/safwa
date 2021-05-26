@@ -53,10 +53,12 @@
                     </div>
                 </tab-content>
 
-                <template slot="finish" slot-scope="props">
+                <template slot="finish">
                     <!-- hide finish button just empty span -->
                     <!-- add button to redirect to all lessons table-->
-                    <span></span>
+                    <vs-button :to="{name: 'student-courses'}" color="primary" type="filled">
+                        {{ $t('student_lesson_profile.done') }}
+                    </vs-button>
                 </template>
             </form-wizard>
         </vx-card>

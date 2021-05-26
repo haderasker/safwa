@@ -3,7 +3,6 @@
     "edit": "Edit",
     "lessons": "Lessons",
     "courses": "Courses",
-    "delete": "Delete",
     "results": "Results",
     "block": "Block",
     "active": "Active",
@@ -18,7 +17,14 @@
     "exam_results": "Exam Results",
     "quran_part": "Part",
     "error_title": "Error",
+    "success_title": "Success",
     "disapprove": "Dis-approve",
     "approve": "Approve",
-    "replay": "Replay"
+    "replay": "Replay",
+    "delete": {
+        "button": "Delete",
+        "title": "Delete",
+        "message": "are you sure you want to delete!"
+    },
+    "score_details": "Score Details"
 }

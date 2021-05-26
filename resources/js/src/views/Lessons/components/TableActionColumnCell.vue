@@ -17,7 +17,7 @@
         </vs-button>
 
         <vs-button color="danger" type="filled" @click="deleteModel">
-            {{ $t('general.delete') }}
+            {{ $t('general.delete.button') }}
         </vs-button>
     </div>
 </template>
@@ -28,6 +28,14 @@ import safwaAxios from "../../../axios";
 export default {
     methods: {
         async deleteModel() {
+            this.confirm(
+                this.$t('general.delete.title'),
+                this.$t('general.delete.message'),
+                this.delete
+            )
+        },
+
+        async delete() {
             await safwaAxios.delete(`lessons/${this.params.data.id}`)
             this.params.api.purgeServerSideCache([])
         }

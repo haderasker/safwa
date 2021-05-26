@@ -28,9 +28,12 @@ class ResultsController extends Controller
         $sort = $request->input('sort', []);
 
         return StudentExam::with([
-            'exam:id,label,score',
-            'student:id,name,email'
+            'exam',
+            'student'
         ])
+            ->whereHas('exam', function($query) {
+                $query->where('exams.testable_type', Course::class);
+            })
             ->when(isset($filters['semester']), function (Builder $query) use ($filters) {
                 $semesterCourses = DB::select("
                     select course_ids,
@@ -40,8 +43,6 @@ class ResultsController extends Controller
                 ");
 
                 $semesterCoursesIds = $this->transformCourses($semesterCourses);
-
-                error_log(print_r($semesterCoursesIds, true));
 
                 $query->whereHas('exam', function (Builder $query) use ($filters, $semesterCoursesIds) {
                     $query->where('testable_type', Course::class)
@@ -61,6 +62,21 @@ class ResultsController extends Controller
             })
             ->when(isset($filters['exam_id']), function (Builder $query) use ($filters) {
                 $query->where('students_exams.exam_id', $filters['exam_id']);
+            })
+            ->when(count($sort), function ($query) use ($sort) {
+                $item = $sort[0];
+
+                if($item['colId'] === 'student.name' || $item['colId'] === 'student.email') {
+                    $query->join('users', 'students_exams.student_id', '=', 'users.id');
+                    return $query->orderBy(str_replace('student', 'users', $item['colId']), $item['sort']);
+                }
+
+                if($item['colId'] === 'exam.label' || $item['colId'] === 'exam.score') {
+                    $query->join('exams', 'students_exams.exam_id', '=', 'exams.id');
+                    return $query->orderBy(str_replace('exam', 'exams', $item['colId']), $item['sort']);
+                }
+
+                return $query->orderBy($item['colId'], $item['sort']);
             })
             ->paginate((int)$request->input('per_page', 10));
     }
@@ -85,8 +101,8 @@ class ResultsController extends Controller
 
             foreach ($course_ids as $course_id) {
                 $element = [
-                    'semester'  => $course->semester_id,
-                    'course' => $course_id
+                    'semester' => $course->semester_id,
+                    'course'   => $course_id
                 ];
                 if (in_array($element, $results)) {
                     continue;

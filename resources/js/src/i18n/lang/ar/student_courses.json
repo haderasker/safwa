@@ -9,5 +9,7 @@
         "column_lesson_num": "عدد الدروس",
         "column_type": "النوع",
         "column_actions": "خيارات"
-    }
+    },
+    "default": "اساسي",
+    "failed": "تخلفات"
 }

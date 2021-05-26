@@ -16,9 +16,7 @@
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
                 :subtitle="null"
-                @on-complete="createLesson"
                 @on-change="validateStep"
-                :finishButtonText="$t('lessons.wizard.submit')"
                 :nextButtonText="$t('lessons.wizard.next')"
                 :backButtonText="$t('lessons.wizard.back')">
 
@@ -62,7 +60,8 @@
                             <span>{{ $t('lessons.step1.courses') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select :disabled="$hasRole('teacher') && !profile.upload_lessons" label="name" :options="getCourses" v-model="lesson.course"></v-select>
+                            <v-select :disabled="$hasRole('teacher') && !profile.upload_lessons" label="name" :options="getCourses" v-model="lesson.course" name="course" v-validate="'required'"></v-select>
+                            <span class="text-danger text-sm">{{ errors.first('course') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -72,7 +71,8 @@
                         <div class="vx-col w-3/4">
                             <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
                                 class="w-full" :placeholder="$t('lessons.step1.lesson_name_placeholder')"
-                                      v-model="lesson.label"/>
+                                      v-model="lesson.label" name="name" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('name') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -82,7 +82,8 @@
                         <div class="vx-col w-3/4">
                             <flat-picker :disabled="$hasRole('teacher') && !profile.upload_lessons"
                                 class="w-full" :config="configDateTimePicker" v-model="lesson.published_at"
-                                         :placeholder="$t('lessons.step1.publish_date_time')"/>
+                                         :placeholder="$t('lessons.step1.publish_date_time')" name="published_at" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('published_at') }}</span>
                         </div>
                     </div>
 
@@ -97,7 +98,8 @@
                         <div class="vx-col w-3/4">
                             <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
                                 class="w-full" :placeholder="$t('lessons.step1.youtube')"
-                                      v-model="lesson.youtube"/>
+                                      v-model="lesson.youtube" name="youtube" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('youtube') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -107,7 +109,8 @@
                         <div class="vx-col w-3/4">
                             <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
                                 class="w-full" :placeholder="$t('lessons.step1.soundcloud')"
-                                      v-model="lesson.soundcloud"/>
+                                      v-model="lesson.soundcloud" name="soundcloud" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('soundcloud') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -117,7 +120,8 @@
                         <div class="vx-col w-3/4">
                             <vs-input :disabled="$hasRole('teacher') && !profile.upload_lessons"
                                 class="w-full" :placeholder="$t('lessons.step1.pdf')"
-                                      v-model="lesson.pdf"/>
+                                      v-model="lesson.pdf" name="pdf" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('pdf') }}</span>
                         </div>
                     </div>
                 </tab-content>
@@ -178,21 +182,16 @@
                                 </draggable>
                             </table>
                         </vs-list>
+
+                        <span v-if="questionError" class="text-danger text-sm">hello {{ $t('lessons.questions_error') }}</span>
                     </div>
                 </tab-content>
 
-<!--                <tab-content-->
-<!--                    v-if="$route.params.id"-->
-<!--                    :lazy="true"-->
-<!--                    :title="$t('lessons.step3.title')"-->
-<!--                    class="mb-5">-->
-
-<!--                    <vs-divider/>-->
-
-<!--                    <comments-section :commentableId="$route.params.id"-->
-<!--                                      :commentableType="commentableType"></comments-section>-->
-
-<!--                </tab-content>-->
+                <template slot="finish">
+                    <vs-button @click="createLesson" color="primary" type="filled" :disabled="!validateForm">
+                        {{ $t('lessons.wizard.submit') }}
+                    </vs-button>
+                </template>
             </form-wizard>
         </vx-card>
     </div>
@@ -222,7 +221,7 @@ export default {
     },
     data() {
         return {
-            // commentableType: 'lesson',
+            questionError: false,
             question: {
                 index: -1,
                 label: '',
@@ -253,7 +252,10 @@ export default {
         ...mapGetters({
             getCourses: 'Courses/getCourses',
             profile: 'Authentication/getProfile'
-        })
+        }),
+        validateForm() {
+            return !this.errors.any() && this.lesson.quiz.questions && this.lesson.quiz.questions.length
+        }
     },
     methods: {
         ...mapActions({
@@ -261,6 +263,16 @@ export default {
         }),
         async createLesson() {
             if(this.$hasRole('teacher') && !this.profile.upload_lessons) {
+                return
+            }
+
+            await this.$validator.validate()
+
+            if(!this.lesson.quiz.questions.length) {
+                this.questionError = true
+            }
+
+            if (this.errors.any()) {
                 return
             }
 
@@ -284,7 +296,9 @@ export default {
                     deletedQuestions: this.deletedQuestions
                 });
             } else {
-                await safwaAxios.post('lessons', lesson);
+                await safwaAxios.post('lessons', {
+                    lesson
+                });
                 this.$router.push({name: 'lessons.list'}).catch();
             }
         },

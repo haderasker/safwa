@@ -45,5 +45,6 @@
         "password_confirmation": "تأكيد كلمة المرور"
     },
     "fill_content": "من فضلك قم بتعبئة جميع الحقول قبل استخدام النظام",
-    "failed_auth_message": "هناك خطأ بالبيانات."
+    "failed_auth_message": "هناك خطأ بالبيانات.",
+    "update_success": "تم تحديث الملف الشخصي"
 }

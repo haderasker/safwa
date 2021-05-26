@@ -17,9 +17,7 @@
                 errorColor="rgba(var(--vs-danger), 1)"
                 :title="null"
                 :subtitle="null"
-                @on-complete="createExam"
                 @on-change="validateStep"
-                :finishButtonText="$route.params.id ? $t('exams.edit') : $t('exams.create')"
                 :nextButtonText="$t('exams.next')"
                 :backButtonText="$t('exams.back')">
 
@@ -34,7 +32,8 @@
                             <span>{{ $t('exams.label') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input class="w-full" v-model="exam.label"/>
+                            <vs-input class="w-full" v-model="exam.label" name="label" v-validate="'required|min:3'"/>
+                            <span class="text-danger text-sm">{{ errors.first('label') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -42,7 +41,9 @@
                             <span>{{ $t('exams.select_subject') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="getCourses" v-model="exam.testable"></v-select>
+                            <v-select label="name" :options="getCourses" v-model="exam.testable" name="course"
+                                      v-validate="'required'"></v-select>
+                            <span class="text-danger text-sm">{{ errors.first('course') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -50,7 +51,9 @@
                             <span>{{ $t('exams.select_level') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="getLevels" v-model="exam.level"></v-select>
+                            <v-select label="name" :options="getLevels" v-model="exam.level" name="level"
+                                      v-validate="'required'"></v-select>
+                            <span class="text-danger text-sm">{{ errors.first('level') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -58,7 +61,9 @@
                             <span>{{ $t('exams.exam_type') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <v-select label="name" :options="typesOptions" v-model="exam.type"></v-select>
+                            <v-select label="name" :options="typesOptions" v-model="exam.type" name="type"
+                                      v-validate="'required'"></v-select>
+                            <span class="text-danger text-sm">{{ errors.first('type') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -66,8 +71,9 @@
                             <span>{{ $t('exams.exam_start_date') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker :format="dateFormat" placeholder="Select Date"
-                                        v-model="exam.published_at"></datepicker>
+                            <flat-picker class="w-full" :config="configDateTimePicker" v-model="exam.published_at"
+                                         placeholder="Select Date" name="published_at" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('published_at') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -75,8 +81,9 @@
                             <span>{{ $t('exams.exam_end_date') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <datepicker :format="dateFormat" placeholder="Select Date"
-                                        v-model="exam.ended_at"></datepicker>
+                            <flat-picker class="w-full" :config="configDateTimePicker" v-model="exam.ended_at"
+                                         placeholder="Select Date" name="ended_at" v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('ended_at') }}</span>
                         </div>
                     </div>
                     <div class="vx-row mb-6">
@@ -84,7 +91,9 @@
                             <span>{{ $t('exams.exam_duration') }}</span>
                         </div>
                         <div class="vx-col w-3/4">
-                            <vs-input type="number" class="w-full" v-model="exam.duration"/>
+                            <vs-input type="number" class="w-full" v-model="exam.duration" name="duration"
+                                      v-validate="'required'"/>
+                            <span class="text-danger text-sm">{{ errors.first('duration') }}</span>
                         </div>
                     </div>
                 </tab-content>
@@ -150,18 +159,27 @@
                                 </draggable>
                             </table>
                         </vs-list>
+                        <span v-if="questionError" class="text-danger text-sm">{{ $t('exams.questions_error') }}</span>
                     </div>
                 </tab-content>
+
+                <template slot="finish">
+                    <vs-button @click="createExam" color="primary" type="filled" :disabled="!validateForm">
+                        {{ $route.params.id ? $t('exams.edit') : $t('exams.create') }}
+                    </vs-button>
+                </template>
             </form-wizard>
         </vx-card>
     </div>
 </template>
 
 <script>
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import 'flatpickr/dist/flatpickr.css';
+
+import flatPicker from 'vue-flatpickr-component';
 import DataViewSidebar from "./DataViewSidebar";
 import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-import Datepicker from 'vuejs-datepicker'
 import draggable from 'vuedraggable'
 import safwaAxios from "../../../axios";
 import {mapGetters, mapActions} from 'vuex'
@@ -171,12 +189,17 @@ export default {
     components: {
         FormWizard,
         TabContent,
-        Datepicker,
         draggable,
-        DataViewSidebar
+        DataViewSidebar,
+        flatPicker
     },
     data() {
         return {
+            questionError: false,
+            configDateTimePicker: {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i'
+            },
             sidebarOpened: false,
             deletedQuestions: [],
             question: {
@@ -194,8 +217,7 @@ export default {
                         is_correct: false
                     }
                 ]
-            },
-            dateFormat: 'yyyy-MM-dd'
+            }
         }
     },
     mounted() {
@@ -206,6 +228,9 @@ export default {
         ...mapGetters({
             getCourses: 'Courses/getCourses'
         }),
+        validateForm() {
+            return !this.errors.any() && this.exam.questions && this.exam.questions.length
+        },
         getLevels() {
             const levels = this.$store.getters['Levels/getLevels']
 
@@ -267,6 +292,16 @@ export default {
             this.sidebarOpened = false
         },
         async createExam() {
+            await this.$validator.validate()
+
+            if(!this.exam.questions.length) {
+                this.questionError=true
+            }
+
+            if (this.errors.any()) {
+                return
+            }
+
             const published_at = this.$moment(this.exam.published_at)
             published_at.locale('en')
 
@@ -274,8 +309,8 @@ export default {
             ended_at.locale('en')
 
             const exam = {
-                published_at: published_at.format('YYYY-MM-DD'),
-                ended_at: ended_at.format('YYYY-MM-DD'),
+                published_at: published_at.format('YYYY-MM-DD HH:mm'),
+                ended_at: ended_at.format('YYYY-MM-DD HH:mm'),
                 testable_type: 'course',
                 testable_id: window._.get(this, 'exam.testable.id', null),
                 duration: this.exam.duration,

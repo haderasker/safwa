@@ -59,5 +59,6 @@
     "table_actions": "Actions",
     "avatar": "Avatar",
     "change_avatar": "Change Avatar",
-    "remove_avatar": "Remove Avatar"
+    "remove_avatar": "Remove Avatar",
+    "questions_error": "you should add at least one question"
 }

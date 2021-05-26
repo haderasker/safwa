@@ -19,7 +19,7 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         $user = $request->user();
-        $user = $user->load('roles', 'doctrine', 'media');
+        $user = $user->load('roles', 'doctrine', 'media', 'level');
         $user->current_academic_year = AcademicYear::where('current', 1)->first()->label;
 
         return $user;
