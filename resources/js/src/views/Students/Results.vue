@@ -94,7 +94,7 @@ export default {
                 },
                 {
                     headerName: this.$t('student_results.list.column_actions'),
-                    minWidth: 170,
+                    minWidth: 300,
                     cellRendererFramework: 'tableActionColumnCell'
                 },
             ]

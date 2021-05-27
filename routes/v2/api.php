@@ -76,6 +76,7 @@ Route::group(['prefix' => 'students'], function () {
 
     Route::get('/{studentId}', 'StudentsController@edit');
     Route::get('/{studentId}/show', 'StudentsController@show');
+    Route::get('/{studentId}/certificate', 'StudentsController@certificate');
     Route::put('/{studentId}', 'StudentsController@update');
     Route::delete('/{studentId}', 'StudentsController@delete');
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "023170cfb76c72795d7a24145016a3da",
+    "content-hash": "c2a5fa71f8210b5a8b25d3be025f2743",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1143,6 +1143,53 @@
             "time": "2019-11-02T09:15:47+00:00"
         },
         {
+            "name": "johntaa/ar-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Johntaa/ar-php.git",
+                "reference": "733050aa23f5c1e93bcb274c6d088f8cfa0ec4aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Johntaa/ar-php/zipball/733050aa23f5c1e93bcb274c6d088f8cfa0ec4aa",
+                "reference": "733050aa23f5c1e93bcb274c6d088f8cfa0ec4aa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Johntaa\\Arabic\\": "src/Arabic"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Khaled Al-Sham'aa",
+                    "email": "khaled@ar-php.org",
+                    "homepage": "http://www.ar-php.org/"
+                },
+                {
+                    "name": ":johntaa",
+                    "email": "fccffccffccf@yahoo.com"
+                }
+            ],
+            "description": "contribution to Ar-PHP Library, namespace-psr4 added",
+            "homepage": "https://github.com/Johntaa/ar-php",
+            "support": {
+                "issues": "https://github.com/Johntaa/ar-php/issues",
+                "source": "https://github.com/Johntaa/ar-php/tree/master"
+            },
+            "time": "2018-01-27T02:25:01+00:00"
+        },
+        {
             "name": "laravel/framework",
             "version": "v7.30.4",
             "source": {
@@ -1973,16 +2020,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.48.0",
+            "version": "2.48.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d3c447f21072766cddec3522f9468a5849a76147"
+                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d3c447f21072766cddec3522f9468a5849a76147",
-                "reference": "d3c447f21072766cddec3522f9468a5849a76147",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8d1f50f1436fb4b05e7127360483dd9c6e73da16",
+                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16",
                 "shasum": ""
             },
             "require": {
@@ -2062,7 +2109,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-07T10:08:30+00:00"
+            "time": "2021-05-26T22:08:38+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -7866,7 +7913,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "johntaa/ar-php": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

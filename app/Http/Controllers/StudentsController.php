@@ -6,7 +6,6 @@ use App\Models\Course;
 use App\Models\Exam;
 use App\Models\Lesson;
 use App\Models\Question;
-use App\Models\Semester;
 use App\Models\StudentExam;
 use App\Models\StudentResponse;
 use App\Models\StudentResult;
@@ -20,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
+use Johntaa\Arabic\I18N_Arabic;
 
 /**
  * Class StudentsController
@@ -347,16 +348,19 @@ class StudentsController extends Controller
     public function isTaken(int $examId)
     {
         $exam = Exam::withCount([
-            'studentExam' => function (Builder $query) {
+            'studentExam' => function (Builder $query) use ($examId) {
                 $query->where('student_id', Auth::user()->id);
             }
         ])
             ->find($examId);
 
         if (
-            $exam->student_exam_count > 0
-            || Carbon::parse($exam->published_at)->toDateString() >= now()->toDateString()
-            || Carbon::parse($exam->ended_at)->toDateString() <= now()->toDateString()
+            $exam->student_exam_count > 0 // false
+            ||
+            (
+                Carbon::parse($exam->published_at)->toDateString() <= now()->toDateString()
+                && Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
+            )
         ) {
             return [
                 'is_taken' => true
@@ -466,5 +470,34 @@ class StudentsController extends Controller
             'created_at' => now(),
             'updated_at' => now()
         ]);
+    }
+
+    public function certificate(int $id)
+    {
+        $path = public_path('images/certificate.jpg');
+        $Arabic = new I18N_Arabic('Glyphs');
+        $img = Image::make($path)->resize(1920,1200);
+
+        $studentName = 'انا طالب';
+        $name = $Arabic->utf8Glyphs($studentName);
+        $img->text($name, 1520, 320, function($font) {
+            $font->file(public_path('fonts/trado.ttf'));
+            $font->size(60);
+            $font->color('#000000');
+            $font->align('right');
+            $font->valign('top');
+        });
+
+        $studentNationality = 'مصري';
+        $nationality = $Arabic->utf8Glyphs($studentNationality);
+        $img->text($nationality, 1520, 395, function($font) {
+            $font->file(public_path('fonts/trado.ttf'));
+            $font->size(60);
+            $font->color('#000000');
+            $font->align('right');
+            $font->valign('top');
+        });
+
+        return $img->response('jpg', 100);
     }
 }
