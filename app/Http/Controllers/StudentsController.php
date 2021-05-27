@@ -355,18 +355,12 @@ class StudentsController extends Controller
             ->find($examId);
 
         if (
-            $exam->student_exam_count > 0 // false
-            ||
-            (
-                Carbon::parse($exam->published_at)->toDateString() <= now()->toDateString()
-                || Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
-            )
+            $exam->student_exam_count > 0
+            || Carbon::parse($exam->published_at)->toDateTimeString() >= now()->toDateTimeString()
+            || Carbon::parse($exam->ended_at)->toDateTimeString() <= now()->toDateTimeString()
         ) {
             return [
-                'student_exam_count' => $exam->student_exam_count,
-                'is_taken' => true,
-                'published_at' => Carbon::parse($exam->published_at)->toDateString() <= now()->toDateString(),
-                'ended_at' => Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
+                'is_taken' => true
             ];
         }
 
