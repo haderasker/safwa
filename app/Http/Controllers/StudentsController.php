@@ -359,11 +359,14 @@ class StudentsController extends Controller
             ||
             (
                 Carbon::parse($exam->published_at)->toDateString() <= now()->toDateString()
-                && Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
+                || Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
             )
         ) {
             return [
-                'is_taken' => true
+                'student_exam_count' => $exam->student_exam_count,
+                'is_taken' => true,
+                'published_at' => Carbon::parse($exam->published_at)->toDateString() <= now()->toDateString(),
+                'ended_at' => Carbon::parse($exam->ended_at)->toDateString() >= now()->toDateString()
             ];
         }
 
