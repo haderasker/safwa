@@ -147,7 +147,7 @@ export default {
             if (this.$route.params.id) {
                 await safwaAxios.put(`students/${this.$route.params.id}`, student);
             } else {
-                await safwaAxios.post('students', this.student);
+                await safwaAxios.post('students', student);
                 this.$router.push({name: 'students.list'}).catch();
             }
         }
