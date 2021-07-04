@@ -178,17 +178,56 @@ class StudentsController extends Controller
      */
     public function upcomingExams(Request $request): LengthAwarePaginator
     {
-        return Exam::where([
+        $userCourses = Auth::user()->courses()->pluck('courses.id')->toArray();
+        $now = now();
+
+        // select all exams where type === default
+        $defaultExams = Exam::where([
             ['level_id', '=', Auth::user()->level_id],
-            ['testable_type', Course::class]
+            ['testable_type', Course::class],
+            ['type', '=', 'default']
         ])
-            ->whereDate('published_at', '<=', now())
-            ->whereDate('ended_at', '>=', now())
-            ->whereIn('testable_id', Auth::user()->courses()->pluck('courses.id')->toArray())
+            ->whereDate('published_at', '<=', $now)
+            ->whereDate('ended_at', '>=', $now)
+            ->whereIn('testable_id', $userCourses)
             ->whereDoesntHave('studentExam', function ($query) {
                 $query->where('student_id', Auth::user()->id);
             })
-            ->paginate((int)$request->input('per_page', 10));
+            ->get()
+            ->toArray();
+
+        // select failed courses
+        // select current year courses that has student exams with passed === false
+        $failedCoursesIds = Auth::user()
+            ->courses()
+            ->whereHas('studentExams', function ($query) {
+                $query->where('passed', false);
+            })
+            ->pluck('courses.id')
+            ->toArray();
+
+        // and get all exams related to these courses where type === fail
+        $failedExams = Exam::where([
+            ['testable_type', Course::class],
+            ['type', '=', 'fail']
+        ])
+            ->whereIn('testable_id', $failedCoursesIds)
+            ->whereDate('published_at', '<=', $now)
+            ->whereDate('ended_at', '>=', $now)
+            ->whereDoesntHave('studentExam', function ($query) {
+                $query->where('student_id', Auth::user()->id);
+            })
+            ->get()
+            ->toArray();
+
+        $allCourses = array_merge($defaultExams, $failedExams);
+
+        return new LengthAwarePaginator(
+            $allCourses,
+            count($allCourses),
+            (int)$request->input('per_page', 10),
+            (int)$request->input('page', 1)
+        );
     }
 
     /**
@@ -373,7 +412,7 @@ class StudentsController extends Controller
     {
         $course = Course::with([
             'teacher:id,name,about_me',
-            'students' => function($query) {
+            'students' => function ($query) {
                 $query->select('users.id');
                 $query->withPivot('type')->find(Auth::user()->id);
             }
@@ -388,14 +427,14 @@ class StudentsController extends Controller
 
         $firstLessonUnfinished = Lesson::select('id', 'label', 'course_id', 'published_at')
             ->where('course_id', $courseId)
-            ->whereDoesntHave('studentQuiz', function($query) {
+            ->whereDoesntHave('studentQuiz', function ($query) {
                 $query->where('students_exams.student_id', Auth::user()->id);
                 $query->where('students_exams.passed', 1);
             })
             ->get();
 
-        $course->lessons = array_merge($finishedLessons->get()->toArray(), $firstLessonUnfinished->map(function($lesson, $key) {
-            if($key === 0) {
+        $course->lessons = array_merge($finishedLessons->get()->toArray(), $firstLessonUnfinished->map(function ($lesson, $key) {
+            if ($key === 0) {
                 return $lesson;
             }
 
@@ -403,7 +442,7 @@ class StudentsController extends Controller
             return $lesson;
         })->toArray());
 
-        $course->progress = round($finishedLessons->count() / $course->lessons_count * 100);
+        $course->progress = round($finishedLessons->count() / ($course->lessons_count ? $course->lessons_count * 100 : 1));
 
         return $course;
     }
@@ -473,11 +512,11 @@ class StudentsController extends Controller
     {
         $path = public_path('images/certificate.jpg');
         $Arabic = new I18N_Arabic('Glyphs');
-        $img = Image::make($path)->resize(1920,1200);
+        $img = Image::make($path)->resize(1920, 1200);
 
         $studentName = 'انا طالب';
         $name = $Arabic->utf8Glyphs($studentName);
-        $img->text($name, 1520, 320, function($font) {
+        $img->text($name, 1520, 320, function ($font) {
             $font->file(public_path('fonts/trado.ttf'));
             $font->size(60);
             $font->color('#000000');
@@ -487,7 +526,7 @@ class StudentsController extends Controller
 
         $studentNationality = 'مصري';
         $nationality = $Arabic->utf8Glyphs($studentNationality);
-        $img->text($nationality, 1520, 395, function($font) {
+        $img->text($nationality, 1520, 395, function ($font) {
             $font->file(public_path('fonts/trado.ttf'));
             $font->size(60);
             $font->color('#000000');
